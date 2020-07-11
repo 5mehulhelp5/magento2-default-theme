@@ -22,6 +22,7 @@
                     </arguments>
                 </block>
                 <block name="header-search" template="Magento_Theme::html/header/search-form.phtml"/>
+                <block name="cart-drawer" template="Magento_Theme::html/cart/cart-drawer.phtml"/>
             </block>
         </referenceContainer>
         <referenceContainer name="top.container">
@@ -44,6 +45,7 @@
             <block name="script-alpine-js" template="Magento_Theme::html/footer/script-alpine-js.phtml"/>
 -->
             <block name="script-cookies" template="Magento_Theme::html/footer/script-cookies.phtml"/>
+            <block name="script-private-content" template="Magento_Theme::html/footer/script-private-content.phtml"/>
             <block name="script-lory-slider" template="Magento_Theme::html/footer/script-lory-slider.phtml"/>
         </referenceContainer>
     </body>

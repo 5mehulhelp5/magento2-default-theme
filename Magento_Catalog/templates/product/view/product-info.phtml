@@ -49,13 +49,33 @@ $product = $productViewModel->getProduct();
         <span class="title-font font-medium text-2xl text-gray-900">
             <?= $block->getChildHtml("product.price.final") ?>
         </span>
-        <button
-            class="flex ml-auto btn btn-primary">
-            <svg class="h-6 w-6 border-current" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
-            </svg>
-            <?= /* @noEscape */ __('Add to cart') ?>
-        </button>
+        <?php if ($product->isSaleable()) : ?>
+        <?php
+        /** @var \Magento\Framework\Data\Helper\PostHelper $postDataHelper */
+            $postDataHelper = $this->helper(\Magento\Framework\Data\Helper\PostHelper::class);
+            $postParams = json_decode($postDataHelper->getPostData($block->getAddToCartUrl($product), ['product' => $product->getEntityId()]));
+        ?>
+        <form method="post"
+              action="<?= $block->escapeUrl($productViewModel->getAddToCartUrl($product)) ?>"
+              id="product_addtocart_form"<?php if ($product->getOptions()) :?> enctype="multipart/form-data"<?php endif; ?>
+              class="flex ml-auto"
+        >
+            <input type="hidden" name="product" value="<?= (int)$product->getId() ?>" />
+            <input type="hidden" name="selected_configurable_option" value="" />
+            <input type="hidden" name="related_product" id="related-products-field" value="" />
+            <input type="hidden" name="item"  value="<?= (int)$block->getRequest()->getParam('id') ?>">
+            <?= $block->getBlockHtml('formkey') ?>
+            <button type="submit"
+                    title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>"
+                    class="btn btn-primary"
+            >
+                <svg class="h-6 w-6 border-current" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                </svg>
+                <span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
+            </button>
+        </form>
+        <?php endif; ?>
         <button
             class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
             <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5"

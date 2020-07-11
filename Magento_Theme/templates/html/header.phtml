@@ -3,10 +3,23 @@ declare(strict_types=1);
 
 /** @var \Magento\Framework\View\Element\Template $block */
 ?>
+<script>
+    function initHeader () {
+        return {
+            menuOpen: false,
+            searchOpen: false,
+            cart: {},
+            getCart (data) {
+                if (data.cart) { this.cart = data.cart }
+            }
+        }
+    }
+</script>
 <nav id="header"
      class="w-full z-30 bg-gray-100 shadow"
-     x-data="{ menuOpen: false, searchOpen: false }"
+     x-data="initHeader()"
      @keydown.window.escape="searchOpen = false; menuOpen = false"
+     @private-content-loaded.window="getCart($event.detail.data)"
 >
     <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-6 py-3">
 
@@ -42,7 +55,7 @@ declare(strict_types=1);
         <div class="order-2 md:order-3 flex items-center" id="nav-content">
 
             <a id="menu-search-icon" class="pl-3 inline-block no-underline hover:text-black" href="#"
-               @click="searchOpen = !searchOpen; $nextTick(function () { $refs.searchInput.select(); });">
+               @click.prevent="searchOpen = !searchOpen; $nextTick(function () { $refs.searchInput.select(); });">
                 <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                 </svg>
@@ -55,12 +68,19 @@ declare(strict_types=1);
                 </svg>
             </a>
 
-            <a id="menu-cart-icon" class="pl-3 inline-block no-underline hover:text-black" href="#">
+            <a id="menu-cart-icon"
+               @click.prevent.stop="$dispatch('toggle-cart',{});"
+               class="pl-3 inline-block no-underline hover:text-black relative"
+               href="<?= $block->escapeUrl($block->getUrl('checkout/cart/index')) ?>">
                 <svg class="fill-current hover:text-black" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                     <path d="M21,7H7.462L5.91,3.586C5.748,3.229,5.392,3,5,3H2v2h2.356L9.09,15.414C9.252,15.771,9.608,16,10,16h8 c0.4,0,0.762-0.238,0.919-0.606l3-7c0.133-0.309,0.101-0.663-0.084-0.944C21.649,7.169,21.336,7,21,7z M17.341,14h-6.697L8.371,9 h11.112L17.341,14z"></path>
                     <circle cx="10.5" cy="18.5" r="1.5"></circle>
                     <circle cx="17.5" cy="18.5" r="1.5"></circle>
                 </svg>
+                <span x-show="cart.summary_count" x-text="cart.summary_count"
+                :class="{
+                'hidden': !cart.summary_count,
+                'absolute top-0 right-0 -mt-4 -mr-4 text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-indigo-600 bg-indigo-200 uppercase': cart.summary_count }"></span>
             </a>
 
         </div>
@@ -73,5 +93,7 @@ declare(strict_types=1);
         <?= $block->getChildHtml('header-search'); ?>
 
     </div>
+    <!--Cart Drawer-->
+    <?= $block->getChildHtml('cart-drawer'); ?>
 </nav>
 
