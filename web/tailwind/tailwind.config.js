@@ -55,7 +55,9 @@ module.exports = {
         borderWidth: ['responsive', 'last', 'hover', 'focus'],
         margin: ['responsive', 'last', 'hover', 'focus'],
     },
-    plugins: [],
+    plugins: [
+        require('@tailwindcss/custom-forms'),
+    ],
     purge: {
         // enabled: false,
         content: [

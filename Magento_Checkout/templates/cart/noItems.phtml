@@ -1,0 +1,25 @@
+<?php
+/**
+ * Copyright © Wigman Interactive. All rights reserved.
+ * This product is licensed per Magento production install
+ */
+
+declare(strict_types=1);
+
+use Magento\Checkout\Block\Cart;
+
+/**  @var $block Cart */
+?>
+<div class="cart-empty container py-4 px-6">
+    <?= $block->getChildHtml('checkout_cart_empty_widget') ?>
+    <p><?= $block->escapeHtml(__('You have no items in your shopping cart.')) ?></p>
+    <p><?= $block->escapeHtml(
+        __(
+            'Click <a href="%1">here</a> to continue shopping.',
+            $block->escapeUrl($block->getContinueShoppingUrl())
+        ),
+        ['a']
+    ) ?>
+    </p>
+    <?= $block->getChildHtml('shopping.cart.table.after') ?>
+</div>

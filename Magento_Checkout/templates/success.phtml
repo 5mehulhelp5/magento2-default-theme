@@ -1,0 +1,44 @@
+<?php
+/**
+ * Copyright © Wigman Interactive. All rights reserved.
+ * This product is licensed per Magento production install
+ */
+
+declare(strict_types=1);
+
+/** @var $block \Magento\Checkout\Block\Onepage\Success */
+?>
+<div class="checkout-success container py-4 px-6">
+    <?php if ($block->getOrderId()): ?>
+        <?php if ($block->getCanViewOrder()): ?>
+            <p>
+                <?= $block->escapeHtml(
+                    __(
+                        'Your order number is: %1.',
+                        sprintf(
+                            '<a href="%s" class="order-number"><strong>%s</strong></a>',
+                            $block->escapeUrl($block->getViewOrderUrl()),
+                            $block->getOrderId()
+                        )
+                    ),
+                    ['a', 'strong']
+                ) ?>
+            </p>
+        <?php  else: ?>
+            <p><?= $block->escapeHtml(__('Your order # is: <span>%1</span>.', $block->getOrderId()), ['span']) ?></p>
+        <?php endif;?>
+        <p>
+            <?= $block->escapeHtml(
+                __('We\'ll email you an order confirmation with details and tracking info.')
+            ) ?>
+        </p>
+    <?php endif; ?>
+
+    <?= $block->getAdditionalInfoHtml() ?>
+
+    <div class="my-4">
+        <a class="btn btn-primary" href="<?= $block->escapeUrl($block->getContinueUrl()) ?>">
+            <span><?= $block->escapeHtml(__('Continue Shopping')) ?></span>
+        </a>
+    </div>
+</div>
