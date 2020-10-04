@@ -78,7 +78,7 @@ $uniqueId = '_' . uniqid();
     }
 </script>
 <?php if ($block->getCollection()->getSize()) :?>
-    <div x-data="initToolbar<?= $uniqueId ?>()" class="toolbar toolbar-products flex-1 flex items-center justify-between">
+    <div x-data="initToolbar<?= $uniqueId ?>()" class="toolbar toolbar-products h-28 grid grid-cols-8 grid-rows-3 md:grid-rows-2 xl:grid-rows-1 grid-flow-row gap-2 items-center">
         <?php if ($block->isExpanded()) :?>
             <?php include ($block->getTemplateFile('Magento_Catalog::product/list/toolbar/viewmode.phtml')) ?>
         <?php endif; ?>

@@ -24,7 +24,7 @@ use Magento\Framework\View\Element\Template;
     }
 </script>
 <nav id="header"
-     class="w-full z-30 bg-background shadow"
+     class="w-full z-30 bg-container-lighter border-b border-container-lighter shadow"
      x-data="initHeader()"
      @keydown.window.escape="searchOpen = false; menuOpen = false"
      @private-content-loaded.window="getCart($event.detail.data)"
@@ -90,9 +90,11 @@ use Magento\Framework\View\Element\Template;
                     <circle cx="17.5" cy="18.5" r="1.5"></circle>
                 </svg>
                 <span x-show="cart.summary_count" x-text="cart.summary_count"
-                :class="{
-                'hidden': !cart.summary_count,
-                'absolute top-0 right-0 -mt-4 -mr-4 text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-indigo-600 bg-indigo-200 uppercase': cart.summary_count }"></span>
+                      class="absolute top-0 right-0 -mt-5 -mr-4 leading-none text-xs font-semibold inline-block py-1 px-2 uppercase transform -translate-x-1 translate-y-1/2 rounded-full text-center text-white bg-primary h-5"
+                      :class="{
+                        'hidden': !cart.summary_count,
+                        'block': cart.summary_count }"
+                ></span>
             </a>
 
         </div>

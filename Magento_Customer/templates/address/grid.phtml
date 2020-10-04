@@ -36,14 +36,14 @@ $customerAddressView = $block->getData('customer_address');
                 foreach ($_pAddsses as $address) :
                     $i++;
                     ?>
-                    <div class="p-2 <?= $i % 2 === 0 ? '' : ' bg-background-lighter' ?>"><?= $escaper->escapeHtml($address->getCompany()) ?></div>
-                    <div class="hidden lg:block p-2 <?= $i % 2 === 0 ? '' : ' bg-background-lighter' ?>"><?= $escaper->escapeHtml($address->getLastname()) ?>, <?= $escaper->escapeHtml(
+                    <div class="p-2 <?= $i % 2 === 0 ? '' : ' bg-primary-lighter' ?>"><?= $escaper->escapeHtml($address->getCompany()) ?></div>
+                    <div class="hidden lg:block p-2 <?= $i % 2 === 0 ? '' : ' bg-primary-lighter' ?>"><?= $escaper->escapeHtml($address->getLastname()) ?>, <?= $escaper->escapeHtml(
                             $address->getFirstname()
                         ) ?></div>
-                    <div class="hidden lg:block p-2 <?= $i % 2 === 0 ? '' : ' bg-background-lighter' ?>"><?= $escaper->escapeHtml($block->getStreetAddress($address)) ?></div>
-                    <div class=" p-2 <?= $i % 2 === 0 ? '' : ' bg-background-lighter' ?>"><?= $escaper->escapeHtml($address->getCity()) ?></div>
-                    <div class="hidden lg:block p-2 <?= $i % 2 === 0 ? '' : ' bg-background-lighter' ?>"><?= $escaper->escapeHtml($block->getCountryByCode($address->getCountryId())) ?></div>
-                    <div class="p-2 <?= $i % 2 === 0 ? '' : ' bg-background-lighter' ?>"><a class="action edit inline-block text-sm underline text-secondary-darker"
+                    <div class="hidden lg:block p-2 <?= $i % 2 === 0 ? '' : ' bg-primary-lighter' ?>"><?= $escaper->escapeHtml($block->getStreetAddress($address)) ?></div>
+                    <div class=" p-2 <?= $i % 2 === 0 ? '' : ' bg-primary-lighter' ?>"><?= $escaper->escapeHtml($address->getCity()) ?></div>
+                    <div class="hidden lg:block p-2 <?= $i % 2 === 0 ? '' : ' bg-primary-lighter' ?>"><?= $escaper->escapeHtml($block->getCountryByCode($address->getCountryId())) ?></div>
+                    <div class="p-2 <?= $i % 2 === 0 ? '' : ' bg-primary-lighter' ?>"><a class="action edit inline-block text-sm underline text-secondary-darker"
                             title="<?= $escaper->escapeHtmlAttr(__('Edit')) ?>"
                             href="<?= $escaper->escapeUrl(
                                 $block->getUrl('customer/address/edit', ['id' => $address->getId()])

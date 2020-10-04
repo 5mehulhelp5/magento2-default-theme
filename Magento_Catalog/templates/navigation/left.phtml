@@ -19,7 +19,7 @@ declare(strict_types=1);
 <?php $_categories = $block->getCurrentChildCategories() ;?>
 <?php $_count = is_array($_categories) ? count($_categories) : $_categories->count(); ?>
 <?php if ($_count) :?>
-    <div class="block rounded border border-background p-4 mx-6 md:mx-0 mb-8">
+    <div class="card border border-container p-4 mx-6 md:mx-0 mb-8">
         <div class="title">
             <strong><?= $block->escapeHtml(__('Shop By')) ?></strong>
         </div>

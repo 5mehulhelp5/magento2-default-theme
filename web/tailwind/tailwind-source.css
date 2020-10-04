@@ -2,11 +2,12 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 
-@import url(components/messages.css);
 @import url(components/category-page.css);
+@import url(components/messages.css);
 @import url(components/product-page.css);
 @import url(components/slider.css);
 @import url(components/structure.css);
+@import url(components/swatches.css);
 @import url(components/theming.css);
 @import url(components/transitions.css);
 @import url(components/typography.css);

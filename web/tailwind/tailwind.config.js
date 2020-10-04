@@ -10,20 +10,21 @@ module.exports = {
             red: colors.red,
             yellow: colors.yellow,
             green: colors.green,
+            teal: colors.teal,
             primary: {
-                lighter: colors.orange['300'],
-                default: colors.orange['500'],
-                darker: colors.orange['600'],
+                lighter: colors.blue['300'],
+                default: colors.blue['500'],
+                darker: colors.blue['600'],
             },
             secondary: {
-                lighter: colors.orange['100'],
-                default: colors.orange['200'],
-                darker: colors.orange['300'],
+                lighter: colors.blue['100'],
+                default: colors.blue['200'],
+                darker: colors.blue['300'],
             },
             background: {
-                lighter: colors.orange['100'],
-                default: colors.orange['200'],
-                darker: colors.orange['300'],
+                lighter: colors.blue['100'],
+                default: colors.blue['200'],
+                darker: colors.blue['300'],
             }
         },
         textColor: {
@@ -40,6 +41,52 @@ module.exports = {
                 default: colors.gray['500'],
                 darker: colors.gray['600'],
             },
+        },
+        backgroundColor: {
+            black: colors.black,
+            white: colors.white,
+            red: colors.red,
+            yellow: colors.yellow,
+            green: colors.green,
+            gray: colors.gray,
+            primary: {
+                lighter: colors.blue['300'],
+                default: colors.blue['500'],
+                darker: colors.blue['600'],
+            },
+            secondary: {
+                lighter: colors.blue['100'],
+                default: colors.blue['200'],
+                darker: colors.blue['300'],
+            },
+            container: {
+                lighter: '#ffffff',
+                default: '#fafafa',
+                darker: '#f5f5f5',
+            }
+        },
+        borderColor: {
+            black: colors.black,
+            white: colors.white,
+            red: colors.red,
+            yellow: colors.yellow,
+            green: colors.green,
+            gray: colors.gray,
+            primary: {
+                lighter: colors.blue['300'],
+                default: colors.blue['500'],
+                darker: colors.blue['600'],
+            },
+            secondary: {
+                lighter: colors.blue['100'],
+                default: colors.blue['200'],
+                darker: colors.blue['300'],
+            },
+            container: {
+                lighter: '#f5f5f5',
+                default: '#e7e7e7',
+                darker: '#b6b6b6',
+            }
         },
         screens: {
             'sm': '640px',

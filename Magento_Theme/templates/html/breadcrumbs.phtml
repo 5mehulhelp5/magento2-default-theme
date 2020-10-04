@@ -15,14 +15,14 @@ use Magento\Framework\Escaper;
 /** @var array $crumbs */
 ?>
 <?php if ($crumbs && is_array($crumbs)): ?>
-<div class="breadcrumbs bg-background-lighter">
+<div class="breadcrumbs bg-container-lighter shadow-sm">
     <div class="container">
         <ul class="items list-reset p-4 rounded flex text-grey text-sm">
             <?php foreach ($crumbs as $crumbName => $crumbInfo) : ?>
                 <li class="item px-2 <?= $escaper->escapeHtmlAttr($crumbName) ?>">
                 <?php if ($crumbInfo['link']) : ?>
                     <a href="<?= $escaper->escapeUrl($crumbInfo['link']) ?>"
-                       class="no-underline text-indigo"
+                       class="no-underline text-primary"
                        title="<?= $escaper->escapeHtmlAttr($crumbInfo['title']) ?>">
                         <?= $escaper->escapeHtml($crumbInfo['label']) ?>
                     </a>

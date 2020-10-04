@@ -16,7 +16,7 @@ $image2X = "https://images.unsplash.com/photo-1454111079122-eb76eb2d5754?ixlib=r
 $title = "Hyvä Themes";
 $content = "We're making Magento Templates great again.";
 $link = "https://hyva.io/";
-$cta = "Read more >";
+$cta = "Read more ";
 
 $imageStyle = "background-image: url($image1X); background-image: -webkit-image-set(url($image1X) 1x, url($image2X) 2x);";
 ?>
@@ -29,8 +29,11 @@ $imageStyle = "background-image: url($image1X); background-image: -webkit-image-
                 <?php if($content) : ?>
                     <p class="text-2xl sm:text-3xl mb-4 font-medium text-white" style="text-shadow: 2px 2px 5px black"><?= $content ?></p>
                 <?php endif; ?>
-                <a class="btn btn-primary border border-primary" href="<?= $link ?>">
+                <a class="btn btn-primary border border-primary flex" href="<?= $link ?>">
                     <?= $block->escapeHtml($cta) ?>
+                    <svg class="w-4 h-4 inline-flex self-center ml-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
                 </a>
             </div>
         </div>
