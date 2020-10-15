@@ -45,7 +45,7 @@ if (!$product) return; ?>
         $block->getBlockHtml('formkey') ?>
         <input type="hidden" name="product" value="<?= (int)$product->getId() ?>"/>
     <?php else: ?>
-        <div class="card card-interactive mr-2">
+        <div class="card card-interactive mr-2 mb-2">
     <?php endif; ?>
         <?php
         $productImage = $block->getImage($product, $imageDisplayArea);
