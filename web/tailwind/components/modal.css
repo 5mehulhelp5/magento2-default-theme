@@ -1,0 +1,18 @@
+.modal {
+  /* TODO: add tailwind classes used for cart and modal */
+}
+
+.modal .backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0 0 0 / 0.1);
+  transition: opacity 200ms linear, visibility 0s 200ms linear;
+}
+
+.modal:not(.is-open) .backdrop {
+  opacity: 0;
+  visibility: hidden;
+}
