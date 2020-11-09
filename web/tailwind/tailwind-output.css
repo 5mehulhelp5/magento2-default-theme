@@ -4190,7 +4190,7 @@ body {
 }
 
 body > div > div.grecaptcha-badge {
-  visibility: hidden;
+  display: none;
   height: 0 !important;
   width: 0 !important;
 }
