@@ -1,0 +1,17 @@
+@media print {
+    .order-items .lg\:grid {
+        display: grid !important;
+    }
+
+    .order-items .lg\:grid-cols-5 {
+        grid-template-columns: repeat(5,minmax(0,1fr)) !important;
+    }
+
+    .order-items .lg\:hidden {
+        display: none !important;
+    }
+
+    .order-items div.flex.lg\:block {
+        display: block !important;
+    }
+}
