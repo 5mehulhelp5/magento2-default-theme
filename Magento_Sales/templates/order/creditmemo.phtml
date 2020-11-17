@@ -9,20 +9,20 @@
 /* @var $block \Magento\Sales\Block\Order\Creditmemo */
 $order = $block->getOrder();
 ?>
-<div class="flex justify-between items-center mb-3">
-    <div>
+<div class="md:flex md:justify-between items-center mb-3">
+    <div class="text-center md:text-left">
         <div class="text-2xl"><?= $escaper->escapeHtml(__('Order # %1', $order->getRealOrderId())) ?></div>
         <?= $block->getChildHtml('order.date') ?>
     </div>
-    <?= $block->getChildHtml('sales.order.buttons') ?>
+    <?= $block->getChildHtml('sales.creditmemo.buttons') ?>
 </div>
 <div class="order-details-items creditmemo bg-container-lighter">
-
-    <?= $block->getChildHtml('order_top_items') ?>
-
+    <div class="-mx-4">
+        <?= $block->getChildHtml('order_top_items') ?>
+    </div>
     <div class="p-4 card">
         <?= $block->getChildHtml('order.comments') ?>
-        <div class="my-4">
+        <div class="mb-4">
             <?= $block->getChildHtml('sales.order.info') ?>
         </div>
         <?= $block->getChildHtml('creditmemo_items') ?>

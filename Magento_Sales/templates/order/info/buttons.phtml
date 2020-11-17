@@ -8,7 +8,7 @@ use Magento\Sales\Block\Order\Info\Buttons;
 
 // phpcs:disable Magento2.Templates.ThisInTemplate
 ?>
-<div class="flex items-center justify-end">
+<div class="flex items-center justify-center md:justify-end my-4 md:my-0">
     <?php $order = $block->getOrder() ?>
     <?php if ($this->helper(\Magento\Sales\Helper\Reorder::class)->canReorder($order->getEntityId())) : ?>
         <?php $formData = json_decode(

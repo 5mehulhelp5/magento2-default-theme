@@ -26,6 +26,11 @@
                 </block>
                 <block class="Magento\Sales\Block\Order\Items" name="order_items"
                        template="Magento_Sales::order/items.phtml">
+                    <block class="Magento\Shipping\Block\Tracking\Link" name="track-all-link" template="Magento_Shipping::tracking/link.phtml">
+                        <arguments>
+                            <argument name="label" xsi:type="string" translate="true">Track All Shipments</argument>
+                        </arguments>
+                    </block>
                     <block class="Magento\Framework\View\Element\RendererList" name="sales.order.items.renderers"
                            as="renderer.list"/>
                     <block class="Magento\Theme\Block\Html\Pager" name="sales_order_item_pager"/>

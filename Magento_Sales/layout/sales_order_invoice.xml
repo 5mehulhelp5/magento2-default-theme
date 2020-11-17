@@ -15,6 +15,8 @@
             <block class="Magento\Sales\Block\Order\Invoice" name="sales.order.invoice" cacheable="false" after="sales.order.info.links">
                 <block class="Magento\Sales\Block\Order\Info" name="order.date"
                        template="Magento_Sales::order/order_date.phtml"/>
+                <block class="Magento\Sales\Block\Order\Info\Buttons" name="sales.invoice.buttons"
+                       template="Magento_Sales::order/info/buttons_invoice.phtml"/>
                 <container name="order_top_items"></container>
                 <block class="Magento\Sales\Block\Order\Info" name="sales.order.info"/>
                 <block class="Magento\Sales\Block\Order\Invoice\Items" name="invoice_items" template="Magento_Sales::order/invoice/items.phtml">

@@ -2692,8 +2692,20 @@ body {
   border-width: 1px;
 }
 
+.border-r-0 {
+  border-right-width: 0;
+}
+
+.border-l-0 {
+  border-left-width: 0;
+}
+
 .border-b-2 {
   border-bottom-width: 2px;
+}
+
+.border-l-2 {
+  border-left-width: 2px;
 }
 
 .border-t {
@@ -2702,6 +2714,10 @@ body {
 
 .border-b {
   border-bottom-width: 1px;
+}
+
+.border-l {
+  border-left-width: 1px;
 }
 
 .last\:border-0:last-child {
@@ -2856,6 +2872,10 @@ body {
   content: "";
   display: table;
   clear: both;
+}
+
+.font-normal {
+  font-weight: 400;
 }
 
 .font-medium {
@@ -3035,6 +3055,11 @@ body {
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
+}
+
+.-mx-4 {
+  margin-left: -1rem;
+  margin-right: -1rem;
 }
 
 .mt-0 {
@@ -3346,6 +3371,10 @@ body {
   padding-top: 0.25rem;
 }
 
+.pr-1 {
+  padding-right: 0.25rem;
+}
+
 .pl-1 {
   padding-left: 0.25rem;
 }
@@ -3358,12 +3387,20 @@ body {
   padding-bottom: 0.5rem;
 }
 
+.pl-2 {
+  padding-left: 0.5rem;
+}
+
 .pt-3 {
   padding-top: 0.75rem;
 }
 
 .pb-3 {
   padding-bottom: 0.75rem;
+}
+
+.pl-3 {
+  padding-left: 0.75rem;
 }
 
 .pt-4 {
@@ -3384,6 +3421,10 @@ body {
 
 .pb-6 {
   padding-bottom: 1.5rem;
+}
+
+.pl-6 {
+  padding-left: 1.5rem;
 }
 
 .pt-8 {
@@ -3697,6 +3738,10 @@ body {
 
 .w-20 {
   width: 5rem;
+}
+
+.w-32 {
+  width: 8rem;
 }
 
 .w-auto {
@@ -5665,10 +5710,6 @@ form select {
     gap: 2rem;
   }
 
-  .sm\:grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .sm\:grid-cols-8 {
     grid-template-columns: repeat(8, minmax(0, 1fr));
   }
@@ -6990,6 +7031,10 @@ form select {
     justify-content: center;
   }
 
+  .md\:justify-between {
+    justify-content: space-between;
+  }
+
   .md\:order-1 {
     order: 1;
   }
@@ -7098,6 +7143,10 @@ form select {
 
   .md\:w-full {
     width: 100%;
+  }
+
+  .md\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .md\:grid-cols-3 {
@@ -8612,6 +8661,10 @@ form select {
 
   .lg\:w-full {
     width: 100%;
+  }
+
+  .lg\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .lg\:grid-cols-6 {
