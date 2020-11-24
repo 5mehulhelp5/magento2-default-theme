@@ -36,7 +36,7 @@ $product = $block->getProduct();
     <span class="normal-price">
         <span class="price-container price-final_price tax" itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
             <?php if ($product->canConfigure() && is_int($product->getPrice())) : ?>
-                <span class="price-label">As low as</span>
+                <span class="price-label"><?= __('As low as'); ?></span>
             <?php endif; ?>
             <span id="product-price-<?= (int) $product->getId() ?>" class="price-wrapper ">
                 <span class="price"><?= $product->getFormattedPrice() ?></span>
