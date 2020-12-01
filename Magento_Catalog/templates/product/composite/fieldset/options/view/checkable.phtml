@@ -29,10 +29,10 @@ if ($option): ?>
 
 <div class="options-list nested" id="options-<?= $escaper->escapeHtmlAttr($option->getId()) ?>-list">
     <?php if ($optionType === Option::OPTION_TYPE_RADIO && !$option->getIsRequire()):?>
-    <div class="field choice admin__field admin__field-option">
+    <div class="field choice">
         <input type="radio"
                id="options_<?= $escaper->escapeHtmlAttr($option->getId()) ?>"
-               class="radio admin__control-radio product-custom-option"
+               class="radio product-custom-option"
                name="options[<?= $escaper->escapeHtmlAttr($option->getId()) ?>]"
                data-selector="options[<?= $escaper->escapeHtmlAttr($option->getId()) ?>]"
                value=""
@@ -43,9 +43,6 @@ if ($option): ?>
                for="options_<?= $escaper->escapeHtmlAttr($option->getId()) ?>"
         >
             <span><?= $escaper->escapeHtml(__('None'))  ?></span>
-        </label>
-        <label class="label admin__field-label" for="options_<?= $escaper->escapeHtmlAttr($option->getId()) ?>">
-
         </label>
     </div>
 <?php endif; ?>
@@ -67,7 +64,7 @@ if ($option): ?>
         $optionId = $option->getId() . '_' . $value->getOptionTypeId();
         ?>
 
-        <div class="field choice admin__field admin__field-option">
+        <div class="field choice">
             <input type="<?= $escaper->escapeHtmlAttr($optionType) ?>"
                    class="<?= $optionType === Option::OPTION_TYPE_RADIO
                        ? 'form-radio'
