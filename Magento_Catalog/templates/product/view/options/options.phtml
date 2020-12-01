@@ -6,15 +6,19 @@
  * See https://hyva.io/license
  */
 
+use Hyva\Theme\ViewModel\ProductPage;
 use Magento\Catalog\Block\Product\View\Options;
 use Magento\Catalog\Model\Product\Option;
 
 /* @var $block Options */
 /** @var Option $option */
+
+/** @var ProductPage $productViewModel */
+$productViewModel = $block->getProductViewModel();
+
+$_options = $block->decorateArray($block->getOptions());
+
 ?>
-
-<?php $_options = $block->decorateArray($block->getOptions()) ?>
-
 <?php if (count($_options)) :?>
     <script>
         function initOptions() {
@@ -23,15 +27,34 @@ use Magento\Catalog\Model\Product\Option;
                 productFinalPrice: false,
                 customOptionPrices: [],
                 refs: [],
-                formatPrice: function formatPrice(price) {
-                    return Number.parseFloat(price).toLocaleString(false, {
-                        style: 'currency',
-                        currency: 'EUR' // todo: fetch currency from priceViewModel
-                    });
+                formatPrice: function (value, showSign) {
+                    var formatter = new Intl.NumberFormat(
+                        document.documentElement.lang,
+                        {
+                            style: 'currency',
+                            currency: '<?= $productViewModel->getCurrencyData()['code']; ?>',
+                            signDisplay: showSign ? "always" : "auto"
+                        }
+                    );
+                    return (typeof Intl.NumberFormat.prototype.formatToParts) ?
+                        formatter.formatToParts(value).map(({type, value}) => {
+                            switch (type) {
+                                case 'currency':
+                                    return '<?= $productViewModel->getCurrencyData()['symbol'] ?: ""; ?>' || value;
+                                case 'minusSign':
+                                    return '- ';
+                                case 'plusSign':
+                                    return '+ ';
+                                default :
+                                    return value;
+                            }
+                        }).reduce((string, part) => string + part) :
+                        formatter.format(value);
                 },
                 getFormattedOptionPrice: function getFormattedOptionPrice (optionId) {
                     if (this.customOptionPrices[optionId]) {
-                        return this.formatPrice(this.customOptionPrices[optionId]);
+                        const showSign = true;
+                        return this.formatPrice(this.customOptionPrices[optionId], showSign);
                     }
                     return false;
                 },
@@ -41,7 +64,8 @@ use Magento\Catalog\Model\Product\Option;
                             this.customOptionPrices[customOptionId] = this.calculateOptionPrice(customOption,customOptionId);
                         } else {
                             for (const [childCustomOptionId, childCustomOption] of Object.entries(customOption)) {
-                                this.customOptionPrices[customOptionId + '_' + childCustomOptionId] = this.calculateOptionPrice(childCustomOption,customOptionId,childCustomOptionId);
+                                this.customOptionPrices[customOptionId + '_' + childCustomOptionId] =
+                                    this.calculateOptionPrice(childCustomOption,customOptionId,childCustomOptionId);
                             }
                         }
                     }
@@ -54,13 +78,17 @@ use Magento\Catalog\Model\Product\Option;
                     );
                 },
                 calculateOptionPrice: function calculateOptionPrice(customOption, customOptionId, childCustomOptionId) {
-                    var customOptionCode = customOptionId + (childCustomOptionId ? '-' + childCustomOptionId : '') ;
+                    const customOptionCode = customOptionId + (childCustomOptionId ? '-' + childCustomOptionId : '') ;
 
-                    var optionElement = this.refs && this.refs['option-'+customOptionCode];
+                    const optionElement = this.refs && this.refs['option-'+customOptionCode];
 
-                    var price = customOption.prices.finalPrice.amount;
+                    let price = customOption.prices.finalPrice.amount;
 
-                    if (this.productFinalPrice && optionElement && optionElement.dataset.priceAmount && optionElement.dataset.priceType ) {
+                    if (this.productFinalPrice &&
+                        optionElement &&
+                        optionElement.dataset.priceAmount &&
+                        optionElement.dataset.priceType
+                    ) {
                         price = optionElement.dataset.priceType !== 'percent' ?
                             optionElement.dataset.priceAmount :
                             this.productFinalPrice * (optionElement.dataset.priceAmount / 100)
@@ -69,8 +97,31 @@ use Magento\Catalog\Model\Product\Option;
                     return price;
                 },
                 updateCustomOptionValue: function updateCustomOptionValue($dispatch, customOptionId, target) {
-                    var active = !!target.value;
-                    //var amount = this.customOptionPrices[customOptionId];
+                    let active;
+                    switch (target.type) {
+                        case 'text':
+                        case 'textarea':
+                        case 'file':
+                            active = !!target.value;
+                        break;
+                        case 'checkbox':
+                            active = target.checked;
+                        break;
+                        case 'radio':
+                            document.querySelectorAll('input[name="'+target.name+'"]').forEach(input => {
+                                // unset sibling radio buttons
+                                input.dataset &&
+                                input.dataset.optionId &&
+                                input !== target && $dispatch('update-custom-option-active',
+                                    {
+                                        customOptionId: input.dataset.optionId,
+                                        active: false
+                                    }
+                                );
+                            })
+                            active = target.checked;
+                        break;
+                    }
 
                     $dispatch('update-custom-option-active', { customOptionId, active });
                 }
@@ -81,7 +132,7 @@ use Magento\Catalog\Model\Product\Option;
         <?= __('Customizable Options:') ?>
     </h2>
     <div x-data="initOptions()"
-         x-init="refs = $refs; $nextTick(() => {calculateOptionPrices()})"
+         x-init="refs = $refs; $nextTick(() => { calculateOptionPrices() })"
          @update-product-final-price.window="productFinalPrice = event.detail; calculateOptionPrices()"
          class="mb-6">
     <?php foreach ($_options as $_option) :?>

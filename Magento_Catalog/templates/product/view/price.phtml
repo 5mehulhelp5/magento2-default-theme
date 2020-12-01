@@ -8,6 +8,7 @@
 
 declare(strict_types=1);
 
+use Hyva\Theme\ViewModel\ProductPage;
 use Magento\Catalog\Block\Product\View;
 use Magento\Catalog\Model\Product;
 use Magento\Catalog\Pricing\Price\RegularPrice;
@@ -16,6 +17,9 @@ use Magento\Framework\Pricing\Helper\Data as PriceHelper;
 /** @var View $block */
 /** @var Product $product */
 $product = $block->getProduct();
+
+/** @var ProductPage $productViewModel */
+$productViewModel = $block->getProductViewModel();
 
 // todo: refactor to use a priceViewModel
 /** @var PriceHelper $priceHelper */
@@ -56,11 +60,29 @@ $priceHelper = $this->helper(PriceHelper::class);
 
                 this.calculateFinalPriceWithCustomOptions();
             },
-            formatPrice: function formatPrice(price) {
-                return price.toLocaleString(false, {
-                    style: 'currency',
-                    currency: 'EUR' // todo: fetch currency from priceViewModel
-                })
+            formatPrice: function (value, showSign) {
+                var formatter = new Intl.NumberFormat(
+                    document.documentElement.lang,
+                    {
+                        style: 'currency',
+                        currency: '<?= $productViewModel->getCurrencyData()['code']; ?>',
+                        signDisplay: showSign ? "always" : "auto"
+                    }
+                );
+                return (typeof Intl.NumberFormat.prototype.formatToParts) ?
+                    formatter.formatToParts(value).map(({type, value}) => {
+                        switch (type) {
+                            case 'currency':
+                                return '<?= $productViewModel->getCurrencyData()['symbol'] ?: ""; ?>' || value;
+                            case 'minusSign':
+                                return '- ';
+                            case 'plusSign':
+                                return '+ ';
+                            default :
+                                return value;
+                        }
+                    }).reduce((string, part) => string + part) :
+                    formatter.format(value);
             },
             qty: 1,
             calculateFinalPrice: function calculatePrice() {
@@ -130,15 +152,17 @@ $priceHelper = $this->helper(PriceHelper::class);
             ): ?>
                 <div class="old-price mr-2 inline-block">
                     <span id="product-price-<?= (int) $product->getId() ?>" class="price-wrapper title-font font-regular text-xl line-through text-gray-900">
-                        <span class="price" ><?= $priceHelper->currency($regularPrice) ?></span>
+                        <span class="price" ><?= $productViewModel->currency($regularPrice) ?></span>
                     </span>
                 </div>
             <?php endif; ?>
 
             <div class="final-price inline-block" itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
-                <?php if ($product->canConfigure() && is_int($product->getPrice())): ?>
-                    <span class="price-label block"><?= /* @noEscape */ __('As low as') ?>:</span>
-                <?php endif; ?>
+                    <span class="price-label block">
+                        <?= ($product->canConfigure() && is_int($product->getPrice())) ?
+                            /* @noEscape */ __('As low as') . ':' :
+                            '' ?>
+                    </span>
                 <span id="product-price-<?= (int) $product->getId() ?>" class="price-wrapper title-font font-medium text-2xl text-gray-900">
                     <span class="price" x-html="getFormattedFinalPrice()"><?= $product->getFormattedPrice() ?></span>
                 </span>
@@ -156,6 +180,9 @@ $priceHelper = $this->helper(PriceHelper::class);
     </template>
     <template x-if="activeProductsPriceData">
         <div class="final-price inline-block">
+            <?php if ($product->canConfigure() && is_int($product->getPrice())): ?>
+                <span class="price-label block invisible">&nbsp;</span>
+            <?php endif; ?>
             <span id="product-price-<?= (int) $product->getId() ?>" class="price-wrapper title-font font-medium text-2xl text-gray-900">
                 <span class="price" x-html="getFormattedFinalPrice()"></span>
             </span>

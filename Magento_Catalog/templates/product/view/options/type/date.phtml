@@ -1,56 +1,40 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Hyvä Themes - https://hyva.io
+ * Copyright © Hyvä Themes 2020-present. All rights reserved.
+ * This product is licensed per Magento install
+ * See https://hyva.io/license
  */
+
+declare(strict_types=1);
+
+use Magento\Catalog\Block\Product\View\Options\Type\Date;
+
+/* TODO: implement custom select elements */
 ?>
-<?php /* @var $block \Magento\Catalog\Block\Product\View\Options\Type\Date */ ?>
-<?php $_option = $block->getOption() ?>
-<?php $_optionId = $block->escapeHtmlAttr($_option->getId()) ?>
-<?php $class = ($_option->getIsRequire()) ? ' required' : ''; ?>
-<div class="field date<?= /* @noEscape */ $class ?>"
-    data-mage-init='{"priceOptionDate":{"fromSelector":"#product_addtocart_form"}}'>
-    <fieldset class="fieldset fieldset-product-options-inner<?= /* @noEscape */ $class ?>">
-        <legend class="legend">
-            <span><?= $block->escapeHtml($_option->getTitle()) ?></span>
+<?php /* @var $block Date */ ?>
+<?php $option = $block->getOption() ?>
+<?php $optionId = $block->escapeHtmlAttr($option->getId()) ?>
+<?php $class = ($option->getIsRequire()) ? ' required' : ''; ?>
+<div class="flex border-t border-gray-300 py-2 last:mb-6 last:border-b w-full items-center">
+    <label class="label text-gray-500 text-left w-1/2" for="options_<?= $escaper->escapeHtmlAttr($option->getId()) ?>_text">
+        <span><?= $escaper->escapeHtml($option->getTitle()) ?></span>
+        <span x-html="getFormattedOptionPrice(<?= $escaper->escapeHtmlAttr($option->getId()) ?>) || ''">
             <?= /* @noEscape */ $block->getFormattedPrice() ?>
-        </legend>
-        <div class="control">
-            <?php if ($_option->getType() == \Magento\Catalog\Api\Data\ProductCustomOptionInterface::OPTION_TYPE_DATE_TIME
-                || $_option->getType() == \Magento\Catalog\Api\Data\ProductCustomOptionInterface::OPTION_TYPE_DATE) :?>
+        </span>
+    </label>
+    <div>
+        <?php if ($option->getType() == \Magento\Catalog\Api\Data\ProductCustomOptionInterface::OPTION_TYPE_DATE_TIME
+            || $option->getType() == \Magento\Catalog\Api\Data\ProductCustomOptionInterface::OPTION_TYPE_DATE) :?>
 
-                <?= $block->getDateHtml() ?>
+            <?= $block->getDateHtml() ?>
 
-            <?php endif; ?>
+        <?php endif; ?>
 
-            <?php if ($_option->getType() == \Magento\Catalog\Api\Data\ProductCustomOptionInterface::OPTION_TYPE_DATE_TIME
-                || $_option->getType() == \Magento\Catalog\Api\Data\ProductCustomOptionInterface::OPTION_TYPE_TIME) :?>
-                <?= $block->getTimeHtml() ?>
-            <?php endif; ?>
+        <?php if ($option->getType() == \Magento\Catalog\Api\Data\ProductCustomOptionInterface::OPTION_TYPE_DATE_TIME
+            || $option->getType() == \Magento\Catalog\Api\Data\ProductCustomOptionInterface::OPTION_TYPE_TIME) :?>
+            <?= $block->getTimeHtml() ?>
+        <?php endif; ?>
 
-            <?php if ($_option->getIsRequire()) :?>
-                <input type="hidden"
-                       name="validate_datetime_<?= /* @noEscape */ $_optionId ?>"
-                       class="validate-datetime-<?= /* @noEscape */ $_optionId ?>"
-                       value=""
-                       data-validate="{'validate-required-datetime':<?= /* @noEscape */ $_optionId ?>}"/>
-            <?php else :?>
-                <input type="hidden"
-                       name="validate_datetime_<?= /* @noEscape */ $_optionId ?>"
-                       class="validate-datetime-<?= /* @noEscape */ $_optionId ?>"
-                       value=""
-                       data-validate="{'validate-optional-datetime':<?= /* @noEscape */ $_optionId ?>}"/>
-            <?php endif; ?>
-            <script type="text/x-magento-init">
-            {
-                "#product_addtocart_form": {
-                    "validation": {
-                        "ignore": ":hidden:not(input[name^='validate_datetime_'])"
-                    }
-                }
-            }
-        </script>
-        </div>
-    </fieldset>
-
+    </div>
 </div>

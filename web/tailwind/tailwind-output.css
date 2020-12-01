@@ -3744,6 +3744,10 @@ body {
   white-space: nowrap;
 }
 
+.w-0 {
+  width: 0;
+}
+
 .w-3 {
   width: 0.75rem;
 }
