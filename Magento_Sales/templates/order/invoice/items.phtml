@@ -7,7 +7,7 @@
  */
 
 $order = $block->getOrder() ?>
-<?php foreach ($order->getInvoiceCollection() as $invoice) : ?>
+<?php foreach ($order->getInvoiceCollection() as $invoice): ?>
     <div class="order-title text-center md:text-left font-semibold">
         <?= $block->escapeHtml(__('Invoice #')) ?><?= $block->escapeHtml($invoice->getIncrementId()) ?>
         <a href="<?= $block->escapeUrl($block->getPrintInvoiceUrl($invoice)) ?>"
@@ -32,8 +32,8 @@ $order = $block->getOrder() ?>
             <div class="p-2 text-right"><?= $escaper->escapeHtml(__('Subtotal')) ?></div>
         </div>
         <?php $items = $invoice->getAllItems(); ?>
-        <?php foreach ($items as $item) : ?>
-            <?php if (!$item->getOrderItem()->getParentItem()) : ?>
+        <?php foreach ($items as $item): ?>
+            <?php if (!$item->getOrderItem()->getParentItem()): ?>
                 <?= $block->getItemHtml($item) ?>
             <?php endif; ?>
         <?php endforeach; ?>

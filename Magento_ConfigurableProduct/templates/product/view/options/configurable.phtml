@@ -15,7 +15,7 @@ use Magento\Framework\Escaper;
 $product    = $block->getProduct();
 $attributes = $block->decorateArray($block->getAllowAttributes());
 ?>
-<?php if ($product->isSaleable() && count($attributes)) :?>
+<?php if ($product->isSaleable() && count($attributes)):?>
     <script>
         function initConfigurableOptions() {
             return {
@@ -132,7 +132,7 @@ $attributes = $block->decorateArray($block->getAllowAttributes());
         <h2 class="text-gray-900 text-xl title-font font-medium mb-4">
             <?= __('Product Options:') ?>
         </h2>
-    <?php foreach ($attributes as $attribute) : ?>
+    <?php foreach ($attributes as $attribute): ?>
         <div class="flex border-t last:border-b  border-gray-300 py-2 w-full items-center">
 
             <label class="label text-gray-500 text-left w-1/2"

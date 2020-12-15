@@ -48,7 +48,7 @@ $formId = 'review_form';
                                             <div class="ml-1">
                                                 <label class="hidden" id="<?= $escaper->escapeHtml(
                                                     $rating->getRatingCode()
-                                                ) ?>_rating_label">
+                                                                          ) ?>_rating_label">
                                                 <span>
                                                     <?= $escaper->escapeHtml($rating->getRatingCode()) ?>
                                                 </span>
@@ -62,28 +62,28 @@ $formId = 'review_form';
                                                             <input
                                                                 class="absolute opacity-0 bottom-0 left-0"
                                                                 type="radio"
-                                                                <?php if ($iterator === 1) : ?>required<?php endif; ?>
+                                                                <?php if ($iterator === 1): ?>required<?php endif; ?>
                                                                 name="ratings[<?= $escaper->escapeHtmlAttr(
                                                                     $rating->getId()
-                                                                ) ?>]"
+                                                                              ) ?>]"
                                                                 id="<?= $escaper->escapeHtmlAttr(
                                                                     $rating->getRatingCode()
-                                                                ) ?>_<?= $escaper->escapeHtmlAttr(
+                                                                    ) ?>_<?= $escaper->escapeHtmlAttr(
                                                                     $_option->getValue()
                                                                 ) ?>"
                                                                 value="<?= $escaper->escapeHtmlAttr(
                                                                     $_option->getId()
-                                                                ) ?>"/>
+                                                                       ) ?>"/>
                                                             <label
                                                                 @click="ratingIdentifierClicked === <?= /* @noEscape */
                                                                 $iterator ?> ? ratingIdentifierClicked = 0 : ratingIdentifierClicked = <?= /* @noEscape */
                                                                 $iterator ?>"
                                                                 class="rating-<?= $escaper->escapeHtmlAttr(
                                                                     $iterator
-                                                                ) ?> cursor-pointer m-0"
+                                                                              ) ?> cursor-pointer m-0"
                                                                 for="<?= $escaper->escapeHtmlAttr(
                                                                     $rating->getRatingCode()
-                                                                ) ?>_<?= $escaper->escapeHtmlAttr(
+                                                                     ) ?>_<?= $escaper->escapeHtmlAttr(
                                                                     $_option->getValue()
                                                                 ) ?>"
                                                                 title="<?= $escaper->escapeHtmlAttr(
@@ -93,13 +93,13 @@ $formId = 'review_form';
                                                                         $iterator > 1
                                                                             ? __('stars')
                                                                             : __(
-                                                                            'star'
-                                                                        )
+                                                                                'star'
+                                                                            )
                                                                     )
-                                                                ) ?>"
+                                                                       ) ?>"
                                                                 id="<?= $escaper->escapeHtmlAttr(
                                                                     $rating->getRatingCode()
-                                                                ) ?>_<?= $escaper->escapeHtmlAttr(
+                                                                    ) ?>_<?= $escaper->escapeHtmlAttr(
                                                                     $_option->getValue()
                                                                 ) ?>_label">
                                                                 <span>
@@ -301,7 +301,7 @@ $formId = 'review_form';
                             try {
                                 ratingValue = document.querySelector('input[name="ratings[<?= $escaper->escapeJs(
                                     $rating->getId()
-                                ) ?>]"]:checked').value;
+                                                                                          ) ?>]"]:checked').value;
                                 this.ratings[<?= $escaper->escapeJs($rating->getId()) ?>] = btoa(ratingValue);
                             } catch (e) {
                                 console.log(e);
@@ -311,10 +311,10 @@ $formId = 'review_form';
 
                             if (!(this.nickname && this.summary && this.review && Object.keys(this.ratings).length === <?= count(
                                 $block->getRatings()
-                            ) ?>)) {
+                                                                                                                       ) ?>)) {
                                 this.setErrorMessages(['<?= $escaper->escapeJs(
                                     __('Please verify you\'ve entered all required information')
-                                ) ?>']);
+                                                        ) ?>']);
                                 this.displayErrorMessage = true;
                                 this.errors = 1;
                                 this.hasCaptchaToken = 0;
@@ -343,7 +343,7 @@ $formId = 'review_form';
                             }
                             }
                           }'
-                            ); ?>
+                                                           ); ?>
                                 .replace('%nickname', $this.nickname)
                                 .replace('%summary', $this.summary)
                                 .replace('%review', $this.review)
@@ -368,7 +368,7 @@ $formId = 'review_form';
                                         if (data.errors) {
                                             $this.setErrorMessages(['<?= $escaper->escapeJs(
                                                 __('Submitting your review failed, please try again.')
-                                            ) ?>']);
+                                                                     ) ?>']);
                                             $this.displayErrorMessage = true;
                                         } else {
                                             $this.displaySuccessMessage = true;

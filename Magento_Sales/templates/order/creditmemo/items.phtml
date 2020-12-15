@@ -8,11 +8,11 @@
  */
 
 $order = $block->getOrder() ?>
-<?php foreach ($order->getCreditmemosCollection() as $creditmemo) : ?>
+<?php foreach ($order->getCreditmemosCollection() as $creditmemo): ?>
     <div class="order-title text-center md:text-left font-semibold">
         <?= $block->escapeHtml(__('Refund #')) ?><?= $block->escapeHtml(
-                $creditmemo->getIncrementId()
-            ) ?>
+            $creditmemo->getIncrementId()
+        ) ?>
         <a href="<?= $block->escapeUrl($block->getPrintCreditmemoUrl($creditmemo)) ?>"
            class="text-primary inline-block ml-2 pl-2 border-l text-sm font-normal"
             target="_blank"
@@ -39,8 +39,8 @@ $order = $block->getOrder() ?>
             <div class="p-2 text-right"><?= $block->escapeHtml(__('Row Total')) ?></div>
         </div>
         <?php $items = $creditmemo->getAllItems(); ?>
-        <?php foreach ($items as $item) : ?>
-            <?php if (!$item->getOrderItem()->getParentItem()) : ?>
+        <?php foreach ($items as $item): ?>
+            <?php if (!$item->getOrderItem()->getParentItem()): ?>
                 <?= $block->getItemHtml($item) ?>
             <?php endif; ?>
         <?php endforeach; ?>

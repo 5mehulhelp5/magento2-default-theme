@@ -10,7 +10,7 @@ use Magento\Sales\Block\Order\Info\Buttons;
 ?>
 <div class="flex items-center justify-center md:justify-end my-4 md:my-0">
     <?php $order = $block->getOrder() ?>
-    <?php if ($this->helper(\Magento\Sales\Helper\Reorder::class)->canReorder($order->getEntityId())) : ?>
+    <?php if ($this->helper(\Magento\Sales\Helper\Reorder::class)->canReorder($order->getEntityId())): ?>
         <?php $formData = json_decode(
             $this->helper(\Magento\Framework\Data\Helper\PostHelper::class)->getPostData(
                 $block->getReorderUrl($order)

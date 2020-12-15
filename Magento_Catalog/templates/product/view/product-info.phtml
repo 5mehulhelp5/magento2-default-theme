@@ -65,7 +65,7 @@ $product = $productViewModel->getProduct();
         <?= $block->getChildHtml("product.info.price") ?>
 
         <div class="flex ml-auto mt-4 sm:mt-0">
-        <?php if ($product->isSaleable()) : ?>
+        <?php if ($product->isSaleable()): ?>
             <?= $block->getChildHtml("product.info.quantity") ?>
             <button type="submit"
                     form="product_addtocart_form"

@@ -17,7 +17,7 @@ declare(strict_types=1);
             <?= $block->getBlockHtml('formkey') ?>
             <div class="text-2xl mb-6"><span><?= $escaper->escapeHtml(__('Subscription option')) ?></span></div>
             <div class="field choice">
-                <input type="checkbox" name="is_subscribed" id="subscription" value="1" title="<?= $escaper->escapeHtmlAttr(__('General Subscription')) ?>"<?php if ($block->getIsSubscribed()) : ?> checked="checked"<?php endif; ?> class="checkbox">
+                <input type="checkbox" name="is_subscribed" id="subscription" value="1" title="<?= $escaper->escapeHtmlAttr(__('General Subscription')) ?>"<?php if ($block->getIsSubscribed()): ?> checked="checked"<?php endif; ?> class="checkbox">
                 <label for="subscription" class="label"><span><?= $escaper->escapeHtml(__('General Subscription')) ?></span></label>
             </div>
             <?php /* Extensions placeholder */ ?>

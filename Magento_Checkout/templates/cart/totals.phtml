@@ -21,7 +21,7 @@ $taxLabelAddition = $viewModelTotalsOutput->getTaxLabelAddition();
 ?>
 <template x-if="cartData.prices && Object.keys(cartData.prices).length">
     <div class="pt-6">
-        <?php if($subtotalFieldShowBoth) : ?>
+        <?php if ($subtotalFieldShowBoth): ?>
             <template x-if="cartData.prices['subtotal_excluding_tax']">
                 <div class="flex md:grid md:grid-cols-3 mx-auto w-10/12 md:w-full">
                     <div class="w-7/12 md:w-auto text-left md:text-right md:p-2 md:col-span-2"><?= $escaper->escapeHtml(__('Subtotal')) ?> (<?= $escaper->escapeHtml(__('excl. VAT')) ?>)</div>
@@ -32,7 +32,7 @@ $taxLabelAddition = $viewModelTotalsOutput->getTaxLabelAddition();
         <?php endif; ?>
         <template x-if="cartData.prices['subtotal_including_tax']">
             <div class="flex md:grid md:grid-cols-3 mx-auto w-10/12 md:w-full">
-                <div class="w-7/12 md:w-auto text-left md:text-right md:p-2 md:col-span-2"><?= $escaper->escapeHtml(__('Subtotal')) ?> <?php if($subtotalFieldShowBoth) : ?>(<?= $escaper->escapeHtml(__('incl. VAT')) ?>)<?php endif; ?></div>
+                <div class="w-7/12 md:w-auto text-left md:text-right md:p-2 md:col-span-2"><?= $escaper->escapeHtml(__('Subtotal')) ?> <?php if ($subtotalFieldShowBoth): ?>(<?= $escaper->escapeHtml(__('incl. VAT')) ?>)<?php endif; ?></div>
                 <div class="w-5/12 md:w-auto text-right md:p-2"
                      x-text="formatPrice(cartData.prices['<?= /** @noEscape */ $subtotalField ?>']['value'])"></div>
             </div>

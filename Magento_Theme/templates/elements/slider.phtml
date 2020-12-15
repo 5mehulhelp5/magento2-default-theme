@@ -42,8 +42,8 @@ if ($linkedProduct) {
     $productSkus = $block->getProductSkus();
 }
 
-$productSkuFilter = $productSkus ? sprintf("sku: { in: [\"%s\"] },", join("\",\"", explode(',',$productSkus))) : "";
-$categoryFilter = $categoryIds ? sprintf("category_id: { in: [\"%s\"] }", join("\",\"", explode(',',$categoryIds))) : "";
+$productSkuFilter = $productSkus ? sprintf("sku: { in: [\"%s\"] },", join("\",\"", explode(',', $productSkus))) : "";
+$categoryFilter = $categoryIds ? sprintf("category_id: { in: [\"%s\"] }", join("\",\"", explode(',', $categoryIds))) : "";
 $priceFilter = $priceFrom || $priceTo ? "price: { from: \"$priceFrom\", to: \"$priceTo\" }," : "";
 
 $productAttributes = "

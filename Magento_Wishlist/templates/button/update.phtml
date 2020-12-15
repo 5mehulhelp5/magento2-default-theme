@@ -11,7 +11,7 @@ use Magento\Wishlist\Block\Customer\Wishlist\Button;
 /** @var Button $block */
 ?>
 
-<?php if ($block->getWishlist()->getItemsCount()) : ?>
+<?php if ($block->getWishlist()->getItemsCount()): ?>
     <button type="submit"
             name="do"
             title="<?= $block->escapeHtmlAttr(__('Update Wish List')) ?>"

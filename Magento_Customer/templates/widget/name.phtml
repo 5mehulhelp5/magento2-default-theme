@@ -58,7 +58,7 @@ $suffix = $block->showSuffix();
                            title="<?= $escaper->escapeHtmlAttr($block->getStoreLabel('prefix')) ?>"
                            class="form-input <?= $escaper->escapeHtmlAttr(
                                $block->getAttributeValidationClass('prefix')
-                           ) ?>"
+                                             ) ?>"
                             <?= $block->isPrefixRequired() ? ' required' : '' ?>
                     >
                 <?php else: ?>
@@ -115,7 +115,7 @@ $suffix = $block->showSuffix();
                        title="<?= $escaper->escapeHtmlAttr($block->getStoreLabel('middlename')) ?>"
                        class="form-input <?= $escaper->escapeHtmlAttr(
                            $block->getAttributeValidationClass('middlename')
-                       ) ?>"
+                                         ) ?>"
                        <?= $isMiddlenameRequired ? ' required' : '' ?>
                 >
             </div>
@@ -155,10 +155,10 @@ $suffix = $block->showSuffix();
                            title="<?= $escaper->escapeHtmlAttr($block->getStoreLabel('suffix')) ?>"
                            class="form-input <?= $escaper->escapeHtmlAttr(
                                $block->getAttributeValidationClass('suffix')
-                           ) ?>"
+                                             ) ?>"
                         <?= $block->isSuffixRequired() ? ' required' : '' ?>
                     >
-                <?php else : ?>
+                <?php else: ?>
                     <select id="<?= $escaper->escapeHtmlAttr($block->getFieldId('suffix')) ?>"
                             name="<?= $escaper->escapeHtmlAttr($block->getFieldName('suffix')) ?>"
                             title="<?= $escaper->escapeHtmlAttr($block->getStoreLabel('suffix')) ?>"

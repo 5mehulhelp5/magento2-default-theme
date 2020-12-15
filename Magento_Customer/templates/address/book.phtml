@@ -12,7 +12,7 @@
 <div class="block block-addresses-default">
     <div class="block-title"><strong><?= $escaper->escapeHtml(__('Default Addresses')) ?></strong></div>
     <div class="block-content md:grid grid-cols-2 gap-x-4 gap-y-0">
-        <?php if ($_pAddsses = $block->getDefaultBilling()) : ?>
+        <?php if ($_pAddsses = $block->getDefaultBilling()): ?>
             <div class="box box-address-billing">
                 <strong class="box-title">
                     <span><?= $escaper->escapeHtml(__('Default Billing Address')) ?></span>
@@ -31,7 +31,7 @@
                     </a>
                 </div>
             </div>
-        <?php else : ?>
+        <?php else: ?>
             <div class="box box-billing-address">
                 <strong class="box-title"><span><?= $escaper->escapeHtml(__('Default Billing Address')) ?></span></strong>
                 <div class="box-content">
@@ -40,7 +40,7 @@
             </div>
         <?php endif ?>
 
-        <?php if ($_pAddsses = $block->getDefaultShipping()) : ?>
+        <?php if ($_pAddsses = $block->getDefaultShipping()): ?>
             <div class="box box-address-shipping">
                 <strong class="box-title">
                     <span><?= $escaper->escapeHtml(__('Default Shipping Address')) ?></span>
@@ -59,7 +59,7 @@
                     </a>
                 </div>
             </div>
-        <?php else : ?>
+        <?php else: ?>
             <div class="box box-shipping-address">
                 <strong class="box-title"><span><?= $escaper->escapeHtml(__('Default Shipping Address')) ?></span></strong>
                 <div class="box-content">

@@ -27,7 +27,7 @@ $imageStyle = "background-image: url($image1X); background-image: -webkit-image-
         <div class="container mx-auto">
             <div class="flex flex-col w-full lg:w-2/3 justify-center items-start px-6 tracking-wide">
                 <h1 class="title-font text-4xl sm:text-5xl mb-2 font-medium text-white" style="text-shadow: 2px 2px 5px black"><?= $block->escapeHtml($title) ?></h1>
-                <?php if($content) : ?>
+                <?php if ($content): ?>
                     <p class="text-2xl sm:text-3xl mb-4 font-medium text-white" style="text-shadow: 2px 2px 5px black"><?= $content ?></p>
                 <?php endif; ?>
                 <a class="btn btn-primary border border-primary flex" href="<?= $link ?>">

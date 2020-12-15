@@ -19,12 +19,12 @@ $product = $item->getProduct();
 $viewModel = $block->getData('allowedQuantityViewModel');
 $allowedQty = $viewModel->setItem($item)->getMinMaxQty();
 ?>
-<?php foreach ($block->getChildNames() as $childName) : ?>
+<?php foreach ($block->getChildNames() as $childName): ?>
     <?= /* @noEscape */ $block->getLayout()->renderElement($childName, false) ?>
 <?php endforeach;?>
 <div class="box-tocart">
     <fieldset class="fieldset">
-    <?php if ($item->canHaveQty() && $product->isVisibleInSiteVisibility()) : ?>
+    <?php if ($item->canHaveQty() && $product->isVisibleInSiteVisibility()): ?>
         <div class="field qty">
             <label class="label" for="qty[<?= $block->escapeHtmlAttr($item->getId()) ?>]"><span><?= $block->escapeHtml(__('Qty')) ?></span></label>
             <div class="control">
@@ -40,7 +40,7 @@ $allowedQty = $viewModel->setItem($item)->getMinMaxQty();
             </div>
         </div>
     <?php endif; ?>
-    <?php if ($product->isSaleable()) : ?>
+    <?php if ($product->isSaleable()): ?>
     <div class="product-item-actions">
         <div class="actions-primary">
             <button type="button"
@@ -53,12 +53,12 @@ $allowedQty = $viewModel->setItem($item)->getMinMaxQty();
             </button>
         </div>
     </div>
-    <?php else : ?>
-        <?php if ($product->getIsSalable()) : ?>
+    <?php else: ?>
+        <?php if ($product->getIsSalable()): ?>
             <p class="available stock" title="<?= $block->escapeHtmlAttr(__('Availability')) ?>">
                 <span><?= $block->escapeHtml(__('In stock')) ?></span>
             </p>
-        <?php else : ?>
+        <?php else: ?>
             <p class="unavailable stock" title="<?= $block->escapeHtmlAttr(__('Availability')) ?>">
                 <span><?= $block->escapeHtml(__('Out of stock')) ?></span>
             </p>
