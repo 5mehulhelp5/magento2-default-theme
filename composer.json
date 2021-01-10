@@ -12,7 +12,11 @@
         "hyva-themes/magento2-theme-module": "*",
         "hyva-themes/magento2-email-module": "*",
         "hyva-themes/magento2-graphql-tokens": "*",
-        "magento/module-quote-graph-ql":"*"
+        "magento/module-quote-graph-ql":"*",
+        "magento/module-graph-ql": "*",
+        "magento/module-customer-graph-ql": "*",
+        "magento/module-quote-graph-ql":"*",
+        "magento/module-directory-graph-ql": "*"
     },
     "suggest": {
         "hyva-themes/magento2-review-graphql": "*"
