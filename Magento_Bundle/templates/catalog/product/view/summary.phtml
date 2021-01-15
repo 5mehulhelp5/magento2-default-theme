@@ -16,17 +16,17 @@ $product = $block->getProduct();
 ?>
 <?php if ($product->isSaleable() && $block->hasOptions()): ?>
 <div id="bundleSummary"
-     class="block-bundle-summary card w-full sm:w-1/2 md:w-1/3">
+     class="block-bundle-summary card w-full sm:w-1/2 lg:w-1/3">
     <div class="title mb-2">
         <h3 class="text-gray-900 text-2xl title-font font-base text-center md:text-left w-full">
-            <?= $block->escapeHtml(__('Your Customization')) ?>
+            <?= $escaper->escapeHtml(__('Your Customization')) ?>
         </h3>
     </div>
     <div class="content">
         <div class="bundle-info">
             <div class="product-details">
                 <h3 class="product-name text-lg font-semibold">
-                    <?= $block->escapeHtml($product->getName()) ?>
+                    <?= $escaper->escapeHtml($product->getName()) ?>
                 </h3>
 
                 <?= $block->getBlockHtml('product.info.form') ?>
@@ -34,35 +34,53 @@ $product = $block->getProduct();
                 <?= $block->getChildHtml("product.info.bundle.price") ?>
 
                 <?php if ($product->isSaleable()): ?>
-                <div class="flex my-4 sm:mt-0">
+                <div class="flex my-4 sm:mt-0 justify-between lg:justify-start">
                     <?= $block->getChildHtml("product.info.quantity") ?>
                     <?= $block->getChildHtml("product.info.addtocart") ?>
                 </div>
                 <?php endif; ?>
 
-                </div>
-
             </div>
+
             <div class="tier-price-container my-2 py-4">
                 <?= $block->getChildHtml("product.price.tier") ?>
             </div>
 
         </div>
-        <div class="bundle-summary">
-            <strong class="subtitle"><?= $block->escapeHtml(__('Summary')) ?></strong>
-            <div id="bundle-summary" data-container="product-summary">
-                <ul data-mage-init='{"productSummary": []}' class="bundle items"></ul>
-                <script data-template="bundle-summary" type="text/x-magento-template">
-                    <li>
-                        <strong class="label"><%- data._label_ %>:</strong>
-                        <div data-container="options"></div>
-                    </li>
-                </script>
-                <script data-template="bundle-option" type="text/x-magento-template">
-                    <div><?= /* @noEscape */ __('%1 x %2', '<%- data._quantity_ %>', '<%- data._label_ %>') ?></div>
-                </script>
+        <div x-data="initBundleSummary()"
+             x-spread="eventListeners"
+             class="bundle-summary"
+        >
+            <div x-show="selectedOptions.length">
+                <div class="mb-2 subtitle text-gray-900 text-2xl title-font font-base text-center md:text-left w-full">
+                    <?= $escaper->escapeHtml(__('Summary')) ?>
+                </div>
+                <div>
+                    <ul class="bundle items">
+                        <template x-for="option in selectedOptions">
+                        <li class="mb-2" x-show="option.products.length">
+                            <span class="text-base font-semibold" x-html="option.label"></span>
+                            <template x-for="product in option.products">
+                                <div><span x-html="product.qty"></span> x <span x-html="product.name"></span></div>
+                            </template>
+                        </li>
+                    </template>
+                    </ul>
+                </div>
             </div>
         </div>
+        <script>
+            function initBundleSummary() {
+                return {
+                    selectedOptions: [],
+                    eventListeners: {
+                        ['@update-bundle-option-selection.window'](event) {
+                            this.selectedOptions = event.detail;
+                        }
+                    }
+                }
+            }
+        </script>
     </div>
 </div>
 <?php endif; ?>

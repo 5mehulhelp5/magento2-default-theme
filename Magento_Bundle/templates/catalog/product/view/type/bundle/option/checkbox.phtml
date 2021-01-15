@@ -1,48 +1,64 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Hyvä Themes - https://hyva.io
+ * Copyright © Hyvä Themes 2020-present. All rights reserved.
+ * This product is licensed per Magento install
+ * See https://hyva.io/license
  */
-?>
 
-<?php /* @var $block \Magento\Bundle\Block\Catalog\Product\View\Type\Bundle\Option\Checkbox */ ?>
-<?php $_option = $block->getOption() ?>
-<?php $_selections = $_option->getSelections() ?>
-<div class="field option <?= ($_option->getRequired()) ? ' required': '' ?>">
-    <label class="label">
-        <span><?= $block->escapeHtml($_option->getTitle()) ?></span>
-    </label>
-    <div class="control">
-        <div class="nested options-list">
-            <?php if ($block->showSingle()) : ?>
-                <?= /* @noEscape */ $block->getSelectionQtyTitlePrice($_selections[0]) ?>
-                <?= /* @noEscape */ $block->getTierPriceRenderer()->renderTierPrice($_selections[0]) ?>
-                <input type="hidden"
-                       class="bundle-option-<?= $block->escapeHtmlAttr($_option->getId()) ?>  product bundle option"
-                       name="bundle_option[<?= $block->escapeHtml($_option->getId()) ?>]"
-                       value="<?= $block->escapeHtmlAttr($_selections[0]->getSelectionId()) ?>"/>
-            <?php else :?>
-                <?php foreach ($_selections as $_selection) : ?>
-                    <div class="field choice">
-                        <input class="bundle-option-<?= $block->escapeHtmlAttr($_option->getId()) ?> checkbox product bundle option change-container-classname"
-                               id="bundle-option-<?= $block->escapeHtmlAttr($_option->getId()) ?>-<?= $block->escapeHtmlAttr($_selection->getSelectionId()) ?>"
-                               type="checkbox"
-                               <?php if ($_option->getRequired()) { echo 'data-validate="{\'validate-one-required-by-name\':\'input[name^=&quot;bundle_option[' . $block->escapeHtmlAttr($_option->getId()) . ']&quot;]:checked\'}"'; } ?>
-                               name="bundle_option[<?= $block->escapeHtmlAttr($_option->getId()) ?>][<?= $block->escapeHtmlAttr($_selection->getId()) ?>]"
-                               data-selector="bundle_option[<?= $block->escapeHtmlAttr($_option->getId()) ?>][<?= $block->escapeHtmlAttr($_selection->getId()) ?>]"
-                               <?php if ($block->isSelected($_selection)) { echo ' checked="checked"'; } ?>
-                               <?php if (!$_selection->isSaleable()) { echo ' disabled="disabled"'; } ?>
-                               value="<?= $block->escapeHtmlAttr($_selection->getSelectionId()) ?>"/>
-                        <label class="label"
-                               for="bundle-option-<?= $block->escapeHtmlAttr($_option->getId()) ?>-<?= $block->escapeHtmlAttr($_selection->getSelectionId()) ?>">
-                            <span><?= /* @noEscape */ $block->getSelectionQtyTitlePrice($_selection) ?></span>
-                            <br/>
-                            <?= /* @noEscape */ $block->getTierPriceRenderer()->renderTierPrice($_selection) ?>
-                        </label>
-                    </div>
-                <?php endforeach; ?>
-                <div id="bundle-option-<?= $block->escapeHtmlAttr($_option->getId()) ?>-container"></div>
-            <?php endif; ?>
+declare(strict_types=1);
+
+use Magento\Bundle\Block\Catalog\Product\View\Type\Bundle\Option\Checkbox;
+use Magento\Framework\Escaper;
+
+/** @var $block Checkbox */
+/** @var $escaper Escaper */
+
+$option = $block->getOption();
+$selections  = $option->getSelections();
+$default     = $option->getDefaultSelection();
+
+$optionId = $option->getId();
+?>
+<?php if ($block->showSingle()): ?>
+    <?= /* @noEscape */ $block->getSelectionQtyTitlePrice($selections[0]) ?>
+    <?= /* @noEscape */ $block->getTierPriceRenderer()->renderTierPrice($selections[0]) ?>
+    <input type="hidden"
+           class="bundle-option-<?= (int)$optionId ?>  product bundle option"
+           name="bundle_option[<?= (int)$optionId ?>]"
+           form="product_addtocart_form"
+           value="<?= (int)$selections[0]->getSelectionId() ?>"
+           id="bundle-option-<?= (int)$optionId ?>-<?= (int)$selections[0]->getSelectionId() ?>"
+           checked="checked"
+           form="product_addtocart_form"
+           data-option-id="<?= (int)$optionId ?>"
+           data-selection-id="<?= (int)$selections[0]->getSelectionId() ?>"
+           x-ref="option-<?= (int)$optionId ?>"
+    />
+<?php else: ?>
+    <?php foreach ($selections as $selection): ?>
+        <?php $selectionId = $selection->getSelectionId(); ?>
+        <?php $optionSelectionId = $optionId . '-' . $selectionId ?>
+        <div class="field choice mt-1 flex items-center gap-x-2">
+            <input class="bundle-option-<?= (int)$optionId ?>
+                form-checkbox"
+                   id="bundle-option-<?= $escaper->escapeHtmlAttr($optionSelectionId) ?>"
+                   name="bundle_option[<?= (int) $optionId ?>][<?= (int) $selectionId ?>]"
+                   form="product_addtocart_form"
+                   type="checkbox"
+                   <?php if ($block->isSelected($selection)) { echo ' checked="checked"'; } ?>
+                   <?php if (!$selection->isSaleable()) { echo ' disabled="disabled"'; } ?>
+                   value="<?= (int)$selectionId ?>"
+                   x-ref="option-<?= $escaper->escapeHtmlAttr($optionSelectionId) ?>"
+                   x-on:change="calculateTotalPrice($dispatch)"
+            />
+            <label class="label"
+                   for="bundle-option-<?= $escaper->escapeHtmlAttr($optionSelectionId) ?>">
+                <span><?= /* @noEscape */ $block->getSelectionQtyTitlePrice($selection) ?></span>
+                <br/>
+                <?= /* @noEscape */ $block->getTierPriceRenderer()->renderTierPrice($selection) ?>
+            </label>
         </div>
-    </div>
-</div>
+    <?php endforeach; ?>
+    <div id="bundle-option-<?= (int)$optionId ?>-container"></div>
+<?php endif; ?>

@@ -104,7 +104,6 @@
 
                         <block class="Magento\Catalog\Block\Product\View"
                                name="product.info.form"
-                               as="product_info_form"
                                template="Magento_Catalog::product/view/product-form.phtml"
                         >
                             <block class="Magento\Catalog\Block\Product\View\Options" name="product.info.options" as="product_options" template="Magento_Catalog::product/view/options/options.phtml">
