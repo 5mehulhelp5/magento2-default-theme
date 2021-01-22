@@ -9,12 +9,15 @@
 use Magento\Newsletter\Block\Subscribe;
 
 /** @var Subscribe $block */
+$formId = 'newsletter-validate-detail';
 ?>
 <div class="lg:w-1/4 md:w-1/2 w-full px-4">
     <form class="form subscribe"
           action="<?= $block->escapeUrl($block->getFormActionUrl()) ?>"
           method="post"
-          id="newsletter-validate-detail">
+          x-data="initNewsletterForm()"
+          @submit.prevent="submitForm()"
+          id="<?= $escaper->escapeHtmlAttr($formId) ?>">
         <h2 class="title-font font-medium text-gray-900 tracking-widest text-sm mb-3 uppercase">
             <?= $block->escapeHtml(__('Newsletter')) ?>
         </h2>
@@ -26,6 +29,27 @@ use Magento\Newsletter\Block\Subscribe;
             <button class="lg:mt-2 xl:mt-0 flex-shrink-0 inline-flex btn btn-primary">
                 <?= $block->escapeHtmlAttr(__('Subscribe')) ?>
             </button>
+            <?= $block->getChildHtml('form.subscribe.info') ?>
+
         </div>
     </form>
+    <div class="w-full">
+    <?= $block->getChildHtml('form.subscribe.after') ?>
+    </div>
+    <script>
+        function initNewsletterForm() {
+            return {
+                errors: 0,
+                hasCaptchaToken: 0,
+                submitForm: function () {
+                    var $form = document.querySelector('#<?= $escaper->escapeJs($formId) ?>');
+                    <?= $block->getChildHtml('recaptcha_validation_newsletter'); ?>
+
+                    if (this.errors === 0) {
+                        $form.submit();
+                    }
+                }
+            }
+        }
+    </script>
 </div>

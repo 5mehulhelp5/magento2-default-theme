@@ -11,7 +11,10 @@
     <body>
         <referenceContainer name="footer-content">
             <block class="Magento\Newsletter\Block\Subscribe" name="form.subscribe" as="subscribe" after="-"
-                   template="Magento_Newsletter::subscribe.phtml" ifconfig="newsletter/general/active"/>
+                   template="Magento_Newsletter::subscribe.phtml" ifconfig="newsletter/general/active">
+                <container name="form.subscribe.info" label="Form Info"/>
+                <container name="form.subscribe.after" label="Form After Container"/>
+            </block>
         </referenceContainer>
     </body>
 </page>
