@@ -33,7 +33,7 @@ if ($block->getIsInCatalogProduct()) {
     <?php if ($block->getAdditionalLinkImage()) : ?>
         <?php $linkImage = $block->getAdditionalLinkImage(); ?>
         <a href="<?= $escaper->escapeUrl($linkImage['href']) ?>">
-            <img src="<?= $escaper->escapeHtml($linkImage['src']) ?>" />
+            <img loading="lazy" src="<?= $escaper->escapeHtml($linkImage['src']) ?>" />
         </a>
     <?php endif; ?>
 </div>
