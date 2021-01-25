@@ -1,17 +1,11 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Hyvä Themes - https://hyva.io
+ * Copyright © Hyvä Themes 2020-present. All rights reserved.
+ * This product is licensed per Magento install
+ * See https://hyva.io/license
  */
-
-// phpcs:disable Magento2.Templates.ThisInTemplate
-/**
- * @var \Magento\Paypal\Block\Express\InContext\SmartButton $block
- */
-$widget = $this->helper(\Magento\Framework\Json\Helper\Data::class)->jsonDecode($block->getJsInitParams());
-$widgetConfig = $this->helper(\Magento\Framework\Json\Helper\Data::class)->jsonEncode(
-    $widget['Magento_Paypal/js/in-context/product-express-checkout']
-);
 ?>
-<div id ="paypal-smart-button" data-mage-init='{"Magento_Paypal/js/in-context/product-express-checkout"
-:<?= /* @noEscape */ $widgetConfig ?>}'></div>
+<div>
+    PayPal Express in-context is not implemented yet. Please switch in-context.
+</div>

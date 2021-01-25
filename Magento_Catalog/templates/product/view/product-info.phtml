@@ -115,7 +115,7 @@ $product = $productViewModel->getProduct();
                                 typeof window.dispatchMessages !== "undefined" && window.dispatchMessages(
                                     [{
                                         type: "warning",
-                                        text: "<?= $block->escapeHtml(__('Could not add item to wishlist.')) ?>"
+                                        text: "<?= $escaper->escapeHtml(__('Could not add item to wishlist.')) ?>"
                                     }], 5000
                                 );
                             }
@@ -127,7 +127,7 @@ $product = $productViewModel->getProduct();
                                 [{
                                     type: (response.success) ? "success" : "error",
                                     text: (response.success)
-                                        ? "<?= $block->escapeHtml(
+                                        ? "<?= $escaper->escapeHtml(
                                             __("%1 has been added to your Wish List.", __("Product"))
                                         ) ?>"
                                         : response.error_message
@@ -159,7 +159,6 @@ $product = $productViewModel->getProduct();
                 </path>
             </svg>
         </button>
-
         </div>
     </div>
 
