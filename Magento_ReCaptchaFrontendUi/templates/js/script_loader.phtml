@@ -17,9 +17,7 @@ use Magento\Framework\View\Element\Template;
 /** @var ViewModelRegistry $viewModels */
 
 /** @var $storeConfig StoreConfig */
-// could not test this yet:
-//$storeConfig = $viewModels->require(StoreConfig::class);
-$storeConfig = $block->getData('viewModelStoreConfig');
+$storeConfig = $viewModels->require(StoreConfig::class);
 $siteKey = $storeConfig->getStoreConfig('recaptcha_frontend/type_recaptcha_v3/public_key');
 ?>
 <?php if ($siteKey): ?>
