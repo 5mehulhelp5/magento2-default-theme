@@ -15,7 +15,7 @@ use Magento\Catalog\Block\Product\View;
 $product = $block->getProduct();
 ?>
 <section class="text-gray-700 body-font">
-    <div class="container mx-auto flex px-5 py-6 md:flex-row flex-col items-center">
+    <div class="container mx-auto flex px-5 py-6 lg:flex-row flex-col items-center">
         <div class="flex flex-wrap order-first w-full">
             <?= $block->getChildHtml('product.info') ?>
             <?= $block->getChildHtml('product.media') ?>
@@ -23,9 +23,14 @@ $product = $block->getProduct();
     </div>
 </section>
 <section>
+    <?= $block->getChildHtml('product_options_wrapper_bottom') ?>
+</section>
+<section>
     <?= $block->getChildHtml('description') ?>
 </section>
 <section>
     <?= $block->getChildHtml('related') ?>
     <?= $block->getChildHtml('upsell') ?>
+    <?= $block->getChildHtml('review_list') ?>
+    <?= $block->getChildHtml('review_form') ?>
 </section>

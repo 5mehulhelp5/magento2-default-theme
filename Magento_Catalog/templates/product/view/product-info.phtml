@@ -9,11 +9,14 @@
 declare(strict_types=1);
 
 use Magento\Catalog\Model\Product;
+use Magento\Framework\Escaper;
 use Magento\Framework\View\Element\Template;
 use Hyva\Theme\ViewModel\ProductAttributes;
 use Hyva\Theme\ViewModel\ProductPage;
 
 /** @var Template $block */
+/** @var Escaper $escaper */
+
 /** @var ProductPage $productViewModel */
 $productViewModel = $block->getProductViewModel();
 /** @var ProductAttributes $attributesViewModel */
@@ -22,98 +25,111 @@ $attributesViewModel = $block->getAttributesViewModel();
 $product = $productViewModel->getProduct();
 
 ?>
-<div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mb-6 lg:mb-0 order-2">
-    <?php if ($productBrand = $product->getBrand()) { ?>
-    <h2 class="text-sm title-font text-gray-500 tracking-widest">
-        <?= $productBrand ?></h2>
-    <?php } ?>
-
-    <h1 class="text-gray-900 text-3xl title-font font-medium mb-4">
-        <?= $product->getName() ?>
+<div class="order-2 w-full mb-6 md:w-7/12 md:pl-5 lg:pl-10 md:py-6 lg:w-1/2 md:mb-0">
+    <h1 class="mb-3 text-3xl font-medium text-gray-900 title-font">
+        <?= $escaper->escapeHtml($product->getName()) ?>
     </h1>
 
+    <div class="mb-2 cursor-pointer"
+         onclick="document.getElementById('customer-reviews').scrollIntoView({behavior: 'smooth'})">
+        <?= $block->getChildHtml('product.info.review') ?>
+    </div>
+
     <?php if ($shortDescription = $productViewModel->getShortDescription()) { ?>
-    <div class="product-description leading-relaxed mb-4 prose"><?= /* @noEscape */ $shortDescription ?></div>
+        <div class="mb-4 leading-relaxed product-description prose"><?= /* @noEscape */
+            $shortDescription ?></div>
     <?php } ?>
 
+    <div class="flex justify-between my-4">
+        <div class="text-right">
+            <?php if ($product->getIsSalable()): ?>
+                <p class="flex items-center justify-end align-middle available gap-x-2 stock"
+                   title="<?= $block->escapeHtmlAttr(__('Availability')) ?>">
+                    <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+                    <span><?= $block->escapeHtml(__('In stock')) ?></span>
+                </p>
+            <?php else: ?>
+                <p class="flex items-center justify-end align-middle gap-x-2 unavailable stock"
+                   title="<?= $block->escapeHtmlAttr(__('Availability')) ?>">
+                    <span class="w-3 h-3 bg-red-500 rounded-full"></span>
+                    <span><?= $block->escapeHtml(__('Out of stock')) ?></span>
+                </p>
+            <?php endif; ?>
+        </div>
+
+        <?= $block->getChildHtml("alert.urls") ?>
+    </div>
+
     <div>
-    <?php foreach ($block->getAttributes() as $attributeConfig ) {
-        $attribute = $attributesViewModel->getAttributeFromLayoutConfig($attributeConfig);
-    ?>
-        <?php if ($value = $attribute['value']) { ?>
-    <div class="flex border-t border-gray-300 py-2 last:mb-6 last:border-b <?= $attribute['value'] ?: "" ?>">
-        <span class="text-gray-500 text-left w-1/2"><?= $attribute['label'] ?></span>
-        <span class="ml-2 text-gray-900 text-left w-1/2"><?= $value ?></span>
-    </div>
+        <?php foreach ($block->getAttributes() as $attributeConfig) {
+            $attribute = $attributesViewModel->getAttributeFromLayoutConfig($attributeConfig);
+            ?>
+            <?php if ($value = $attribute['value'] ?? null) { ?>
+                <div
+                    class="flex border-t border-gray-300 py-2 last:mb-6 last:border-b <?= $attribute['value'] ?: "" ?>">
+                    <span class="w-1/2 text-left text-gray-700">
+                        <?= $escaper->escapeHtml($attribute['label']) ?>
+                    </span>
+                    <span class="w-1/2 ml-2 text-left text-gray-900">
+                        <?= $escaper->escapeHtml($value) ?>
+                    </span>
+                </div>
+            <?php } ?>
         <?php } ?>
-    <?php } ?>
     </div>
-    <div class="flex sticky" style="top:6em;">
-        <span class="title-font font-medium text-2xl text-gray-900">
-            <?= $block->getChildHtml("product.price.final") ?>
-        </span>
-        <?php if ($product->isSaleable()) : ?>
-        <?php
-        /** @var \Magento\Framework\Data\Helper\PostHelper $postDataHelper */
-            $postDataHelper = $this->helper(\Magento\Framework\Data\Helper\PostHelper::class);
-            $postParams = json_decode($postDataHelper->getPostData($block->getAddToCartUrl($product), ['product' => $product->getEntityId()]));
-        ?>
-        <form method="post"
-              action="<?= $block->escapeUrl($productViewModel->getAddToCartUrl($product)) ?>"
-              id="product_addtocart_form"<?php if ($product->getOptions()) :?> enctype="multipart/form-data"<?php endif; ?>
-              class="flex ml-auto"
-        >
-            <input type="hidden" name="product" value="<?= (int)$product->getId() ?>" />
-            <input type="hidden" name="selected_configurable_option" value="" />
-            <input type="hidden" name="related_product" id="related-products-field" value="" />
-            <input type="hidden" name="item"  value="<?= (int)$block->getRequest()->getParam('id') ?>">
-            <?= $block->getBlockHtml('formkey') ?>
-            <button type="submit"
-                    title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>"
-                    class="btn btn-primary"
-            >
-                <svg class="h-6 w-6 border-current" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
-                </svg>
-                <span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
-            </button>
-        </form>
+
+    <?= $block->getBlockHtml('product.info.form') ?>
+
+    <div class="flex flex-col items-end sm:flex-row">
+
+        <?= $block->getChildHtml("product.info.price") ?>
+
+        <div class="flex mt-4 ml-auto sm:mt-0">
+        <?php if ($product->isSaleable()): ?>
+            <?= $block->getChildHtml("product.info.quantity") ?>
+            <?= $block->getChildHtml("product.info.addtocart") ?>
         <?php endif; ?>
-        <script>
+        <script defer>
             function initWishlist() {
                 return {
-                    addToWishlist: function addToWishlist(productId){
+                    addToWishlist: function addToWishlist(productId) {
                         var formKey = document.querySelector('input[name=form_key]').value;
-                        var postUrl = BASE_URL+"wishlist/index/add/";
+                        var postUrl = BASE_URL + "wishlist/index/add/";
                         fetch(postUrl, {
                             "headers": {
                                 "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
                             },
-                            "body": "form_key="+ formKey + "&product="+productId+"&uenc="+btoa(window.location.href),
+                            "body": (
+                                "form_key=" + formKey + "&product=" + productId +
+                                "&uenc=" + btoa(window.location.href)
+                            ),
                             "method": "POST",
                             "mode": "cors",
                             "credentials": "include"
                         }).then(function (response) {
                             if (response.redirected) {
                                 window.location.href = response.url;
-                                return;
                             } else if (response.ok) {
                                 return response.json();
                             } else {
                                 typeof window.dispatchMessages !== "undefined" && window.dispatchMessages(
                                     [{
                                         type: "warning",
-                                        text: "<?= $block->escapeHtml(__('Could not add item to wishlist.')) ?>"
+                                        text: "<?= $escaper->escapeHtml(__('Could not add item to wishlist.')) ?>"
                                     }], 5000
                                 );
                             }
                         }).then(function (response) {
-                            if(!response) { return }
+                            if (!response) {
+                                return
+                            }
                             typeof window.dispatchMessages !== "undefined" && window.dispatchMessages(
                                 [{
                                     type: (response.success) ? "success" : "error",
                                     text: (response.success)
-                                        ? "<?= $block->escapeHtml(__("%1 has been added to your Wish List.", __("Product"))) ?>"
+                                        ? "<?= $escaper->escapeHtml(
+                                            __("%1 has been added to your Wish List.", __("Product"))
+                                        ) ?>"
                                         : response.error_message
                                 }], 5000
                             );
@@ -132,13 +148,31 @@ $product = $productViewModel->getProduct();
             }
         </script>
         <button x-data="initWishlist()"
-                @click.prevent="addToWishlist(<?= $product->getId() ?>)"
-            class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 hover:text-red-600 ml-4">
+                @click.prevent="addToWishlist(<?= (int)$product->getId() ?>)"
+                aria-label="<?= $escaper->escapeHtmlAttr(__('Add to Wish List')) ?>"
+                class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex
+                    items-center justify-center text-gray-500 hover:text-red-600 ml-4">
             <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5"
                  viewBox="0 0 24 24">
-                <path
-                    d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
+                <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12
+                    21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z">
+                </path>
             </svg>
         </button>
+        </div>
     </div>
+
+    <?php if ($product->isSaleable()): ?>
+        <div class="flex mt-4 ml-auto justify-end">
+            <?= $block->getChildHtml('addtocart.shortcut.buttons') ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if ($tierPriceBlock = $block->getChildHtml("product.price.tier")): ?>
+    <div class="py-4 my-2 tier-price-container">
+        <?= /** @noEscape */ $tierPriceBlock ?>
+    </div>
+    <?php endif; ?>
+
+    <?= $block->getChildHtml("product.info.additional") ?>
 </div>

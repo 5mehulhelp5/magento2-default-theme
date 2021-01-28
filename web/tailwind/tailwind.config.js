@@ -1,4 +1,4 @@
-const { colors } = require('tailwindcss/defaultTheme')
+const {colors} = require('tailwindcss/defaultTheme')
 
 module.exports = {
     theme: {
@@ -13,17 +13,17 @@ module.exports = {
             teal: colors.teal,
             primary: {
                 lighter: colors.blue['300'],
-                default: colors.blue['500'],
-                darker: colors.blue['600'],
+                DEFAULT: colors.blue['800'],
+                darker: colors.blue['900'],
             },
             secondary: {
                 lighter: colors.blue['100'],
-                default: colors.blue['200'],
+                DEFAULT: colors.blue['200'],
                 darker: colors.blue['300'],
             },
             background: {
                 lighter: colors.blue['100'],
-                default: colors.blue['200'],
+                DEFAULT: colors.blue['200'],
                 darker: colors.blue['300'],
             }
         },
@@ -31,16 +31,20 @@ module.exports = {
             black: colors.black,
             white: colors.white,
             gray: colors.gray,
+            yellow: colors.yellow,
+            orange: colors.orange,
             red: colors.red,
+            green: colors.green,
+            transparent: colors.transparent,
             primary: {
                 lighter: colors.gray['700'],
-                default: colors.gray['800'],
+                DEFAULT: colors.gray['800'],
                 darker: colors.gray['900'],
             },
             secondary: {
                 lighter: colors.gray['400'],
-                default: colors.gray['500'],
-                darker: colors.gray['600'],
+                DEFAULT: colors.gray['600'],
+                darker: colors.gray['800'],
             },
         },
         backgroundColor: {
@@ -49,21 +53,22 @@ module.exports = {
             white: colors.white,
             red: colors.red,
             yellow: colors.yellow,
+            orange: colors.orange,
             green: colors.green,
             gray: colors.gray,
             primary: {
-                lighter: colors.blue['300'],
-                default: colors.blue['500'],
-                darker: colors.blue['600'],
+                lighter: colors.blue['600'],
+                DEFAULT: colors.blue['700'],
+                darker: colors.blue['800'],
             },
             secondary: {
                 lighter: colors.blue['100'],
-                default: colors.blue['200'],
+                DEFAULT: colors.blue['200'],
                 darker: colors.blue['300'],
             },
             container: {
                 lighter: '#ffffff',
-                default: '#fafafa',
+                DEFAULT: '#fafafa',
                 darker: '#f5f5f5',
             }
         },
@@ -76,18 +81,18 @@ module.exports = {
             green: colors.green,
             gray: colors.gray,
             primary: {
-                lighter: colors.blue['300'],
-                default: colors.blue['500'],
-                darker: colors.blue['600'],
+                lighter: colors.blue['600'],
+                DEFAULT: colors.blue['700'],
+                darker: colors.blue['800'],
             },
             secondary: {
                 lighter: colors.blue['100'],
-                default: colors.blue['200'],
+                DEFAULT: colors.blue['200'],
                 darker: colors.blue['300'],
             },
             container: {
                 lighter: '#f5f5f5',
-                default: '#e7e7e7',
+                DEFAULT: '#e7e7e7',
                 darker: '#b6b6b6',
             }
         },
@@ -121,13 +126,17 @@ module.exports = {
     variants: {
         borderWidth: ['responsive', 'last', 'hover', 'focus'],
         margin: ['responsive', 'last', 'hover', 'focus'],
+        opacity: ['responsive', 'hover', 'focus','disabled'],
     },
     plugins: [
-        require('@tailwindcss/custom-forms'),
+        require('@tailwindcss/forms'),
         require('@tailwindcss/typography'),
     ],
     purge: {
-        // enabled: false,
+        // Examples for excluding patterns from purge
+        // options: {
+        //     safelist: [/^bg-opacity-/, /^-?[mp][trblxy]?-[4,8]$/, /^text-shadow/],
+        // },
         content: [
             '../../**/*.phtml',
             './src/**/*.phtml'

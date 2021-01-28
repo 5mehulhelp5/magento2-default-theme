@@ -7,31 +7,41 @@
  * See https://hyva.io/license
  */
  -->
-<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
-    <update handle="catalog_product_opengraph" />
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="catalog_product_opengraph"/>
     <body>
-        <attribute name="itemtype" value="http://schema.org/Product" />
+        <attribute name="itemtype" value="http://schema.org/Product"/>
         <attribute name="itemscope" value="itemscope"/>
         <referenceBlock name="page.main.title">
             <arguments>
-                <argument name="css_class" xsi:type="string">product</argument>
+                <argument name="css_class" xsi:type="string">product lg:hidden</argument>
                 <argument name="add_base_attribute" xsi:type="string">itemprop="name"</argument>
             </arguments>
         </referenceBlock>
+        <referenceContainer name="after.body.start">
+            <block name="product_breadcrumbs" class="Hyva\Theme\Block\Catalog\Breadcrumbs"/>
+        </referenceContainer>
         <referenceBlock name="root">
             <arguments>
-                <argument name="add_attribute" xsi:type="string">itemscope itemtype="http://schema.org/Product"</argument>
+                <argument name="add_attribute" xsi:type="string">itemscope itemtype="http://schema.org/Product"
+                </argument>
             </arguments>
         </referenceBlock>
 
         <referenceContainer name="content">
             <referenceContainer name="product.info.main">
-                <block class="Magento\Catalog\Block\Product\View" name="product.detail.page" template="Magento_Catalog::product/product-detail-page.phtml">
-                    <block name="product.info"
+                <block class="Magento\Catalog\Block\Product\View" name="product.detail.page"
+                       template="Magento_Catalog::product/product-detail-page.phtml">
+                    <block class="Magento\Catalog\Block\Product\View"
+                           name="product.info"
                            template="Magento_Catalog::product/view/product-info.phtml">
                         <arguments>
-                            <argument name="product_view_model" xsi:type="object">Hyva\Theme\ViewModel\ProductPage</argument>
-                            <argument name="attributes_view_model" xsi:type="object">Hyva\Theme\ViewModel\ProductAttributes</argument>
+                            <argument name="product_view_model" xsi:type="object">Hyva\Theme\ViewModel\ProductPage
+                            </argument>
+                            <argument name="attributes_view_model"
+                                      xsi:type="object">Hyva\Theme\ViewModel\ProductAttributes
+                            </argument>
                             <argument name="attributes" xsi:type="array">
                                 <item name="sku" xsi:type="array">
                                     <item name="call" xsi:type="string">getSku</item>
@@ -72,28 +82,67 @@
                             </argument>
                         </arguments>
 
-                        <block class="Magento\Catalog\Block\Product\View" name="product.info.review" template="Magento_Catalog::product/view/review.phtml" />
+                        <block class="Magento\Catalog\Block\Product\View" name="product.info.review"
+                               template="Magento_Catalog::product/view/review.phtml" ifconfig="catalog/review/active"/>
 
-                        <block class="Magento\Catalog\Pricing\Render" name="product.price.final">
+                        <block class="Magento\Catalog\Pricing\Render" name="product.price.tier">
                             <arguments>
                                 <argument name="price_render" xsi:type="string">product.price.render.default</argument>
-                                <argument name="price_type_code" xsi:type="string">final_price</argument>
+                                <argument name="price_type_code" xsi:type="string">tier_price</argument>
                                 <argument name="zone" xsi:type="string">item_view</argument>
                             </arguments>
                         </block>
+
+                        <block class="Magento\Catalog\Block\Product\View" name="product.info.quantity"  template="Magento_Catalog::product/view/quantity.phtml"/>
+                        <block name="product.info.addtocart"  template="Magento_Catalog::product/view/addtocart.phtml"/>
+
+                        <block class="Magento\Catalog\Block\Product\View" name="product.info.price"  template="Magento_Catalog::product/view/price.phtml">
+                            <arguments>
+                                <argument name="product_view_model" xsi:type="object">Hyva\Theme\ViewModel\ProductPage</argument>
+                            </arguments>
+                        </block>
+
+                        <block class="Magento\Catalog\Block\Product\View"
+                               name="product.info.form"
+                               template="Magento_Catalog::product/view/product-form.phtml"
+                        >
+                            <block class="Magento\Catalog\Block\Product\View\Options" name="product.info.options" as="product_options" template="Magento_Catalog::product/view/options/options.phtml">
+                                <block class="Magento\Catalog\Block\Product\View\Options\Type\DefaultType" name="product.info.options.default" as="default" template="Magento_Catalog::product/view/options/type/default.phtml"/>
+                                <block class="Magento\Catalog\Block\Product\View\Options\Type\Text" name="product.info.options.text" as="text" template="Magento_Catalog::product/view/options/type/text.phtml"/>
+                                <block class="Magento\Catalog\Block\Product\View\Options\Type\File" name="product.info.options.file" as="file" template="Magento_Catalog::product/view/options/type/file.phtml"/>
+                                <block class="Magento\Catalog\Block\Product\View\Options\Type\Select" name="product.info.options.select" as="select" template="Magento_Catalog::product/view/options/type/select.phtml"/>
+                                <block class="Magento\Catalog\Block\Product\View\Options\Type\Date" name="product.info.options.date" as="date" template="Magento_Catalog::product/view/options/type/date.phtml"/>
+                                <arguments>
+                                    <argument name="product_view_model" xsi:type="object">Hyva\Theme\ViewModel\ProductPage</argument>
+                                </arguments>
+                            </block>
+                        </block>
+
+                        <block class="Magento\Catalog\Block\ShortcutButtons\InCatalog" name="addtocart.shortcut.buttons" />
+
+                        <container name="product.info.additional" />
                     </block>
 
-                    <block class="Magento\Catalog\Block\Product\View\Gallery" name="product.media" template="Magento_Catalog::product/view/gallery.phtml">
+                    <block class="Magento\Catalog\Block\Product\View\Gallery" name="product.media"
+                           template="Magento_Catalog::product/view/gallery.phtml">
                         <arguments>
-                            <argument name="gallery_options" xsi:type="object">Magento\Catalog\Block\Product\View\GalleryOptions</argument>
+                            <argument name="gallery_options"
+                                      xsi:type="object">Magento\Catalog\Block\Product\View\GalleryOptions
+                            </argument>
                             <argument name="imageHelper" xsi:type="object">Magento\Catalog\Helper\Image</argument>
                         </arguments>
                     </block>
 
+                    <block class="Magento\Catalog\Block\Product\View"
+                           name="product.info.options.wrapper.bottom"
+                           as="product_options_wrapper_bottom"
+                           template="Magento_Catalog::product/view/options/wrapper/bottom.phtml"/>
+
                     <block name="description"
                            template="Magento_Catalog::product/view/description.phtml">
                         <arguments>
-                            <argument name="product_view_model" xsi:type="object">Hyva\Theme\ViewModel\ProductPage</argument>
+                            <argument name="product_view_model" xsi:type="object">Hyva\Theme\ViewModel\ProductPage
+                            </argument>
                         </arguments>
                     </block>
 
@@ -101,7 +150,10 @@
                            template="Magento_Theme::elements/slider.phtml">
                         <arguments>
                             <argument name="type" xsi:type="string">upsell</argument>
-                            <argument name="title" xsi:type="string" translate="true">We found other products you might like!</argument>
+                            <argument name="title" xsi:type="string"
+                                      translate="true">We found other products you might like!
+                            </argument>
+                            <argument name="viewModelStore" xsi:type="object">Hyva\Theme\ViewModel\Store</argument>
                         </arguments>
                     </block>
 
@@ -110,6 +162,7 @@
                         <arguments>
                             <argument name="type" xsi:type="string">related</argument>
                             <argument name="title" xsi:type="string" translate="true">Related Products:</argument>
+                            <argument name="viewModelStore" xsi:type="object">Hyva\Theme\ViewModel\Store</argument>
                         </arguments>
                     </block>
                 </block>
@@ -117,5 +170,8 @@
             </referenceContainer>
 
         </referenceContainer>
+
+        <move element="alert.urls" destination="product.info" as="alert.urls"/>
+
     </body>
 </page>

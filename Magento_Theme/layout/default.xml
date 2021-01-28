@@ -10,7 +10,6 @@
 <page layout="3columns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="after.body.start">
-            <block name="head.js" class="Magento\Framework\View\Element\Template" template="Magento_Theme::html/head/js_variables.phtml" />
             <block class="Magento\Framework\View\Element\FormKey" name="formkey" />
         </referenceContainer>
         <referenceContainer name="page.messages">
@@ -26,8 +25,14 @@
                 </block>
                 <block name="header-search" template="Magento_Theme::html/header/search-form.phtml"/>
                 <block name="cart-drawer" template="Magento_Theme::html/cart/cart-drawer.phtml"/>
-<!--                <block name="topmenu_static" as="topmenu" template="Magento_Theme::html/header/topmenu_static.phtml"/>-->
-                <block name="topmenu_generic" as="topmenu" template="Magento_Theme::html/header/topmenu.phtml" ttl="3600">
+<!--
+                <block name="topmenu_static" as="topmenu" template="Magento_Theme::html/header/topmenu_static.phtml"/>
+-->
+                <block class="Magento\Theme\Block\Html\Topmenu"
+                       name="topmenu_generic"
+                       as="topmenu"
+                       template="Magento_Theme::html/header/topmenu.phtml" ttl="3600"
+                >
                     <arguments>
                         <argument name="viewModelNavigationAsJson"
                                   xsi:type="object">Hyva\Theme\ViewModel\NavigationAsJson
@@ -51,10 +56,10 @@
                 </block>
             </block>
         </referenceContainer>
-        <referenceContainer name="before.body.end">
-            <block name="script-alpine-js" template="Magento_Theme::html/footer_scripts/script-alpine-js.phtml"/>
-            <block name="script-cookies" template="Magento_Theme::html/footer_scripts/script-cookies.phtml"/>
-            <block name="script-private-content" template="Magento_Theme::html/footer_scripts/script-private-content.phtml"/>
+
+        <referenceContainer name="after.body.start">
+            <block class="Magento\Framework\View\Element\Js\Components" name="head.components" as="components" template="Magento_Theme::html/container.phtml"/>
         </referenceContainer>
+        <block class="Magento\Framework\View\Element\Template" name="head.additional" as="head.additional" template="Magento_Theme::html/container.phtml"/>
     </body>
 </page>
