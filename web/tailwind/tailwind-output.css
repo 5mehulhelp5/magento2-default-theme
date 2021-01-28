@@ -526,7 +526,6 @@ video {
       [type='password'],
       [type='number'],
       [type='date'],
-      [type='month'],
       [type='search'],
       [type='tel'],
       [type='time'],
@@ -549,7 +548,7 @@ video {
   line-height: 1.5rem;
 }
 
-[type='text']:focus, [type='email']:focus, [type='url']:focus, [type='password']:focus, [type='number']:focus, [type='date']:focus, [type='month']:focus, [type='search']:focus, [type='tel']:focus, [type='time']:focus, [multiple]:focus, textarea:focus, select:focus {
+[type='text']:focus, [type='email']:focus, [type='url']:focus, [type='password']:focus, [type='number']:focus, [type='date']:focus, [type='search']:focus, [type='tel']:focus, [type='time']:focus, [multiple]:focus, textarea:focus, select:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
   --tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);
@@ -1235,6 +1234,23 @@ section#messages a {
           line-height: 1.5rem;
         }
 
+.modal {
+  /* TODO: add tailwind classes used for cart and modal styles */
+}
+
+.backdrop {
+  --tw-bg-opacity: 1;
+  background-color: rgba(0, 0, 0, var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.25;
+  display: flex;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  z-index: 20;
+}
+
 .snap {
   -ms-scroll-snap-type: x mandatory;
   scroll-snap-type: x mandatory;
@@ -1859,16 +1875,8 @@ body {
   display: table;
 }
 
-.table-caption {
-  display: table-caption;
-}
-
 .grid {
   display: grid;
-}
-
-.contents {
-  display: contents;
 }
 
 .hidden {
@@ -2613,10 +2621,6 @@ body {
   padding-bottom: 1px;
 }
 
-.static {
-  position: static;
-}
-
 .fixed {
   position: fixed;
 }
@@ -2627,11 +2631,6 @@ body {
 
 .relative {
   position: relative;
-}
-
-.sticky {
-  position: -webkit-sticky;
-  position: sticky;
 }
 
 .inset-0 {
@@ -2666,10 +2665,6 @@ body {
   left: -1.5rem;
 }
 
-.resize {
-  resize: both;
-}
-
 * {
   --tw-shadow: 0 0 #0000;
 }
@@ -2691,6 +2686,11 @@ body {
 
 .shadow-xl {
   --tw-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.shadow-2xl {
+  --tw-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
@@ -2886,12 +2886,6 @@ body {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-}
-
-.select-all {
-  -webkit-user-select: all;
-     -moz-user-select: all;
-          user-select: all;
 }
 
 .align-middle {
