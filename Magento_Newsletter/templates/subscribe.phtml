@@ -28,8 +28,7 @@ use Magento\Newsletter\Block\Subscribe;
                    required
                    id="newsletter-subscribe"
                    class="input input-light"
-                   placeholder="<?= $escaper->escapeHtmlAttr(__('Enter your email address')) ?>" type="text"
-            />
+                   placeholder="<?= $escaper->escapeHtmlAttr(__('Enter your email address')) ?>">
             <?= $block->getBlockHtml('formkey') ?>
             <button class="lg:mt-2 xl:mt-0 flex-shrink-0 inline-flex btn btn-primary">
                 <?= $escaper->escapeHtmlAttr(__('Subscribe')) ?>
