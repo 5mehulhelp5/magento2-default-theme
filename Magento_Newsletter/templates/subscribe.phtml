@@ -21,14 +21,15 @@ use Magento\Newsletter\Block\Subscribe;
             <?= $escaper->escapeHtml(__('Newsletter')) ?>
         </div>
         <div class="flex xl:flex-nowrap md:flex-nowrap lg:flex-wrap flex-wrap justify-center md:justify-start">
+            <label for="newsletter-subscribe" class="sr-only">
+                <?= $escaper->escapeHtml(__('Email Address')) ?>
+            </label>
             <input name="email"
-                   type="email"
-                   aria-label="<?= $escaper->escapeHtml(__('Email Address')) ?>"
-                   required
-                   id="newsletter-subscribe"
-                   class="input input-light"
-                   placeholder="<?= $escaper->escapeHtmlAttr(__('Enter your email address')) ?>" type="text"
-            />
+                type="email"
+                required
+                id="newsletter-subscribe"
+                class="input input-light"
+                placeholder="<?= $escaper->escapeHtmlAttr(__('Enter your email address')) ?>">
             <?= $block->getBlockHtml('formkey') ?>
             <button class="lg:mt-2 xl:mt-0 flex-shrink-0 inline-flex btn btn-primary">
                 <?= $escaper->escapeHtmlAttr(__('Subscribe')) ?>
