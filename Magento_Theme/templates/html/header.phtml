@@ -19,7 +19,7 @@ use Magento\Framework\View\Element\Template;
         return {
             searchOpen: false,
             cart: {},
-            getData: function (data) {
+            getData(data) {
                 if (data.cart) { this.cart = data.cart }
             },
             menu: initHeaderNavigation()

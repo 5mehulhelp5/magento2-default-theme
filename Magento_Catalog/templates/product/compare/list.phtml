@@ -1,7 +1,9 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Hyvä Themes - https://hyva.io
+ * Copyright © Hyvä Themes 2020-present. All rights reserved.
+ * This product is licensed per Magento install
+ * See https://hyva.io/license
  */
 
 declare(strict_types=1);
@@ -309,15 +311,6 @@ function initWishlist() {
         </table>
     </div>
 </section>
-<?php if (!$block->isRedirectToCartEnabled()): ?>
-    <script type="text/x-magento-init">
-    {
-        "[data-role=tocart-form]": {
-            "catalogAddToCart": {}
-        }
-    }
-    </script>
-<?php endif; ?>
 <?php else: ?>
 <section>
     <div class="container"><?= $escaper->escapeHtml(__('You have no items to compare.')) ?></div>
