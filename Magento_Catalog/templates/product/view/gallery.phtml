@@ -100,7 +100,8 @@ $mediumHeight = $block->getImageAttribute('product_page_image_medium', 'height',
             </div>
         </div>
         <div id="thumbs" class="flex flex-wrap"
-        :class="{ 'fixed justify-center bottom-0 left-0 right-0 mx-6': fullscreen}" style="min-height: 100px;">
+            :class="{ 'fixed justify-center bottom-0 left-0 right-0 mx-6': fullscreen}"
+            style="min-height: 100px;">
             <template x-for="(image, index) in images" :key="index">
                 <div class="mb-2 mr-2 lg:mr-4 last:mr-0">
                     <a href="#" @click.prevent="setActive(index);"
