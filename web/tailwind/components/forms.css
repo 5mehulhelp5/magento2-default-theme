@@ -4,6 +4,7 @@
 .form-input,
 .form-email,
 .form-select,
+.form-multiselect,
 .form-textarea {
     @apply border-gray-300 rounded-md shadow-sm;
 
