@@ -35,7 +35,7 @@ $productViewModel = $viewModels->require(ProductPage::class);
         return {
             activeProductsPriceData: false,
             getConfiguredTierPrices() {
-                if (this.activeProductsPriceData) {
+                if (this.activeProductsPriceData && this.activeProductsPriceData.tierPrices) {
                     return this.activeProductsPriceData.tierPrices.map((tierPrice) => {
                         return {
                             qty: tierPrice.qty,
