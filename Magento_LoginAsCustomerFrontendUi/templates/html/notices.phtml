@@ -1,0 +1,71 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+$viewFileUrl = $block->getViewFileUrl('Magento_LoginAsCustomerFrontendUi::images/magento-icon.svg');
+?>
+<?php if ($block->getConfig()->isEnabled()): ?>
+    <div class="bg-gray-900"
+         x-data="initLoginAsCustomer()"
+         @private-content-loaded.window="receiveCustomerData(event.detail.data)"
+    >
+        <div class="max-w-7xl mx-auto py-1 px-1 sm:px-6 lg:px-8" x-show="isVisible">
+            <div class="flex items-center justify-between flex-wrap">
+                <div class="w-0 flex-1 flex items-center">
+                    <span class="flex p-2">
+                       <img class="logo-img" src="<?= $escaper->escapeUrl($viewFileUrl) ?>" alt="Magento" />
+                    </span>
+                    <p class="ml-3 font-medium text-white truncate">
+                        <span x-text="notificationText"></span>
+                    </p>
+                </div>
+                <div class="order-2 flex-shrink-0 sm:order-3 sm:ml-3">
+                    <?= $block->getChildHtml('login-as-customer-notice-links') ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        "use strict";
+
+        function initLoginAsCustomer() {
+            return {
+                isVisible: false,
+                adminUserId: null,
+                websiteName: null,
+                fullname: null,
+                notificationText: '',
+                receiveCustomerData: function receiveCustomerData(data) {
+                    if (data.customer) {
+                        this.fullname = data.customer.fullname;
+                    }
+
+                    if (data.loggedAsCustomer) {
+                        this.adminUserId = data.loggedAsCustomer.adminUserId;
+                        this.websiteName = data.loggedAsCustomer.websiteName;
+                    }
+
+                    this.updateBanner();
+                },
+
+                updateBanner: function updateBanner() {
+                    this.isVisible = !!this.adminUserId;
+
+                    if (this.fullname !== undefined && this.websiteName !== undefined) {
+                        this.notificationText = '<?= $escaper->escapeHtml(__('You are connected as <strong>%1</strong> on %2', '%1', '%2'), ['<strong>']) ?>'
+                            .replace('%1', this.fullname)
+                            .replace('%2', this.websiteName);
+                    }
+                }
+            }
+        }
+    </script>
+<?php endif; ?>

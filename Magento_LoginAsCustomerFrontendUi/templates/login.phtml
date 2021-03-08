@@ -1,0 +1,31 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Magento\Framework\Escaper $escaper */
+?>
+
+<div class="loading-mask">
+    <div class="loader">
+        <img src="<?= $escaper->escapeUrl($block->getViewFileUrl('images/loader-1.gif')) ?>"
+             alt="<?= $escaper->escapeHtmlAttr(__('Loading...')) ?>"
+             style="position: absolute;">
+    </div>
+</div>
+
+<script>
+    "use strict";
+
+    window.addEventListener("private-content-loaded", function(event) {
+        var sectionData = event.detail.data;
+        if (sectionData.loggedAsCustomer && sectionData.loggedAsCustomer.adminUserId) {
+            window.location.href = "<?= /* @noEscape */ $block->getUrl('customer/account/index') ?>"
+        }
+    });
+
+    let reloadCustomerDataEvent = new CustomEvent("reload-customer-section-data");
+    window.dispatchEvent(reloadCustomerDataEvent);
+
+</script>
