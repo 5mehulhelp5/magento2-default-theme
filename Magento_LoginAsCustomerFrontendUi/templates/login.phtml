@@ -18,14 +18,17 @@
 <script>
     "use strict";
 
+    // Invalidate existing private content
+    const browserStorage = hyva.getBrowserStorage();
+    if (browserStorage) {
+        browserStorage.removeItem('mage-cache-storage');
+    }
+
     window.addEventListener("private-content-loaded", function(event) {
         var sectionData = event.detail.data;
         if (sectionData.loggedAsCustomer && sectionData.loggedAsCustomer.adminUserId) {
             window.location.href = "<?= /* @noEscape */ $block->getUrl('customer/account/index') ?>"
         }
     });
-
-    let reloadCustomerDataEvent = new CustomEvent("reload-customer-section-data");
-    window.dispatchEvent(reloadCustomerDataEvent);
 
 </script>
