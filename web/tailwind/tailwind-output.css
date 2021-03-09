@@ -1869,6 +1869,10 @@ body {
   border-width: 0px;
 }
 
+.last\:border-b-0:last-child {
+  border-bottom-width: 0px;
+}
+
 .last\:border-b:last-child {
   border-bottom-width: 1px;
 }
@@ -2408,6 +2412,10 @@ body {
 
 .max-w-full {
   max-width: 100%;
+}
+
+.max-w-prose {
+  max-width: 65ch;
 }
 
 .max-w-screen-2xl {
