@@ -20,10 +20,10 @@ use Magento\Framework\View\Element\Template;
             itemId: '<?= (int)$block->getRequest()->getParam('id') ?>',
             allowedAttributeOptions: [],
             selectedValues: [],
-            findSimpleIndex: function findSimpleIndex () {
+            findSimpleIndex () {
                 var productIndexes = this.optionConfig.index;
                 var $this = this;
-                this.productIndex = Object.keys(productIndexes).find(function(productIndex) {
+                this.productIndex = Object.keys(productIndexes).find(productIndex => {
                     var currentProductIndex = productIndexes[productIndex];
 
                     for (var productOption in currentProductIndex) {
@@ -38,9 +38,9 @@ use Magento\Framework\View\Element\Template;
                 });
             },
             productIndex: 0,
-            findAllowedAttributeOptions: function findAllowedAttributeOptions() {
+            findAllowedAttributeOptions() {
                 var allAttributes = this.optionConfig.attributes;
-                var allAttributesSorted = Object.values(allAttributes).sort(function (a,b) {
+                var allAttributesSorted = Object.values(allAttributes).sort((a,b) => {
                     return a.position - b.position
                 });
                 var previousOption = false;
@@ -66,17 +66,17 @@ use Magento\Framework\View\Element\Template;
                 });
                 this.allowedAttributeOptions = newAllowedAttributeOptions;
             },
-            getAllowedAttributeOptions: function getAllowedAttributeOptions(attributeId) {
+            getAllowedAttributeOptions(attributeId) {
                 return this.allowedAttributeOptions[attributeId] || []
             },
-            changeOption: function changeOption (optionId, value) {
+            changeOption(optionId, value) {
                 this.selectedValues[optionId] = value;
                 this.findSimpleIndex();
                 this.findAllowedAttributeOptions();
                 this.updatePrices();
                 this.updateGallery();
             },
-            updatePrices: function updatePrices () {
+            updatePrices() {
                 var value = this.productIndex ?
                     this.optionConfig.optionPrices[this.productIndex] :
                     this.optionConfig.prices;
@@ -87,7 +87,7 @@ use Magento\Framework\View\Element\Template;
                     )
                 );
             },
-            updateGallery: function updateGallery () {
+            updateGallery () {
                 var value = this.productIndex ?
                     this.optionConfig.images[this.productIndex] :
                     Object.values(this.optionConfig.images)[0];
