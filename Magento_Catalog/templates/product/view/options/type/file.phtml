@@ -15,15 +15,19 @@ use Magento\Catalog\Block\Product\View\Options\Type\File;
 /** @var File $block */
 /** @var Escaper $escaper */
 /** @var SecureHtmlRenderer $secureRenderer */
-?>
-<?php $option = $block->getOption(); ?>
-<?php $fileInfo = $block->getFileInfo(); ?>
-<?php $fileExists = $fileInfo->hasData(); ?>
-<?php $fileName = 'options_' . $escaper->escapeHtmlAttr($option->getId()) . '_file'; ?>
-<?php $fieldNameAction = $fileName . '_action'; ?>
-<?php $fieldValueAction = $fileExists ? 'save_old' : 'save_new'; ?>
-<?php $fileNamed = $fileName . '_name'; ?>
 
+$option = $block->getOption();
+$fileInfo = $block->getFileInfo();
+$fileExists = $fileInfo->hasData();
+$fileName = 'options_' . $escaper->escapeHtmlAttr($option->getId()) . '_file';
+$fieldNameAction = $fileName . '_action';
+$fieldValueAction = $fileExists ? 'save_old' : 'save_new';
+$fileNamed = $fileName . '_name';
+
+$isPercentage = $option->getPriceType() === 'percent';
+$optionPrice = $isPercentage ? $option->getPrice() : $block->getPrice($option->getPrice(), true);
+
+?>
 <div class="flex border-t border-gray-300 py-2 last:mb-6 last:border-b w-full items-center">
     <label class="label text-gray-700 text-left w-1/2"
            for="options_<?= $escaper->escapeHtmlAttr($option->getId()) ?>_text">
@@ -59,7 +63,7 @@ use Magento\Catalog\Block\Product\View\Options\Type\File;
                class="product-custom-option form-file"
             <?= $fileExists ? 'disabled="disabled"' : '' ?>
             <?= $option->getIsRequire() ? 'required' : '' ?>
-               data-price-amount="<?= $escaper->escapeHtmlAttr($option->getPrice()) ?>"
+               data-price-amount="<?= $escaper->escapeHtmlAttr($optionPrice) ?>"
                data-price-type="<?= $escaper->escapeHtmlAttr($option->getPriceType()) ?>"
                x-ref="option-<?= $escaper->escapeHtmlAttr($option->getId()) ?>"
                x-on:change="updateCustomOptionValue(

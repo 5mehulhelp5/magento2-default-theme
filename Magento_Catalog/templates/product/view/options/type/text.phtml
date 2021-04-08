@@ -17,7 +17,8 @@ use Magento\Framework\Escaper;
 /** @var Escaper $escaper */
 /** @var Option $option */
 $option = $block->getOption();
-
+$isPercentage = $option->getPriceType() === 'percent';
+$optionPrice = $isPercentage ? $option->getPrice() : $block->getPrice($option->getPrice(), true);
 ?>
 
 <div class="flex border-t border-gray-300 py-2 last:mb-6 last:border-b w-full items-center">
@@ -41,7 +42,7 @@ $option = $block->getOption();
                    value="<?= $escaper->escapeHtml($block->getDefaultValue()) ?>"
                    maxlength="<?= (int)$option->getMaxCharacters() ?>"
                    <?= $option->getIsRequire() ? 'required' : '' ?>
-                   data-price-amount="<?= $escaper->escapeHtmlAttr($option->getPrice()) ?>"
+                   data-price-amount="<?= $escaper->escapeHtmlAttr($optionPrice) ?>"
                    data-price-type="<?= $escaper->escapeHtmlAttr($option->getPriceType()) ?>"
                    x-ref="option-<?= $escaper->escapeHtmlAttr($option->getId()) ?>"
                    x-on:input="updateCustomOptionValue(
@@ -58,7 +59,7 @@ $option = $block->getOption();
                       name="options[<?= $escaper->escapeHtmlAttr($option->getId()) ?>]"
                       rows="5"
                       cols="25"
-                      data-price-amount="<?= $escaper->escapeHtmlAttr($option->getPrice()) ?>"
+                      data-price-amount="<?= $escaper->escapeHtmlAttr($optionPrice) ?>"
                       data-price-type="<?= $escaper->escapeHtmlAttr($option->getPriceType()) ?>"
                       x-ref="option-<?= $escaper->escapeHtmlAttr($option->getId()) ?>"
                       x-on:input="updateCustomOptionValue(

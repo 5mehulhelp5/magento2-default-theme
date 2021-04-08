@@ -14,6 +14,7 @@ use Magento\Catalog\Block\Product\View;
 use Magento\Catalog\Model\Product;
 use Magento\Catalog\Pricing\Price\FinalPrice;
 use Magento\Catalog\Pricing\Price\RegularPrice;
+use Magento\Catalog\Pricing\Price\TierPrice;
 use Magento\Framework\Escaper;
 use Magento\Framework\Pricing\Helper\Data as PriceHelper;
 
@@ -36,7 +37,16 @@ $priceHelper = $this->helper(PriceHelper::class);
 $priceInfo = $product->getPriceInfo();
 $regularPrice = $priceInfo->getPrice(RegularPrice::PRICE_CODE)->getAmount()->getValue();
 $finalPrice = $priceInfo->getPrice(FinalPrice::PRICE_CODE)->getAmount()->getValue();
-
+$tierPrices = $priceInfo->getPrice(TierPrice::PRICE_CODE)->getTierPriceList();
+$tierPrices =
+    array_map(
+        function ($a, $b) {
+            $b['website_price'] = $b['price']->getValue();
+            return $b;
+        },
+        array_keys($tierPrices),
+        array_values($tierPrices)
+    );
 ?>
 <script>
     function initPrice<?= (int) $product->getId() ?>() {
@@ -45,7 +55,7 @@ $finalPrice = $priceInfo->getPrice(FinalPrice::PRICE_CODE)->getAmount()->getValu
             initialFinalPrice: <?= (float)$finalPrice ?>,
             calculatedFinalPrice: false,
             calculatedFinalPriceWithCustomOptions: false,
-            initialTierPrices: <?= /** @noEscape */ json_encode($product->getTierPrice()) ?>,
+            initialTierPrices: <?= /** @noEscape */ json_encode($tierPrices) ?>,
             showRegularPriceLabel: <?= ($product->getFinalPrice() < $regularPrice) ? 'true' : 'false' ?>,
             customOptionPrices: [],
             activeCustomOptions: [],
