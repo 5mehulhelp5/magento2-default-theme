@@ -7,6 +7,7 @@
  */
 
 use Hyva\Theme\Model\ViewModelRegistry;
+use Hyva\Theme\ViewModel\BlockCache;
 use Hyva\Theme\ViewModel\ProductPage;
 use Magento\Catalog\Block\Product\ListProduct;
 use Magento\Framework\Escaper;
@@ -17,8 +18,10 @@ use Magento\Framework\Escaper;
 /** @var Escaper $escaper */
 /** @var ViewModelRegistry $viewModels */
 /** @var ProductPage $productViewModel */
+/** @var BlockCache $blockCacheViewModel */
 
-$productViewModel = $viewModels->require(ProductPage::class);
+$productViewModel    = $viewModels->require(ProductPage::class);
+$blockCacheViewModel = $viewModels->require(BlockCache::class);
 
 $productCollection = $block->getLoadedProductCollection();
 ?>
@@ -72,8 +75,7 @@ $productCollection = $block->getLoadedProductCollection();
                     ->setData('template_type', $templateType)
                     ->setData('cache_lifetime', 3600)
                     ->setData('cache_tags', $product->getIdentities())
-                    ->setData('cache_key', $productViewModel->hashCacheKeyInfo($itemCacheKeyInfo))
-
+                    ->setData('cache_key', $blockCacheViewModel->hashCacheKeyInfo($itemCacheKeyInfo))
                     ->toHtml(); ?>
             <?php endforeach; ?>
         </div>
