@@ -199,7 +199,7 @@ $displayPriceExclTax = $viewModelItemOutput->isItemPriceExclTax();
                                 class="form-input px-2 py-2 w-20 text-center"
                                 max="99"
                                 min="1"
-                                x-on:change.debounce.1000="mutateItemQty(item.id, $event.target.value);"
+                                x-on:input.debounce.1000="mutateItemQty(item.id, $event.target.value);"
                             />
                         </div>
                     </div>
