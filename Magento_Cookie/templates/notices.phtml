@@ -53,6 +53,7 @@ if ($cookieHelper->isCookieRestrictionModeEnabled()): ?>
                 } else {
                     window.dispatchEvent(new CustomEvent('user-allowed-save-cookie'));
                 }
+                window.dispatchEvent(new CustomEvent('user-allowed-save-cookie'));
             }
         }
     }
