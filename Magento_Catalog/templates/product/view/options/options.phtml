@@ -8,6 +8,7 @@
 
 use Hyva\Theme\Model\ViewModelRegistry;
 use Hyva\Theme\ViewModel\ProductPage;
+use Hyva\Theme\ViewModel\ProductPrice;
 use Magento\Catalog\Block\Product\View\Options;
 use Magento\Catalog\Model\Product\Option;
 use Magento\Framework\Escaper;
@@ -20,6 +21,13 @@ use Magento\Framework\Escaper;
 /** @var ProductPage $productViewModel */
 $productViewModel = $viewModels->require(ProductPage::class);
 
+$product = $block->getProduct();
+
+/** @var ProductPrice $productPriceViewModel */
+$productPriceViewModel = $viewModels->require(ProductPrice::class);
+
+$displayTax = $productPriceViewModel->displayPriceIncludingTax();
+
 $options = $block->decorateArray($block->getOptions());
 
 ?>
@@ -28,8 +36,10 @@ $options = $block->decorateArray($block->getOptions());
         function initOptions() {
             return {
                 optionConfig: <?= /* @noEscape */ $block->getJsonConfig() ?>,
+                regularPriceKey: '<?= /* @noEscape */ $displayTax ? 'oldPrice' : 'baseOldPrice' ?>',
+                finalPriceKey: '<?= /* @noEscape */ $displayTax ? 'finalPrice' : 'basePrice' ?>',
                 productFinalPrice: false,
-                customOptionPrices: [],
+                customOptionPrices: {},
                 refs: [],
                 formatPrice(value, showSign) {
                     var formatter = new Intl.NumberFormat(
@@ -87,7 +97,7 @@ $options = $block->decorateArray($block->getOptions());
 
                     const optionElement = this.refs && this.refs['option-'+customOptionCode];
 
-                    let price = customOption.prices.finalPrice.amount;
+                    let price = customOption.prices[this.finalPriceKey].amount;
 
                     if (this.productFinalPrice &&
                         optionElement &&
@@ -109,11 +119,22 @@ $options = $block->decorateArray($block->getOptions());
                         case 'file':
                             active = !!target.value;
                         break;
-                        case 'checkbox':
-                            active = target.checked;
+                        case 'hidden':
+                            // when we're configuring an item in the cart that already has an attachment
+                            // this is only needed on page-initialization
+                            active = (target.value === 'save_old')
+                        break;
+                        case 'select-one':
+                        case 'select-multiple':
+                            Array.from(target.options).forEach(option => {
+                                customOptionId = option.dataset.optionId;
+                                active = option.selected;
+                                $dispatch('update-custom-option-active', { customOptionId, active });
+                            });
+                            return;
                         break;
                         case 'radio':
-                            document.querySelectorAll('input[name="'+target.name+'"]').forEach(input => {
+                            target.checked && document.querySelectorAll('input[name="'+target.name+'"]').forEach(input => {
                                 // unset sibling radio buttons
                                 input.dataset &&
                                 input.dataset.optionId &&
@@ -124,10 +145,32 @@ $options = $block->decorateArray($block->getOptions());
                                     }
                                 );
                             })
+                        // DO NOT BREAK
+                        // Checkbox case should also run for Radio
+                        case 'checkbox':
+                            const requiredOptions = document
+                                .querySelectorAll('input[name="'+target.name+'"][data-required]');
+                            const checkedOptionsQty = Array.from(requiredOptions)
+                                .filter(option => option.checked).length;
+
+                            requiredOptions.forEach(input => {
+                                if(checkedOptionsQty) {
+                                    input.required = false;
+                                    input.setCustomValidity('');
+                                } else {
+                                    input.required = false;
+                                    input.setCustomValidity(input.dataset.validationMessage);
+                                }
+                            });
                             active = target.checked;
                         break;
                     }
                     $dispatch('update-custom-option-active', { customOptionId, active });
+                },
+                initSelectedOptions($dispatch) {
+                    Array.from(document.querySelectorAll('.product-custom-option')).forEach(customOption => {
+                        this.updateCustomOptionValue($dispatch, customOption.dataset.optionId, customOption);
+                    })
                 },
                 eventListeners: {
                     ['@update-product-final-price.window'](event) {
@@ -144,7 +187,7 @@ $options = $block->decorateArray($block->getOptions());
     <div x-data="initOptions()"
          x-init="
             refs = $refs;
-            $nextTick(() => { calculateOptionPrices() })
+            $nextTick(() => { calculateOptionPrices(); initSelectedOptions($dispatch); })
          "
          x-spread="eventListeners"
          class="mb-6">

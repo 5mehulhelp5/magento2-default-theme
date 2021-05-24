@@ -8,22 +8,31 @@
 
 declare(strict_types=1);
 
+use Hyva\Theme\Model\ViewModelRegistry;
+use Hyva\Theme\ViewModel\ProductPrice;
+use Magento\Catalog\Pricing\Price\CustomOptionPrice;
 use Magento\Framework\Escaper;
 use Magento\Framework\View\Helper\SecureHtmlRenderer;
 use Magento\Catalog\Block\Product\View\Options\Type\File;
 
 /** @var File $block */
 /** @var Escaper $escaper */
+/** @var ViewModelRegistry $viewModels */
 /** @var SecureHtmlRenderer $secureRenderer */
-?>
-<?php $option = $block->getOption(); ?>
-<?php $fileInfo = $block->getFileInfo(); ?>
-<?php $fileExists = $fileInfo->hasData(); ?>
-<?php $fileName = 'options_' . $escaper->escapeHtmlAttr($option->getId()) . '_file'; ?>
-<?php $fieldNameAction = $fileName . '_action'; ?>
-<?php $fieldValueAction = $fileExists ? 'save_old' : 'save_new'; ?>
-<?php $fileNamed = $fileName . '_name'; ?>
 
+$product = $block->getProduct();
+$option = $block->getOption();
+$fileInfo = $block->getFileInfo();
+$fileExists = $fileInfo->hasData();
+$fileName = 'options_' . $escaper->escapeHtmlAttr($option->getId()) . '_file';
+$fieldNameAction = $fileName . '_action';
+$fieldValueAction = $fileExists ? 'save_old' : 'save_new';
+$fileNamed = $fileName . '_name';
+
+/** @var ProductPrice $productPriceViewModel */
+$productPriceViewModel = $viewModels->require(ProductPrice::class);
+$optionPrice = $productPriceViewModel->getCustomOptionPrice($option, CustomOptionPrice::PRICE_CODE, $product);
+?>
 <div class="flex border-t border-gray-300 py-2 last:mb-6 last:border-b w-full items-center">
     <label class="label text-gray-700 text-left w-1/2"
            for="options_<?= $escaper->escapeHtmlAttr($option->getId()) ?>_text">
@@ -38,13 +47,21 @@ use Magento\Catalog\Block\Product\View\Options\Type\File;
 
     <?php if ($fileExists):?>
     <div class="ml-2 text-gray-900 text-left w-1/2">
-        <span class="<?= /* @noEscape */ $fileNamed ?>"><?= $escaper->escapeHtml($fileInfo->getTitle()) ?></span>
+        <span class="<?= /* @noEscape */ $fileNamed ?> inline-block my-2 mr-2">
+            <?= $escaper->escapeHtml($fileInfo->getTitle()) ?>
+        </span>
         <a href="#"
-           class="btn btn-secondary inline-block ml-2"
+           class="btn btn-secondary inline-block"
            id="change-<?= /* @noEscape */ $fileName ?>"
-           @click.prevent="$event.target.parentNode.remove();
+           @click.prevent="
+                // delete this button
+                $event.target.parentNode.remove();
+                // show file upload
                 document.getElementById('input-box-<?= /* @noEscape */ $fileName ?>').style.display = 'block';
-                $refs['option-<?= $escaper->escapeHtmlAttr($option->getId()) ?>'].disabled = false;"
+                $refs['option-<?= $escaper->escapeHtmlAttr($option->getId()) ?>'].disabled = false;
+                // update hidden upload field
+                $refs['option-<?= $escaper->escapeHtmlAttr($option->getId()) ?>-hidden']
+                    .dispatchEvent(new Event('image-removed'));"
         >
             <?= $escaper->escapeHtml(__('Change')) ?>
         </a>
@@ -58,19 +75,35 @@ use Magento\Catalog\Block\Product\View\Options\Type\File;
                id="<?= /* @noEscape */ $fileName ?>"
                class="product-custom-option form-file"
             <?= $fileExists ? 'disabled="disabled"' : '' ?>
-            <?= $option->getIsRequire() ? 'required' : '' ?>
-               data-price-amount="<?= $escaper->escapeHtmlAttr($option->getPrice()) ?>"
+            <?php if ($option->getIsRequire()): ?>
+                required
+                oninvalid="this.setCustomValidity('<?= $escaper
+                    ->escapeHtmlAttr( __("Please select a file.")) ?>')"
+                oninput="this.setCustomValidity('')"
+            <?php endif; ?>
+               data-price-amount="<?= $escaper->escapeHtmlAttr($optionPrice) ?>"
                data-price-type="<?= $escaper->escapeHtmlAttr($option->getPriceType()) ?>"
+               data-option-id="<?= $escaper->escapeHtmlAttr($option->getId()) ?>"
                x-ref="option-<?= $escaper->escapeHtmlAttr($option->getId()) ?>"
                x-on:change="updateCustomOptionValue(
                     $dispatch,
                     '<?= $escaper->escapeHtmlAttr($option->getId()) ?>',
                     $event.target
                 )"
-
         />
         <input type="hidden" name="<?= /* @noEscape */ $fieldNameAction ?>"
-               value="<?= /* @noEscape */ $fieldValueAction ?>" />
+               x-ref="option-<?= $escaper->escapeHtmlAttr($option->getId()) ?>-hidden"
+               class="product-custom-option hidden-form-file"
+               data-price-amount="<?= $escaper->escapeHtmlAttr($option->getPrice()) ?>"
+               data-price-type="<?= $escaper->escapeHtmlAttr($option->getPriceType()) ?>"
+               data-option-id="<?= $escaper->escapeHtmlAttr($option->getId()) ?>"
+               value="<?= /* @noEscape */ $fieldValueAction ?>"
+               @image-removed="$event.target.value = 'save_new'; updateCustomOptionValue(
+                    $dispatch,
+                    '<?= $escaper->escapeHtmlAttr($option->getId()) ?>',
+                    $event.target
+                )"
+        />
         <?php if ($option->getFileExtension()):?>
             <p class="my-2 text-sm">
                 <?= $escaper->escapeHtml(__('Compatible file extensions to upload')) ?>:
