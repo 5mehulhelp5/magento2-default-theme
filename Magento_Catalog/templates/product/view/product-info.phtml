@@ -67,26 +67,32 @@ $product = $productViewModel->getProduct();
 
     <?= $block->getChildHtml('product.info.form') ?>
 
+    <div class="my-4">
+        <?= $block->getChildHtml("product.info.price") ?>
+    </div>
+
     <div class="flex flex-col items-end sm:flex-row">
 
-        <?= $block->getChildHtml("product.info.price") ?>
-
-        <div class="flex mt-4 ml-auto sm:mt-0">
+        <div class="flex mt-4 mr-auto sm:mt-0">
             <?php if ($product->isSaleable()): ?>
                 <?= $block->getChildHtml("product.info.quantity") ?>
                 <?= $block->getChildHtml("product.info.addtocart") ?>
             <?php endif; ?>
-
-            <?= $block->getChildHtml('product.info.addtowishlist'); ?>
-            <?= $block->getChildHtml('product.info.addtocompare'); ?>
         </div>
+        <?php if ($product->isSaleable()): ?>
+            <div class="flex mt-4 ml-auto">
+                <?= $block->getChildHtml('addtocart.shortcut.buttons') ?>
+            </div>
+        <?php endif; ?>
     </div>
 
-    <?php if ($product->isSaleable()): ?>
-        <div class="flex mt-4 ml-auto justify-end">
-            <?= $block->getChildHtml('addtocart.shortcut.buttons') ?>
-        </div>
-    <?php endif; ?>
+
+
+    <div class="flex mt-4 justify-end">
+        <?= $block->getChildHtml('product.info.addtowishlist'); ?>
+        <?= $block->getChildHtml('product.info.addtocompare'); ?>
+        <?= $block->getChildHtml('product.info.emailtofriend'); ?>
+    </div>
 
     <?php if ($tierPriceBlock = $block->getChildHtml("product.price.tier")): ?>
         <div class="py-4 my-2 tier-price-container">
