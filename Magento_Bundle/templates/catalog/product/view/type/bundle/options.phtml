@@ -43,40 +43,7 @@ $finalPrice = $productPriceViewModel->getPriceValue(BasePrice::PRICE_CODE, $prod
             <script>
                 const qtyHelper = (() => {
                     return {
-                        getQtyValue(optionId, defaultQty, optionConfig, activeSelectOptions) {
-                            const activeSelectOption = activeSelectOptions[optionId];
-                            if (!activeSelectOption || !activeSelectOption.length) {
-                                return defaultQty;
-                            }
-                            const selectionConfig = optionConfig
-                                .options[optionId]
-                                .selections[activeSelectOption[0]];
-
-                            return selectionConfig ? selectionConfig.qty : "0";
-
-                        },
-                        getQtyDisabled(optionId, optionConfig, activeSelectOptions) {
-                            const activeSelectOption = activeSelectOptions[optionId];
-                            if (!activeSelectOption || !activeSelectOption.length) {
-                                return true;
-                            }
-                            const selectionConfig = optionConfig
-                                .options[optionId]
-                                .selections[activeSelectOption[0]];
-
-                            return !selectionConfig || selectionConfig.customQty === "0";
-                        },
-                        setQtyValue(optionId,optionConfig, activeSelectOptions, value) {
-                            const activeSelectOption = activeSelectOptions[optionId];
-                            if (!activeSelectOption || !activeSelectOption.length) {
-                                return;
-                            }
-                            const selectionConfig = optionConfig
-                                .options[optionId]
-                                .selections[activeSelectOption[0]];
-
-                            selectionConfig.qty = value;
-                        }
+ 
                     }
                 })();
             </script>
@@ -227,6 +194,40 @@ $finalPrice = $productPriceViewModel->getPriceValue(BasePrice::PRICE_CODE, $prod
                                     }
                                 )
                             );
+                        },
+                        getQtyValue(optionId, defaultQty, optionConfig, activeSelectOptions) {
+                            const activeSelectOption = activeSelectOptions[optionId];
+                            if (!activeSelectOption || !activeSelectOption.length) {
+                                return defaultQty;
+                            }
+                            const selectionConfig = optionConfig
+                                .options[optionId]
+                                .selections[activeSelectOption[0]];
+
+                            return selectionConfig ? selectionConfig.qty : "0";
+
+                        },
+                        getQtyDisabled(optionId, optionConfig, activeSelectOptions) {
+                            const activeSelectOption = activeSelectOptions[optionId];
+                            if (!activeSelectOption || !activeSelectOption.length) {
+                                return true;
+                            }
+                            const selectionConfig = optionConfig
+                                .options[optionId]
+                                .selections[activeSelectOption[0]];
+
+                            return !selectionConfig || selectionConfig.customQty === "0";
+                        },
+                        setQtyValue(optionId,optionConfig, activeSelectOptions, value) {
+                            const activeSelectOption = activeSelectOptions[optionId];
+                            if (!activeSelectOption || !activeSelectOption.length) {
+                                return;
+                            }
+                            const selectionConfig = optionConfig
+                                .options[optionId]
+                                .selections[activeSelectOption[0]];
+
+                            selectionConfig.qty = value;
                         }
                     }
                 }
