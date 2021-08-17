@@ -43,53 +43,65 @@ $heroicons = $viewModels->require(HeroiconsOutline::class);
 $uniqueId = '_' . uniqid();
 $query = $block->getGraphqlQuery();
 $title = 'Recently Viewed Products';
-$widgetAttrbutesToShow = explode(',', $this->getdata('show_attributes'));
-$widgetButtonsToShow = explode(',', $this->getdata('show_buttons'));
+
+
+$widgetAttributesToShow = explode(',', $this->getData('show_attributes'));
+$widgetButtonsToShow = explode(',', $this->getData('show_buttons'));
 ?>
     <script>
-        function initSliderComponent<?= /** @noEscape */$uniqueId ?>() {
+        function putDataInLocalStorage(data){
 
-            // Recently Viewed products Data being put into the local storage
-            now = new Date();
-            sku = '<?php echo $viewModelProducts->getProduct()->getSku(); ?>';
-            productsExpiry = <?php echo $viewModelProducts->getRecentlyViewedLifeTime(); ?>;
-            productsExpiry = productsExpiry * 1000;
-            expiry = now.getTime() + productsExpiry;
-            localStorageData = sku + ' ' + expiry;
-
-            // localStorage.removeItem('recently_viewed_skus');
-
-            if(localStorage.getItem('recently_viewed_skus')){
-                // flush the local storage by getting rid of expired products
-                cleanlocalStorageData = '';
-                recentlyViewedSkusArray = localStorage.getItem('recently_viewed_skus').split(",");
-                recentlyViewedSkusArray.forEach(function myFunction(skuData,key){
-                    tempSplitedArray  = skuData.split(" ");
-                    if(now.getTime() < tempSplitedArray[1]){
-                        cleanlocalStorageData = cleanlocalStorageData + ',' + tempSplitedArray[0] + ' ' + tempSplitedArray[1];
-                    }
-                });
-                cleanlocalStorageData = cleanlocalStorageData.replace(/[,]/, '');
-                localStorage.removeItem('recently_viewed_skus');
-                localStorage.setItem('recently_viewed_skus', cleanlocalStorageData);
-                recentlyViewedSkusArray = null;
-
-                // avoind adding the already added sku in the local storage
-                isExisted = false;
-                recentlyViewedSkusArray = localStorage.getItem('recently_viewed_skus').split(",");
-                recentlyViewedSkusArray.forEach(function myFunction(skuData,key){
-                    tempSplitedArray  = skuData.split(" ");
-                    if(tempSplitedArray[0] == sku){
-                        isExisted = true;
-                    }
-                });
-                if(!isExisted){
-                    localStorageData = localStorage.getItem('recently_viewed_skus') + ',' + localStorageData;
-                    localStorage.setItem('recently_viewed_skus', localStorageData);
-                }
+            let localStorageDataToPut = data['current_product_sku'] + ' ' + data['expiry'];
+            if(!localStorage.getItem('recently_viewed_skus')){
+                localStorage.setItem('recently_viewed_skus', localStorageDataToPut);
             }else{
-                localStorage.setItem('recently_viewed_skus', localStorageData);
+                /***
+                * Remove expired products in the local storage and avoid adding sku already in the storage
+                ***/
+
+                var updatedlocalStorageData = '';
+                let recentlyViewedSkusArray = localStorage.getItem('recently_viewed_skus').split(",");
+                let skuAlreadyInList = false;
+                
+                recentlyViewedSkusArray.forEach(function myFunction(skuData,key){
+                    // split each product's sku and expiry data
+                    let tempSplitArray  = skuData.split(" ");
+                    let now = new Date();
+                    if(tempSplitArray[0] == data['current_product_sku']){
+                        skuAlreadyInList = true;
+                    }
+                    if(tempSplitArray[1] > now.getTime()){
+                        updatedlocalStorageData +=  ',' + tempSplitArray[0] + ' ' + tempSplitArray[1];
+                    }
+                });
+                updatedlocalStorageData = updatedlocalStorageData.replace(/[,]/, '');
+
+                localStorage.removeItem('recently_viewed_skus');
+
+                // Avoid adding sku already in the storage
+                if(!skuAlreadyInList){
+                    // if sku not already in list, append current product's data in the list
+                    localStorageDataToPut =  localStorageDataToPut + ',' + updatedlocalStorageData;
+                    localStorage.setItem('recently_viewed_skus', localStorageDataToPut);
+                }else{
+                    localStorage.setItem('recently_viewed_skus', updatedlocalStorageData);
+                }
             }
+        }
+        function createLocalStorageData(){
+            // get current product sku and calculate its expiry from local storage
+            let currentProductData = [];
+            currentProductData['current_product_sku'] = '<?php echo $viewModelProducts->getProduct()->getSku(); ?>';
+            let now = new Date();
+            let lifeTimeOfProducts = <?php echo $viewModelProducts->getRecentlyViewedLifeTime(); ?>;
+            lifeTimeOfProducts = lifeTimeOfProducts * 1000;
+            let expiry = now.getTime() + lifeTimeOfProducts;
+            currentProductData['expiry'] = expiry;
+            return currentProductData;
+        }
+        function initSliderComponent<?= /** @noEscape */$uniqueId ?>() {
+            // Recently Viewed Products' data adding into the local storage
+            putDataInLocalStorage(createLocalStorageData());
 
             return {
                 active: 0,
@@ -97,7 +109,6 @@ $widgetButtonsToShow = explode(',', $this->getdata('show_buttons'));
                 currency: [],
                 currentProductSku: '<?php echo $viewModelProducts->getProduct()->getSku(); ?>',
                 noOfProductsToShow: <?php echo $this->getData('page_size'); ?>,
-                recentlyViewedLifetime: <?php echo $viewModelProducts->getRecentlyViewedLifeTime(); ?>,
                 loading: true,
                 minHeight() {
                     return 'min-height: ' + ((this.loading && '491px') || 0);
@@ -106,11 +117,12 @@ $widgetButtonsToShow = explode(',', $this->getdata('show_buttons'));
                 getProducts($nextTick) {
                     /* Fetching Products from local storage */
                     recentlyViewedSkusArray = localStorage.getItem('recently_viewed_skus').split(",");
+                    // In order to show the most recent product first, the array is reversed
                     recentlyViewedSkusArray = recentlyViewedSkusArray.reverse();
                     noOfProductsToShow = this.noOfProductsToShow;
                     currentProductSku = this.currentProductSku;
                     itemsToFetch = [];
-
+                    
                     recentlyViewedSkusArray.forEach(function myFunction(skuData,key){
                         tempSplitedArray  = skuData.split(" ");
                         /* avoid showing the current product */
@@ -312,7 +324,7 @@ $widgetButtonsToShow = explode(',', $this->getdata('show_buttons'));
                         <template x-for="product in products">
                             <div class="flex-none w-full py-1 js_slide md:w-1/2 lg:w-1/3 xl:w-1/4">
                                 <div class="mx-1 card card-interactive">
-                                    <?php if(in_array("image", $widgetAttrbutesToShow)): ?>
+                                    <?php if(in_array("image", $widgetAttributesToShow)): ?>
                                         <a :href="'<?= $escaper->escapeUrl($block->getBaseUrl()) ?>' +
                                             product.url_key + (product.url_suffix || '')"
                                         class="relative flex items-center bg-white product photo product-item-photo"
@@ -330,7 +342,7 @@ $widgetButtonsToShow = explode(',', $this->getdata('show_buttons'));
                                             </span>
                                         </a>
                                     <?php endif ?>
-                                    <?php if(in_array("name", $widgetAttrbutesToShow)): ?>
+                                    <?php if(in_array("name", $widgetAttributesToShow)): ?>
                                         <p class="flex items-center justify-center px-1 pt-3 text-primary">
                                             <a class="truncate product-item-link"
                                             :href="'<?= $escaper->escapeUrl($block->getBaseUrl()) ?>' +
@@ -340,12 +352,12 @@ $widgetButtonsToShow = explode(',', $this->getdata('show_buttons'));
                                             </a>
                                         </p>
                                     <?php endif ?>
-                                    <?php if(in_array("price", $widgetAttrbutesToShow)): ?>
+                                    <?php if(in_array("price", $widgetAttributesToShow)): ?>
                                         <p class="pt-1 text-lg text-center text-gray-900"
                                         x-text="hyva.formatPrice(product.price_range.minimum_price.final_price.value)"></p>
                                     <?php endif ?>
                                         <p class="flex flex-wrap gap-2 inline p-3">
-                                            <?php if(in_array("learn_more", $widgetAttrbutesToShow)): ?>
+                                            <?php if(in_array("learn_more", $widgetAttributesToShow)): ?>
                                                 <a class="justify-center w-auto mr-auto btn btn-primary"
                                                 :href="'<?= $escaper->escapeUrl($block->getBaseUrl()) ?>' +
                                                         product.url_key + (product.url_suffix || '')">
