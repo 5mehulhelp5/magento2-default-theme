@@ -19,7 +19,6 @@ use Hyva\Theme\ViewModel\ProductPage;
 use Magento\Framework\Escaper;
 use Magento\Framework\View\Element\Template;
 
-/** @var Template $block */
 /** @var Escaper $escaper */
 /** @var ViewModelRegistry $viewModels */
 
@@ -38,15 +37,13 @@ $compareViewModel = $viewModels->require(ProductCompare::class);
 /** @var HeroiconsOutline $heroicons */
 $heroicons = $viewModels->require(HeroiconsOutline::class);
 
-/** @var Escaper $escaper */
-/** @var Template $block */
 $uniqueId = '_' . uniqid();
 $query = $block->getGraphqlQuery();
-$title = 'Recently Viewed Products';
+$title = __('Recently Viewed Products');
 
 
-$widgetAttributesToShow = explode(',', $this->getData('show_attributes'));
-$widgetButtonsToShow = explode(',', $this->getData('show_buttons'));
+$widgetAttributesToShow = explode(',', $block->getData('show_attributes'));
+$widgetButtonsToShow = explode(',', $block->getData('show_buttons'));
 $currentProductSku = $viewModelProducts->getProduct() ? $viewModelProducts->getProduct()->getSku() : 'false';
 ?>
     <script>
@@ -58,14 +55,14 @@ $currentProductSku = $viewModelProducts->getProduct() ? $viewModelProducts->getP
                 * Remove expired products in the local storage
                 ***/
                 if(localStorage.getItem('recently_viewed_skus')){
+                    
                     let updatedlocalStorageData = '';
-                    let recentlyViewedSkusArray = localStorage.getItem('recently_viewed_skus').split(",");
+                    const recentlyViewedSkusArray = localStorage.getItem('recently_viewed_skus').split(",");
                     
                     recentlyViewedSkusArray.forEach(function myFunction(skuData,key){
                         // split each product's sku and expiry data
-                        let tempSplitArray  = skuData.split(" ");
-                        let now = new Date();
-                        if(tempSplitArray[1] > now.getTime()){
+                        const tempSplitArray  = skuData.split(" ");
+                        if(tempSplitArray[1] > Date.now()){
                             updatedlocalStorageData +=  ',' + tempSplitArray[0] + ' ' + tempSplitArray[1];
                         }
                     });
@@ -76,14 +73,14 @@ $currentProductSku = $viewModelProducts->getProduct() ? $viewModelProducts->getP
             }
             const putDataInLocalStorage = function(data){
 
-                let localStorageDataToPut = data['current_product_sku'] + ' ' + data['expiry'];
+                const localStorageDataToPut = data['current_product_sku'] + ' ' + data['expiry'];
                 if(!localStorage.getItem('recently_viewed_skus')){
                     localStorage.setItem('recently_viewed_skus', localStorageDataToPut);
                 }else{
                     // Remove expired products in the local storage
                     refreshLocalStorageData();
                     // Avoid adding sku already in the storage
-                    let recentlyViewedSkusArray = localStorage.getItem('recently_viewed_skus').split(",");
+                    const recentlyViewedSkusArray = localStorage.getItem('recently_viewed_skus').split(",");
                     let skuAlreadyInList = false;
                     
                     recentlyViewedSkusArray.forEach(function myFunction(skuData,key){
@@ -101,19 +98,18 @@ $currentProductSku = $viewModelProducts->getProduct() ? $viewModelProducts->getP
                     }
                 }
             }
-            let createLocalStorageData = function(){
+            const createLocalStorageData = function(){
                 // get current product sku and calculate its expiry from local storage
-                let currentProductData = [];
-                currentProductData['current_product_sku'] = '<?php echo $currentProductSku; ?>';
-                let now = new Date();
-                let lifeTimeOfProducts = <?php echo $viewModelProducts->getRecentlyViewedLifeTime(); ?>;
+                const currentProductData = [];
+                currentProductData['current_product_sku'] = '<?= $escaper->escapeHtmlAttr($currentProductSku) ?>';
+                let lifeTimeOfProducts = <?= $escaper->escapeHtmlAttr($viewModelProducts->getRecentlyViewedLifeTime()) ?>;
                 lifeTimeOfProducts = lifeTimeOfProducts * 1000;
-                let expiry = now.getTime() + lifeTimeOfProducts;
+                const expiry = Date.now() + lifeTimeOfProducts;
                 currentProductData['expiry'] = expiry;
                 return currentProductData;
             }
 
-            let currentProductSku = '<?php echo $currentProductSku; ?>';
+            const currentProductSku = '<?= $escaper->escapeHtmlAttr($currentProductSku) ?>';
             if(currentProductSku != 'false'){
                 // Recently Viewed Products' data adding into the local storage
                 putDataInLocalStorage(createLocalStorageData());
@@ -126,8 +122,8 @@ $currentProductSku = $viewModelProducts->getProduct() ? $viewModelProducts->getP
                 active: 0,
                 products: [],
                 currency: [],
-                currentProductSku: '<?php echo $currentProductSku; ?>',
-                noOfProductsToShow: <?php echo $this->getData('page_size'); ?>,
+                currentProductSku: '<?= $escaper->escapeHtmlAttr($currentProductSku) ?>',
+                noOfProductsToShow: <?= (int)$escaper->escapeHtmlAttr($block->getData('page_size')) ?>,
                 loading: true,
                 minHeight() {
                     return 'min-height: ' + ((this.loading && '491px') || 0);
@@ -136,32 +132,24 @@ $currentProductSku = $viewModelProducts->getProduct() ? $viewModelProducts->getP
                 getProducts() {
                     let itemsToFetch = [];
                     if(localStorage.getItem('recently_viewed_skus')){
-                        /* Fetching Products from local storage */
-                        let recentlyViewedSkusArray = localStorage.getItem('recently_viewed_skus').split(",");
-                        // recentlyViewedSkusArray = recentlyViewedSkusArray.reverse();
-
-                        let noOfProductsToShow = this.noOfProductsToShow;
-                        let currentProductSku = this.currentProductSku;
-                        
-                        recentlyViewedSkusArray.forEach(function myFunction(skuData,key){
-                            let tempSplitedArray  = skuData.split(" ");
-                            /* avoid showing the current product */
-                            if(tempSplitedArray[0] !== currentProductSku){
-                                itemsToFetch[key] = tempSplitedArray[0];
-                            }
-                        });
+                         /* Fetching Products from local storage */
+                         const recentlyViewedSkusArray = localStorage.getItem('recently_viewed_skus').split(",");
+                        /* avoid showing the current product */
+                        itemsToFetch = recentlyViewedSkusArray
+                            .map(skuData => skuData.split(" ")[0])
+                            .filter(sku => sku !== this.currentProductSku);
                     }
 
                     if(!itemsToFetch.length){
                         this.noOfProductsToShow = 0;
+                    }else{
+                        itemsToFetch = itemsToFetch.slice(0, this.noOfProductsToShow);
                     }
-
-                    let itemsToFetchStringify = JSON.stringify(itemsToFetch);
 
                     this.query = `{
                         products(
                             filter: {
-                                sku: { in: ${itemsToFetchStringify} },
+                                sku: { in: ${JSON.stringify(itemsToFetch)} },
                             }
                             pageSize: ${this.noOfProductsToShow},
                         ) {
@@ -193,30 +181,27 @@ $currentProductSku = $viewModelProducts->getProduct() ? $viewModelProducts->getP
                         }
                     }`;
 
-                    fetch('<?= $escaper->escapeUrl($block->getBaseUrl()) ?>graphql?query=' + encodeURIComponent(
-                        this.query
-                    ), {
+                    window.fetch('/graphql?' + new URLSearchParams({query: this.query}), {
                         method: 'GET',
                         headers: {
-                            'Content-Type': 'application/json',
                             'Store': '<?= /* @noEscape */ $viewModelStore->getStoreCode() ?>'
                         },
                     })
                         .then((response) =>  response.json())
-                        .then((data) => {
-                                this.currency = (data &&
-                                    data.data &&
-                                    data.data.currency);
+                        .then((result) => {
+                                this.currency = (result &&
+                                result.data &&
+                                result.data.currency);
 
-                                    let responseProducts = (
-                                        data &&
-                                        data.data &&
-                                        data.data.products &&
-                                        data.data.products.items
+                                    const responseProducts = (
+                                        result &&
+                                        result.data &&
+                                        result.data.products &&
+                                        result.data.products.items
                                     ) || [];
                                     
                                     // fix sorting of the response-products according to the sorting of the requested-products
-                                    let sortedProducts = [];
+                                    const sortedProducts = [];
                                     itemsToFetch.forEach(function myFunction(sku,key){
                                         responseProducts.forEach(function myFunction(productData,index){
                                             if(sku == productData.sku){
@@ -228,17 +213,17 @@ $currentProductSku = $viewModelProducts->getProduct() ? $viewModelProducts->getP
                                     return this.products = sortedProducts;
                             }
                         ).finally(() => {
-                        this.loading = false
-                    });
+                            this.loading = false
+                        });
                 },
                 addToWishlist(productId) {
-                    var formKey = document.querySelector('input[name=form_key]').value;
-                    var postUrl = BASE_URL+"wishlist/index/add/";
+                    const formKey = hyva.getFormKey();
+                    const postUrl = BASE_URL+"wishlist/index/add/";
                     fetch(postUrl, {
                         "headers": {
                             "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
                         },
-                        "body": "form_key="+ formKey + "&product="+productId+"&uenc="+btoa(window.location.href),
+                        "body": new URLSearchParams({form_key: hyva.getFormKey(), product: productId, uenc: btoa(window.location.href)}),
                         "method": "POST",
                         "mode": "cors",
                         "credentials": "include"
@@ -266,7 +251,7 @@ $currentProductSku = $viewModelProducts->getProduct() ? $viewModelProducts->getP
                                     ) ?>" : response.error_message
                             }], 5000
                         );
-                        var reloadCustomerDataEvent = new CustomEvent("reload-customer-section-data");
+                        const reloadCustomerDataEvent = new CustomEvent("reload-customer-section-data");
                         window.dispatchEvent(reloadCustomerDataEvent);
                     }).catch(function (error) {
                         typeof window.dispatchMessages !== "undefined" && window.dispatchMessages(
@@ -278,14 +263,14 @@ $currentProductSku = $viewModelProducts->getProduct() ? $viewModelProducts->getP
                     });
                 },
                 addToCompare(productId) {
-                    const formKey = document.querySelector('input[name=form_key]').value;
+                    const formKey = hyva.getFormKey();
                     const postUrl = BASE_URL + 'catalog/product_compare/add/';
 
                     fetch(postUrl, {
                         "headers": {
                             "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
                         },
-                        "body": "form_key="+ formKey + "&product="+productId+"&uenc="+btoa(window.location.href),
+                        "body": new URLSearchParams({form_key: hyva.getFormKey(), product: productId, uenc: btoa(window.location.href)}),
                         "method": "POST",
                         "mode": "cors",
                         "credentials": "include"
@@ -316,14 +301,12 @@ $currentProductSku = $viewModelProducts->getProduct() ? $viewModelProducts->getP
     >
         <template x-if="products && products.length">
             <div class="container relative px-5">
-                <?php if ($title): ?>
                     <div class="container flex flex-col items-center pt-6 pb-3 mx-auto mb-6 border-b-2
                         border-gray-300 md:flex-row">
                         <h3 class="text-2xl font-medium text-gray-900 title-font">
                             <?= $escaper->escapeHtml($title); ?>
                         </h3>
                     </div>
-                <?php endif; ?>
                 <div class="relative w-full">
                     <div class="relative w-full align-baseline transition-all snap"
                     >
@@ -347,7 +330,7 @@ $currentProductSku = $viewModelProducts->getProduct() ? $viewModelProducts->getP
                                                 />
                                             </span>
                                         </a>
-                                    <?php endif ?>
+                                    <?php endif; ?>
                                     <?php if(in_array("name", $widgetAttributesToShow)): ?>
                                         <p class="flex items-center justify-center px-1 pt-3 text-primary">
                                             <a class="truncate product-item-link"
@@ -357,11 +340,11 @@ $currentProductSku = $viewModelProducts->getProduct() ? $viewModelProducts->getP
                                                 <span x-html="product.name"></span>
                                             </a>
                                         </p>
-                                    <?php endif ?>
+                                    <?php endif; ?>
                                     <?php if(in_array("price", $widgetAttributesToShow)): ?>
                                         <p class="pt-1 text-lg text-center text-gray-900"
                                         x-text="hyva.formatPrice(product.price_range.minimum_price.final_price.value)"></p>
-                                    <?php endif ?>
+                                    <?php endif; ?>
                                     <p class="flex flex-wrap gap-2 inline p-3">
                                         <?php if(in_array("learn_more", $widgetAttributesToShow)): ?>
                                             <a class="justify-center w-auto mr-auto btn btn-primary"
@@ -369,7 +352,7 @@ $currentProductSku = $viewModelProducts->getProduct() ? $viewModelProducts->getP
                                                     product.url_key + (product.url_suffix || '')">
                                                 <span class="inline"><?= $escaper->escapeHtml(__('View Product')) ?></span>
                                             </a>
-                                        <?php endif ?>
+                                        <?php endif; ?>
                                         <span class="inline-flex gap-2">
                                             <?php if (in_array("add_to_compare", $widgetButtonsToShow)): ?>
                                                 <?php if ($compareViewModel->showInProductList()): ?>
@@ -381,7 +364,7 @@ $currentProductSku = $viewModelProducts->getProduct() ? $viewModelProducts->getP
                                                     <?= $heroicons->scaleHtml("w-5 h-5") ?>
                                                 </button>
                                                 <?php endif; ?>
-                                            <?php endif ?>
+                                            <?php endif; ?>
                                             <?php if (in_array("add_to_wishlist", $widgetButtonsToShow)): ?>
                                                 <?php if ($wishlistViewModel->isEnabled()): ?>
                                                     <button
@@ -393,7 +376,7 @@ $currentProductSku = $viewModelProducts->getProduct() ? $viewModelProducts->getP
                                                     <?= $heroicons->heartHtml("w-5 h-5", 25, 25) ?>
                                                 </button>
                                                 <?php endif; ?>
-                                            <?php endif ?>
+                                            <?php endif; ?>
                                         </span>
                                     </p>
                                 </div>
