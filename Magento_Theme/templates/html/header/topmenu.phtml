@@ -1,0 +1,17 @@
+<?php
+/**
+ * Hyvä Themes - https://hyva.io
+ * Copyright © Hyvä Themes 2020-present. All rights reserved.
+ * This product is licensed per Magento install
+ * See https://hyva.io/license
+ */
+
+use Magento\Framework\View\Element\Template;
+
+/** @var Template $block */
+
+/**
+ * This is a wrapper block rather than a container to prevent breaking changes
+ */
+?>
+<?= $block->getChildHtml() ?>
