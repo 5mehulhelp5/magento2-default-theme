@@ -13,4 +13,9 @@
     <update handle="print"/>
     <referenceBlock name="sales.order.buttons" remove="true"/>
     <referenceBlock name="sales.order.info.links" remove="true"/>
+    <referenceBlock name="logo">
+        <arguments>
+            <argument name="logoPathResolver" xsi:type="object">Magento\Sales\ViewModel\Header\LogoPathResolver</argument>
+        </arguments>
+    </referenceBlock>
 </page>
