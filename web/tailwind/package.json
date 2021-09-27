@@ -22,6 +22,7 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "npx postcss tailwind-source.css -o tailwind-output.css",
+        "jit": "NODE_ENV=development TAILWIND_MODE=watch npx postcss tailwind-source.css -o ../css/styles.css --watch --verbose",
         "minify": "npx csso tailwind-output.css --output ../css/styles.css",
         "build-dev": "NODE_ENV=development npm run build && cp tailwind-output.css ../css/styles.css && npm run output-success",
         "build-prod": "NODE_ENV=production npm run build && npm run minify && npm run output-success",
