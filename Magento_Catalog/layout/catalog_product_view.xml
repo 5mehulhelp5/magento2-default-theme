@@ -146,7 +146,7 @@
                            template="Magento_Catalog::product/view/options/wrapper/bottom.phtml"/>
 
                     <block name="upsell" class="Magento\Catalog\Block\Product\View"
-                           template="Magento_Theme::elements/slider.phtml">
+                           template="Magento_Catalog::product/slider/product-slider.phtml">
                         <arguments>
                             <argument name="type" xsi:type="string">upsell</argument>
                             <argument name="title" xsi:type="string"
@@ -156,7 +156,7 @@
                     </block>
 
                     <block name="related" class="Magento\Catalog\Block\Product\View"
-                           template="Magento_Theme::elements/slider.phtml">
+                           template="Magento_Catalog::product/slider/product-slider.phtml">
                         <arguments>
                             <argument name="type" xsi:type="string">related</argument>
                             <argument name="title" xsi:type="string" translate="true">Related Products</argument>

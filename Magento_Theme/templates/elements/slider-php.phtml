@@ -29,7 +29,11 @@ $heroicons = $viewModels->require(HeroiconsOutline::class);
 
 $uniqueId = '_' . uniqid();
 $title = (string) $block->getTitle();
-$items = (array) $block->getItems();
+$items = $block->getItems() ?? [];
+if (is_object($items) && $items instanceof Iterator) {
+    $items = iterator_to_array($items);
+}
+
 $sliderItemRenderer = $block->getChildBlock('slider.item.template');
 
 ?>
