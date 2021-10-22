@@ -8,6 +8,7 @@
 
 declare(strict_types=1);
 
+use Hyva\GraphqlViewModel\ViewModel\GraphqlViewModel;
 use Hyva\Theme\Model\ViewModelRegistry;
 use Hyva\Theme\ViewModel\Currency;
 use Hyva\Theme\ViewModel\Store;
@@ -29,6 +30,9 @@ use Magento\Framework\View\Element\Template;
  * @var string $uniqueId
  * @var string $title
  */
+
+/** @var GraphqlViewModel $gqlViewModel */
+$gqlViewModel = $viewModels->require(GraphqlViewModel::class);
 
 /** @var ProductPage $viewModelProducts */
 $viewModelProducts = $viewModels->require(ProductPage::class);
@@ -98,28 +102,29 @@ $title = $title ?? __('Recently Viewed Products');
             active: 0,
             products: [],
             currency: [],
-            currentProductSku: '<?= $escaper->escapeJs($currentProductSku) ?>',
             noOfProductsToShow: config.noOfProductsToShow,
             loading: true,
             minHeight() {
                 return 'min-height: ' + ((this.loading && '491px') || 0);
             },
-            query: '',
             getProducts($nextTick) {
                 const recentlyViewedProductsArray = readRecentlyViewedFromStorage();
-                let itemsToFetch = recentlyViewedProductsArray.length > 0
-                    ? recentlyViewedProductsArray.slice(1).map(product => product.sku) // Avoid showing the current product
-                    : [];
+                let itemsToFetch = [];
+                if (recentlyViewedProductsArray.length > 0) {
+                    // Avoid showing the current product
+                    const start = '<?= $escaper->escapeJs($currentProductSku) ?>' === '' ? 0 : 1;
+                    itemsToFetch = recentlyViewedProductsArray.slice(start).map(product => product.sku)
+                }
 
-                itemsToFetch = itemsToFetch.slice(this.noOfProductsToShow * -1);
+                itemsToFetch = itemsToFetch.slice(0, this.noOfProductsToShow);
 
                 if (!itemsToFetch.length) {
                     this.noOfProductsToShow = 0;
                     return;
                 }
 
-                const query = `{
-  products(filter: { sku: { in: ${JSON.stringify(itemsToFetch)} } }) {
+                const query = `<?= $gqlViewModel->query("recently_viewed_products_query", 'query ($skus: [String!]!) {
+  products(filter: { sku: { in: $skus } }) {
     items {
       sku
       id
@@ -146,8 +151,9 @@ $title = $title ?? __('Recently Viewed Products');
       }
     }
   }
-}`;
-                window.fetch('/graphql?' + new URLSearchParams({query}), {
+}') ?>`;
+                const variables = JSON.stringify({skus: itemsToFetch});
+                window.fetch('/graphql?' + new URLSearchParams({query, variables}), {
                     method: 'GET',
                     headers: {
                         'Store': '<?= $escaper->escapeJs($viewModelStore->getStoreCode()) ?>',
