@@ -255,13 +255,13 @@ $directoryViewModel = $viewModels->require(DirectoryViewModel::class);
                 this.isLoading = true;
                 const cartItemRemoveQuery = `<?= /** @noEscape */ $viewModelGraphQl->query(
                     'cart_item_remove_mutation',
-                    'mutation ($cartId: String, $itemId: String!) {' .
+                    'mutation ($cartId: String!, $itemId: Int) {' .
                     $viewModelCart->getCartItemRemoveQuery() .
                     '}'
                 )?>`;
                 const variables = {
                     cartId: this.cartId,
-                    itemid: itemId
+                    itemId: itemId
                 };
 
                 fetch('<?= $escaper->escapeUrl($block->getBaseUrl()) ?>graphql', {
