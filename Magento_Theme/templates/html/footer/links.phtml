@@ -48,6 +48,12 @@ $customer = $viewModels->require(Customer::class)
                     </li>
                     <?php endif; ?>
                     <li class="mt-4">
+                        <a href="<?= $escaper->escapeUrl($block->getUrl('search/term/popular')) ?>"
+                           class="text-base leading-6">
+                            <?= $escaper->escapeHtml(__('Search Terms')) ?>
+                        </a>
+                    </li>
+                    <li class="mt-4">
                         <a href="<?= $escaper->escapeUrl($block->getUrl('contact')) ?>"
                            class="text-base leading-6">
                             <?= $escaper->escapeHtml(__('Contact')) ?>
