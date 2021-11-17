@@ -15,6 +15,8 @@ use Magento\Framework\Escaper;
 use Magento\Framework\View\Helper\SecureHtmlRenderer;
 use Magento\SendFriend\Block\Send;
 
+// phpcs:disable Generic.Files.LineLength.TooLong
+
 /**
  * @var Send $block
  * @var SecureHtmlRenderer $secureRenderer
@@ -40,9 +42,11 @@ if ($recaptchaViewModel !== null && $recaptchaData = $recaptchaViewModel->getRec
 $formData = $block->getFormData();
 $recipients = $formData->getRecipientData() ?? '[]';
 ?>
-<div class="container grid gap-2 grid-cols-1 lg:grid-cols-2">
-    <div class="card">
-        <form action="<?= $escaper->escapeUrl($block->getSendUrl()) ?>" method="post" id="product-sendtofriend-form"
+<div class="flex flex-col lg:flex-row justify-between gap-4">
+    <div class="card w-full lg:w-2/3">
+        <form action="<?= $escaper->escapeUrl($block->getSendUrl()) ?>"
+              method="post"
+              id="product-sendtofriend-form"
               class="form send friend"
               x-data="initSendFriendForm()"
               @submit.prevent="submitForm()"
@@ -97,39 +101,42 @@ $recipients = $formData->getRecipientData() ?? '[]';
             </fieldset>
 
             <div x-data="rowHandler()">
-                <input name="recipient_data" x-bind:value="JSON.stringify(fields)" type="hidden"/>
+                <input name="recipient_data" :value="JSON.stringify(fields)" type="hidden"/>
                 <fieldset class="fieldset recipients">
                     <legend class="legend">
-                    <span x-text="fields.length > 1 ? plural : single"></span>
+                    <span x-text="fields.length > 1 ? plural : single">
+                        <?= $escaper->escapeHtml(__('Invitee')) ?>
+                    </span>
                     </legend>
                     <br/>
                     <div id="recipients-options">
                         <fieldset class="fieldset">
                             <template x-for="(field, index) in fields" :key="index">
-                                <div class="row block">
+                                <div class="flex flex-row flex-wrap items-end justify-between gap-x-4 border-t border-container mb-2">
+                                    <div class="flex flex-row flex-wrap gap-x-4">
                                     <div class="field name required inline-block">
-                                        <label x-bind:for="`recipients-name${index}`" class="label">
+                                        <label :for="`recipients-name${index}`" class="label">
                                             <span><?= $escaper->escapeHtml(__('Name')) ?></span>
                                         </label>
                                         <div class="control">
                                             <input type="text"
                                                    title="<?= $escaper->escapeHtmlAttr(__('Name')) ?>"
                                                    class="form-input input-text"
-                                                   x-bind:id="`recipients-name${index}`"
-                                                   x-bind:name="`recipients[name][${index}]`"
+                                                   :id="`recipients-name${index}`"
+                                                   :name="`recipients[name][${index}]`"
                                                    required
                                                    x-model="field.name"
                                             />
                                         </div>
                                     </div>
                                     <div class="field email required inline-block">
-                                        <label x-bind:for="`recipients-email${index}`" class="label">
+                                        <label :for="`recipients-email${index}`" class="label">
                                             <span><?= $escaper->escapeHtml(__('Email')) ?></span>
                                         </label>
                                         <div class="control">
                                             <input title="<?= $escaper->escapeHtmlAttr(__('Email')) ?>"
-                                                   x-bind:id="`recipients-email${index}`"
-                                                   x-bind:name="`recipients[email][${index}]`"
+                                                   :id="`recipients-email${index}`"
+                                                   :name="`recipients[email][${index}]`"
                                                    type="email"
                                                    class="form-input input-text"
                                                    required
@@ -138,13 +145,28 @@ $recipients = $formData->getRecipientData() ?? '[]';
                                             />
                                         </div>
                                     </div>
-                                    <button type="button" class="btn bg-red-500 btn-small inline-block"
-                                            @click="removeField(index)"><?= $icons->trashHtml('h-6 w-6') ?></button>
+                                    </div>
+                                    <div class="field">
+                                        <button type="button"
+                                                class="btn btn-secondary"
+                                                @click="removeField(index)"
+                                        >
+                                            <?= $icons->trashHtml('h-6 w-6') ?>
+                                        </button>
+                                    </div>
                                 </div>
                             </template>
                         </fieldset>
-                        <button x-show="fields.length < <?= (int)$block->getMaxRecipients(); ?>" type="button"
-                                class="btn btn-secondary" @click="addNewField()"><?= $escaper->escapeHtml(__('+ Add Invitee')) ?></button>
+                        <div x-show="fields.length < <?= (int)$block->getMaxRecipients(); ?>"
+                             class="border-t border-container"
+                        >
+                            <button type="button"
+                                    class="mt-4 btn btn-secondary"
+                                    @click="addNewField()"
+                            >
+                                <?= $escaper->escapeHtml(__('+ Add Invitee')) ?>
+                            </button>
+                        </div>
                     </div>
 
                     <?= $block->getChildHtml('form_additional_info') ?>
@@ -177,7 +199,7 @@ $recipients = $formData->getRecipientData() ?? '[]';
             <script>
                 function rowHandler() {
                     return {
-                        fields: <?= $recipients ?>,
+                        fields: <?= /** @noEscape */ $recipients ?>,
                         plural: '<?= $escaper->escapeHtml(__('Invitees')) ?>',
                         single: '<?= $escaper->escapeHtml(__('Invitee')) ?>',
                         addNewField() {
@@ -226,7 +248,7 @@ $recipients = $formData->getRecipientData() ?? '[]';
             </script>
         </form>
     </div>
-    <div id="send-friend-product">
+    <div id="send-friend-product" class="w-full lg:w-1/3">
         <?= $block->getChildHtml('product_item') ?>
     </div>
 </div>
