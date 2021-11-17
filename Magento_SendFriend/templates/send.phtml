@@ -8,54 +8,68 @@
 
 declare(strict_types=1);
 
+use Hyva\Theme\Model\ViewModelRegistry;
+use Hyva\Theme\ViewModel\HeroiconsOutline;
 use Hyva\Theme\ViewModel\ReCaptcha;
 use Magento\Framework\Escaper;
 use Magento\Framework\View\Helper\SecureHtmlRenderer;
 use Magento\SendFriend\Block\Send;
+
+// phpcs:disable Generic.Files.LineLength.TooLong
 
 /**
  * @var Send $block
  * @var SecureHtmlRenderer $secureRenderer
  * @var Escaper $escaper
  * @var ReCaptcha $recaptchaViewModel
+ * @var ViewModelRegistry $viewModels
+ * @var HeroiconsOutline $icons
  */
 
 // Do not replace this with $viewModels->require(ReCaptcha::class); that might break the dependency on
 // Magento's Recaptcha module
 $recaptchaViewModel = $block->getData('viewModelRecaptcha');
 
+$icons = $viewModels->require(HeroiconsOutline::class);
+
 $recaptchaInputField = '';
 $recaptchaLegalNotice = '';
-if ($recaptchaViewModel !== null && $recaptchaData = $recaptchaViewModel->getRecaptchaData('sendfriend')) {
+if ($recaptchaViewModel !== null && ($recaptchaData = $recaptchaViewModel->getRecaptchaData('sendfriend'))) {
     $recaptchaInputField = $block->getBlockHtml($recaptchaData[ReCaptcha::RECAPTCHA_INPUT_FIELD]);
     $recaptchaLegalNotice = $block->getBlockHtml($recaptchaData[ReCaptcha::RECAPTCHA_LEGAL_NOTICE_BLOCK]);
 }
+
+$formData = $block->getFormData();
+$recipients = $formData->getRecipientData() ?? '[]';
 ?>
-<div class="container">
-    <div class="prose card">
-        <form action="<?= $escaper->escapeUrl($block->getSendUrl()) ?>" method="post" id="product-sendtofriend-form"
+<div class="flex flex-col lg:flex-row justify-between gap-4">
+    <div class="card w-full lg:w-2/3">
+        <form action="<?= $escaper->escapeUrl($block->getSendUrl()) ?>"
+              method="post"
+              id="product-sendtofriend-form"
               class="form send friend"
               x-data="initSendFriendForm()"
               @submit.prevent="submitForm()"
         >
             <?= $block->getBlockHtml('formkey') ?>
+            <?= /** @noEscape */ $recaptchaInputField ?>
             <fieldset class="fieldset sender" id="sender_options">
                 <legend class="legend"><span><?= $escaper->escapeHtml(__('Sender')) ?></span></legend>
                 <br>
-                <div class="field sender required">
+                <div class="field sender required inline-block">
                     <label for="sender-name" class="label"><span><?= $escaper->escapeHtml(__('Name')) ?></span></label>
                     <div class="control">
                         <input name="sender[name]" value="<?= $escaper->escapeHtmlAttr($block->getUserName()) ?>"
                                title="<?= $escaper->escapeHtmlAttr(__('Name')) ?>"
                                id="sender-name"
                                type="text"
-                               class="input-text"
+                               class="form-input input-text"
                                required
                         />
                     </div>
                 </div>
 
-                <div class="field email required">
+                <div class="field email required inline-block">
                     <label for="sender-email" class="label">
                         <span><?= $escaper->escapeHtml(__('Email')) ?></span>
                     </label>
@@ -65,7 +79,7 @@ if ($recaptchaViewModel !== null && $recaptchaData = $recaptchaViewModel->getRec
                                title="<?= $escaper->escapeHtmlAttr(__('Email')) ?>"
                                id="sender-email"
                                type="email"
-                               class="input-text"
+                               class="form-input input-text"
                                required
                         />
                     </div>
@@ -79,7 +93,7 @@ if ($recaptchaViewModel !== null && $recaptchaData = $recaptchaViewModel->getRec
                     </label>
                     <div class="control">
                         <textarea name="sender[message]"
-                                  class="input-text mt-2 input input-light w-full h-48"
+                                  class="form-input input-text mt-2 input input-light w-full h-48"
                                   id="sender-message"
                                   required
                         ><?= $escaper->escapeHtml($block->getMessage()) ?></textarea>
@@ -87,49 +101,81 @@ if ($recaptchaViewModel !== null && $recaptchaData = $recaptchaViewModel->getRec
                 </div>
             </fieldset>
 
-            <fieldset class="fieldset recipients">
-                <legend class="legend">
-                    <span>
+            <div x-data="rowHandler()">
+                <input name="recipient_data" :value="JSON.stringify(fields)" type="hidden"/>
+                <fieldset class="fieldset recipients">
+                    <legend class="legend">
+                    <span x-text="fields.length > 1 ? plural : single">
                         <?= $escaper->escapeHtml(__('Invitee')) ?>
                     </span>
-                </legend>
-                <br/>
-                <div id="recipients-options">
-                    <fieldset class="fieldset">
-                        <div class="field name required">
-                            <label for="recipients-name0" class="label">
-                                <span><?= $escaper->escapeHtml(__('Name')) ?></span>
-                            </label>
-                            <div class="control">
-                                <input name="recipients[name][0]" type="text"
-                                       title="<?= $escaper->escapeHtmlAttr(__('Name')) ?>" class="input-text"
-                                       id="recipients-name0"
-                                       required
-                                />
-                            </div>
+                    </legend>
+                    <br/>
+                    <div id="recipients-options">
+                        <fieldset class="fieldset">
+                            <template x-for="(field, index) in fields" :key="index">
+                                <div class="flex flex-row flex-wrap items-end justify-between gap-x-4 border-t border-container mb-2">
+                                    <div class="flex flex-row flex-wrap gap-x-4">
+                                    <div class="field name required inline-block">
+                                        <label :for="`recipients-name${index}`" class="label">
+                                            <span><?= $escaper->escapeHtml(__('Name')) ?></span>
+                                        </label>
+                                        <div class="control">
+                                            <input type="text"
+                                                   title="<?= $escaper->escapeHtmlAttr(__('Name')) ?>"
+                                                   class="form-input input-text"
+                                                   :id="`recipients-name${index}`"
+                                                   :name="`recipients[name][${index}]`"
+                                                   required
+                                                   x-model="field.name"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="field email required inline-block">
+                                        <label :for="`recipients-email${index}`" class="label">
+                                            <span><?= $escaper->escapeHtml(__('Email')) ?></span>
+                                        </label>
+                                        <div class="control">
+                                            <input title="<?= $escaper->escapeHtmlAttr(__('Email')) ?>"
+                                                   :id="`recipients-email${index}`"
+                                                   :name="`recipients[email][${index}]`"
+                                                   type="email"
+                                                   class="form-input input-text"
+                                                   required
+                                                   validate
+                                                   x-model="field.email"
+                                            />
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div class="field">
+                                        <button type="button"
+                                                class="btn btn-secondary"
+                                                @click="removeField(index)"
+                                        >
+                                            <?= $icons->trashHtml('h-6 w-6') ?>
+                                        </button>
+                                    </div>
+                                </div>
+                            </template>
+                        </fieldset>
+                        <div x-show="fields.length < <?= (int)$block->getMaxRecipients(); ?>"
+                             class="border-t border-container"
+                        >
+                            <button type="button"
+                                    class="mt-4 btn btn-secondary"
+                                    @click="addNewField()"
+                            >
+                                <?= $escaper->escapeHtml(__('+ Add Invitee')) ?>
+                            </button>
                         </div>
+                    </div>
 
-                        <div class="field email required">
-                            <label for="recipients-email0" class="label">
-                                <span><?= $escaper->escapeHtml(__('Email')) ?></span>
-                            </label>
-                            <div class="control">
-                                <input name="recipients[email][0]" title="<?= $escaper->escapeHtmlAttr(__('Email')) ?>"
-                                       id="recipients-email0"
-                                       type="email"
-                                       class="input-text"
-                                       required
-                                       validate
-                                />
-                            </div>
-                        </div>
-                    </fieldset>
-                </div>
-                <?= $block->getChildHtml('form_additional_info') ?>
-            </fieldset>
+                    <?= $block->getChildHtml('form_additional_info') ?>
+                </fieldset>
+            </div>
             <?= $block->getChildHtml('captcha'); ?>
             <div class="w-full grecaptcha-legal">
-                <?= /** @noEscape */ $recaptchaLegalNotice ?>
+                <?= /** @noEscape */$recaptchaLegalNotice ?>
             </div>
             <div class="actions-toolbar">
                 <div class="primary">
@@ -145,13 +191,30 @@ if ($recaptchaViewModel !== null && $recaptchaData = $recaptchaViewModel->getRec
                     </button>
                 </div>
                 <div class="secondary">
-                    <a class="action back" href="#" onclick="history.back(); return false;" role="back"><span>
+                    <a class="action back" href="#" onclick="history.back(); return false;" role="link"><span>
                             <?= $escaper->escapeHtml(__('Back')) ?>
                         </span>
                     </a>
                 </div>
             </div>
             <script>
+                function rowHandler() {
+                    return {
+                        fields: <?= /** @noEscape */ $recipients ?>,
+                        plural: '<?= $escaper->escapeJs(__('Invitees')) ?>',
+                        single: '<?= $escaper->escapeJs(__('Invitee')) ?>',
+                        addNewField() {
+                            this.fields.push({
+                                name: '',
+                                email: ''
+                            });
+                        },
+                        removeField(index) {
+                            this.fields.splice(index, 1);
+                        },
+                    }
+                }
+
                 function initSendFriendForm() {
                     return {
                         errors: 0,
@@ -163,7 +226,18 @@ if ($recaptchaViewModel !== null && $recaptchaData = $recaptchaViewModel->getRec
                             this.displayErrorMessage = this.errorMessages.length
                         },
                         submitForm() {
-                            var $form = document.querySelector('#product-sendtofriend-form');
+                            const $form = document.querySelector('#product-sendtofriend-form');
+                            if ($form.querySelectorAll('input[id^="recipients-email"]').length === 0) {
+                                dispatchMessages([
+                                    {
+                                        type: "error",
+                                        text: "<?= $escaper->escapeJs(
+                                            __("Add one or more recipients before sending the message.")
+                                        ) ?>"
+                                    }
+                                ], 10000);
+                                return false;
+                            }
                             <?= $block->getChildHtml('recaptcha_validation'); ?>
 
                             if (this.errors === 0) {
@@ -174,5 +248,8 @@ if ($recaptchaViewModel !== null && $recaptchaData = $recaptchaViewModel->getRec
                 }
             </script>
         </form>
+    </div>
+    <div id="send-friend-product" class="w-full lg:w-1/3">
+        <?= $block->getChildHtml('product_item') ?>
     </div>
 </div>
