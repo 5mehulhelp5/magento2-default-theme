@@ -84,7 +84,7 @@ $uniqueId = '_' . uniqid();
         <img class="hover:shadow-sm object-contain"
              loading="lazy"
              x-data=""
-             @update-gallery-<?= (int)$productId ?>.window="$el.src = event.detail"
+             @update-gallery-<?= (int)$productId ?>.window="$el.src = $event.detail"
              alt="<?= $escaper->escapeHtmlAttr($productImage->getLabel()) ?>"
              title="<?= $escaper->escapeHtmlAttr($productImage->getLabel()) ?>"
              src="<?= $escaper->escapeUrl($productImage->getImageUrl()) ?>"
@@ -129,41 +129,43 @@ $uniqueId = '_' . uniqid();
         </script>
         <div class="pt-1 text-gray-900"
              x-data="initPriceBox_<?= /** @noEscape */ $uniqueId ?>()"
-             @update-prices-<?= (int)$productId ?>.window="updatePrice(event.detail);"
+             @update-prices-<?= (int)$productId ?>.window="updatePrice($event.detail);"
         >
             <?= /* @noEscape */ $productListItemViewModel->getProductPriceHtml($product) ?>
         </div>
 
-        <div class="mt-auto pt-3 flex flex-wrap justify-center items-center">
+        <div class="mt-auto pt-3 flex flex-wrap justify-between items-center content-center gap-y-2">
             <?php if ($product->isSaleable()): ?>
-            <button class="w-auto btn btn-primary justify-center text-sm mr-auto
-                        <?= $viewIsGrid ? 'mr-auto' : 'mr-auto md:mr-0' ?>"
+            <button class="btn btn-primary justify-center text-sm
+                        <?= '' // $viewIsGrid ? 'mr-auto' : 'mr-auto md:mr-0' ?>"
                     aria-label="<?= $escaper->escapeHtmlAttr(__('Add to Cart')) ?>"
             >
                 <?= $heroiconsOutline->shoppingCartHtml("h-6 w-6 border-current inline", 25, 25) ?>
-                <span class="ml-2 inline <?= $viewIsGrid ? 'md:ml-0 md:hidden lg:ml-2 lg:inline' : '' ?>">
+                <span class="ml-2 inline whitespace-nowrap <?= $viewIsGrid ? 'md:ml-0 md:hidden lg:ml-2 lg:inline' : '' ?>">
                     <?= $escaper->escapeHtml(__('Add to Cart')) ?>
                 </span>
             </button>
             <?php endif; ?>
-            <?php if ($showAddToWishlist): ?>
-            <button x-data="initWishlist()"
-                    @click.prevent="addToWishlist(<?= (int)$productId ?>)"
-                    aria-label="<?= $escaper->escapeHtmlAttr(__('Add to Wish List')) ?>"
-                    type="button"
-                    class="rounded-full w-9 h-9 bg-gray-200 p-0 border-0 inline-flex flex-shrink-0 items-center justify-center text-gray-500 hover:text-red-600 ml-2">
-                <?= $heroiconsSolid->heartHtml("w-5 h-5", 25, 25) ?>
-            </button>
-            <?php endif; ?>
-            <?php if ($showAddToCompare): ?>
-            <button x-data="initCompare()"
-                    @click.prevent="addToCompare(<?= (int)$productId ?>)"
-                    aria-label="<?= $escaper->escapeHtmlAttr(__('Add to Compare')) ?>"
-                    type="button"
-                    class="rounded-full w-9 h-9 bg-gray-200 p-0 border-0 inline-flex flex-shrink-0 items-center justify-center text-gray-500 hover:text-yellow-500 ml-2">
-                <?= $heroiconsOutline->scaleHtml("w-5 h-5", 25, 25) ?>
-            </button>
-            <?php endif; ?>
+            <div class="flex flex-row">
+                <?php if ($showAddToWishlist): ?>
+                <button x-data="initWishlist()"
+                        @click.prevent="addToWishlist(<?= (int)$productId ?>)"
+                        aria-label="<?= $escaper->escapeHtmlAttr(__('Add to Wish List')) ?>"
+                        type="button"
+                        class="rounded-full w-9 h-9 bg-gray-200 p-0 border-0 inline-flex flex-shrink-0 items-center justify-center text-gray-500 hover:text-red-600 ml-2">
+                    <?= $heroiconsSolid->heartHtml("w-5 h-5", 25, 25) ?>
+                </button>
+                <?php endif; ?>
+                <?php if ($showAddToCompare): ?>
+                <button x-data="initCompare()"
+                        @click.prevent="addToCompare(<?= (int)$productId ?>)"
+                        aria-label="<?= $escaper->escapeHtmlAttr(__('Add to Compare')) ?>"
+                        type="button"
+                        class="rounded-full w-9 h-9 bg-gray-200 p-0 border-0 inline-flex flex-shrink-0 items-center justify-center text-gray-500 hover:text-yellow-500 ml-2">
+                    <?= $heroiconsOutline->scaleHtml("w-5 h-5", 25, 25) ?>
+                </button>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 <?php if ($product->isSaleable()): ?>
