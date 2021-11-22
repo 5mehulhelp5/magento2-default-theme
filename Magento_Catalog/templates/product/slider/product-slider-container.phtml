@@ -92,7 +92,7 @@ $sliderItemRenderer = $block->getLayout()->getBlock('product_list_item')
     ?: 'my-12 text-gray-700 body-font';
 ?>"
          x-data="initSliderComponent<?= /** @noEscape */ $uniqueId?>()"
-         x-init="console.log('scrollLeft:', getSlider().scrollLeft); calcPageSize();"
+         x-init="calcPageSize();"
          @resize.window.debounce="calcPageSize(); $nextTick( function() { calcActive() })"
 >
     <?php if ($items): ?>
