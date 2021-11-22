@@ -76,11 +76,8 @@ $sliderItemRenderer = $block->getLayout()->getBlock('product_list_item')
             calcActive() {
                 const slider = this.getSlider();
                 if (slider) {
-                    this.active = Math.ceil(
-                        Math.round(
-                            slider.scrollLeft / (slider.scrollWidth / this.itemCount)
-                        ) / this.pageSize
-                    ) * this.pageSize;
+                    const activeFirstSlide = slider.scrollLeft / (slider.scrollWidth / (this.itemCount + this.pageFillers));
+                    this.active = Math.floor(activeFirstSlide / this.pageSize) * this.pageSize;
                 }
             }
         }
@@ -154,7 +151,8 @@ $sliderItemRenderer = $block->getLayout()->getBlock('product_list_item')
                         class="w-8 h-8 mx-4 text-black rounded-full outline-none focus:outline-none"
                         :class="{ 'invisible' : active === 0 }"
                         @click="getSlider().scrollLeft =
-                            (getSlider().scrollWidth / itemCount) * (active-pageSize); active=active-pageSize;">
+                            (getSlider().scrollWidth / (itemCount + pageFillers)) * (active-pageSize);
+                            active -= pageSize;">
                         <?= $heroicons->chevronLeftHtml("w-5 h-5", 25, 25) ?>
                     </button>
                     <?php for ($i=0; $i < $itemCount; $i++): ?>
@@ -163,10 +161,9 @@ $sliderItemRenderer = $block->getLayout()->getBlock('product_list_item')
                                     'bg-opacity-100': active === <?= (int) $i ?>,
                                     'hidden': (pageSize !== 1 && !!(<?= (int) $i ?> % pageSize))
                                     }"
-                                @click="
-                        getSlider().scrollLeft = (getSlider().scrollWidth / itemCount) * <?= (int) $i ?>;
-                        active=<?= (int) $i ?>;
-                                    ">
+                                @click="getSlider().scrollLeft =
+                                    Math.floor(getSlider().scrollWidth / (itemCount + pageFillers)) * <?= (int) $i ?>;
+                                    active=<?= (int) $i ?>;">
                         </span>
                     <?php endfor; ?>
                     <button
@@ -175,7 +172,8 @@ $sliderItemRenderer = $block->getLayout()->getBlock('product_list_item')
                         class="w-8 h-8 mx-4 text-black rounded-full outline-none focus:outline-none"
                         :class="{ 'invisible' : active >= itemCount-pageSize }"
                         @click="getSlider().scrollLeft =
-                            (getSlider().scrollWidth / itemCount) * (active+pageSize); active=active+pageSize">
+                            (getSlider().scrollWidth / (itemCount + pageFillers)) * (active+pageSize);
+                            active += pageSize">
                         <?= $heroicons->chevronRightHtml("w-5 h-5", 25, 25) ?>
                     </button>
                 </div>
