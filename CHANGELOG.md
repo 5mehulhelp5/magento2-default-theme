@@ -23,6 +23,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   * Use `npm run watch` to run the JIT file watcher recompiling the css after any change.  
   * Use `npm run browser-sync` to start the browser-sync file watcher.  
     Use `PROXY_URL="https://my-magento.test npm run browser-sync` to specify the backend host.
+
+- **Support recently viewed products** (PENDING)
+
+  In addition to the regular Recently Viewed Product widget, Hyvä also supports configuring recently viewed products
+  using the system configuration.
+
+  More information can be found in the [merge request #243](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/243)
+
+  Many thanks to Faran Cheema (Aware Digital) for the contribution!
   
 - **Add react-container.phtml to example purge config section in tailwind config**
 
@@ -79,6 +88,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   Many thanks to Kiel Pykett (Fisheye) for the contribution!
 
 ### Changed
+
+- **Use SSR rendering for product sliders instead of GraphQL** (PENDING)
+
+  The product sliders no longer use GraphQL. The graphql product slider template still is present for backward
+  compatibility, but it is no longer used.  
+  The items use the product listing template, so add-to-cart and swatches are now supported, too.
+
+  More information can be found on the [merge request #294](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/294)
 
 - **Improve Send to Friend**
   
