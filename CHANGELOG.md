@@ -24,7 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   * Use `npm run browser-sync` to start the browser-sync file watcher.  
     Use `PROXY_URL="https://my-magento.test npm run browser-sync` to specify the backend host.
 
-- **Support recently viewed products** (PENDING)
+- **Support recently viewed products**
 
   In addition to the regular Recently Viewed Product widget, Hyvä also supports configuring recently viewed products
   using the system configuration.
