@@ -61,12 +61,13 @@ if (!$product) {
 $productId = $product->getId();
 $uniqueId = '_' . uniqid();
 
+$hideDetails = $block->getData('hide_details') ?: false;
 ?>
 
 <?php if ($product->isSaleable()): ?>
 <form method="post"
     action="<?= $escaper->escapeUrl($productViewModel->getAddToCartUrl($product)) ?>"
-    class="item product product-item product_addtocart_form card card-interactive flex flex-col <?= $viewIsGrid ? '' : 'md:flex-row' ?>"
+    class="item product product-item product_addtocart_form card card-interactive flex flex-col w-full <?= $viewIsGrid ? '' : 'md:flex-row' ?>"
     <?php if ($product->getOptions()): ?>
     enctype="multipart/form-data"
     <?php endif; ?>
@@ -74,7 +75,7 @@ $uniqueId = '_' . uniqid();
     <?= /** @noEscape */ $block->getBlockHtml('formkey') ?>
     <input type="hidden" name="product" value="<?= (int)$productId ?>"/>
 <?php else: ?>
-<div class="item product product-item card card-interactive flex flex-col <?= $viewIsGrid ? '' : 'md:flex-row' ?>">
+<div class="item product product-item card card-interactive flex flex-col w-full <?= $viewIsGrid ? '' : 'md:flex-row' ?>">
 <?php endif; ?>
     <?php $productImage = $productViewModel->getImage($product, $imageDisplayArea); ?>
     <?php // Product Image ?>
@@ -102,11 +103,11 @@ $uniqueId = '_' . uniqid();
             </a>
         </div>
 
-        <div class="py-1 mx-auto w-6/12 <?= $viewIsGrid ? '' : 'md:mx-0 md:w-auto' ?>">
+        <div class="py-1 mx-auto <?= $viewIsGrid ? '' : 'md:mx-0 md:w-auto' ?>">
             <?= $block->getReviewsSummaryHtml($product, 'short') ?>
         </div>
 
-        <?php if ($product->isAvailable()):?>
+        <?php if ($product->isAvailable() && !$hideDetails):?>
             <?= $block->getProductDetailsHtml($product) ?>
         <?php endif; ?>
 
