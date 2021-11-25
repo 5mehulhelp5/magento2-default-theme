@@ -57,6 +57,7 @@
                     <arguments>
                         <argument name="type" xsi:type="string">crosssell</argument>
                         <argument name="title" xsi:type="string" translate="true">You might also like:</argument>
+                        <argument name="hide_rating_summary" xsi:type="boolean">true</argument>
                     </arguments>
                 </block>
             </block>
