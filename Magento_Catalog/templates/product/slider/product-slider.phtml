@@ -41,6 +41,8 @@ $priceTo           = $block->getData('price_to');
 $sortAttribute     = $block->getData('sort_attribute') ?: 'position';
 $sortDirection     = $block->getData('sort_direction') ?: 'ASC';
 $title             = $block->getData('title') ?: '';
+$hideDetails       = $block->getData('hide_details') ?? false;
+$hideRatingSummary = $block->getData('hide_rating_summary') ?? false;
 $type              = $block->getData('type');
 $additionalFilters = (array) $block->getData('additional_filters');
 $itemTemplate      = $block->getData('item_template') ?? 'Magento_Catalog::product/list/item.phtml';
@@ -55,6 +57,10 @@ if ($priceFrom) {
 }
 if ($priceTo) {
     $productListViewModel->addFilter('price', $priceTo, 'lteq');
+}
+
+if ($hideRatingSummary) {
+    $productListViewModel->excludeReviewSummary();
 }
 
 foreach ($additionalFilters as $filter) {
@@ -85,7 +91,11 @@ if (in_array($type, ['related', 'upsell', 'crosssell'], true)) {
 ?>
 <div x-data="">
     <?=
-    $sliderViewModel->getSliderForItems($itemTemplate, $items, $containerTemplate)->setData('title', $title)->toHtml();
+    $sliderViewModel->getSliderForItems($itemTemplate, $items, $containerTemplate)
+                    ->setData('hide_details', $hideDetails)
+                    ->setData('hide_rating_summary', $hideRatingSummary)
+                    ->setData('title', $title)
+                    ->toHtml();
     ?>
 </div>
 <script>

@@ -61,7 +61,8 @@ if (!$product) {
 $productId = $product->getId();
 $uniqueId = '_' . uniqid();
 
-$hideDetails = $block->getData('hide_details') ?: false;
+$hideDetails       = $block->getData('hide_details') ?: false;
+$hideRatingSummary = $block->getData('hide_rating_summary') ?: false;
 ?>
 
 <?php if ($product->isSaleable()): ?>
@@ -103,11 +104,13 @@ $hideDetails = $block->getData('hide_details') ?: false;
             </a>
         </div>
 
+        <?php if (!$hideRatingSummary): ?>
         <div class="py-1 mx-auto <?= $viewIsGrid ? '' : 'md:mx-0 md:w-auto' ?>">
             <?= $block->getReviewsSummaryHtml($product, 'short') ?>
         </div>
+        <?php endif; ?>
 
-        <?php if ($product->isAvailable() && !$hideDetails):?>
+        <?php if ($product->isAvailable() && !$hideDetails): ?>
             <?= $block->getProductDetailsHtml($product) ?>
         <?php endif; ?>
 

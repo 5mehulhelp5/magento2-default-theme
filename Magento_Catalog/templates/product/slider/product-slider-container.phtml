@@ -52,6 +52,12 @@ $sliderItemRenderer = $block->getLayout()->getBlock('product_list_item')
     ?? $block->getChildBlock('slider.item.template')
     ?? $block->getLayout()->createBlock(Template::class);
 
+$hideRatingSummary = (bool) $block->getData('hide_rating_summary');
+$hideDetails       = (bool) $block->getData('hide_details');
+
+$sliderItemRenderer->setData('hide_details', $hideDetails);
+$sliderItemRenderer->setData('hide_rating_summary', $hideRatingSummary);
+
 ?>
 <section class="<?=
     $escaper->escapeHtmlAttr($block->getData('maybe_purged_tailwind_section_classes'))
@@ -85,11 +91,12 @@ $sliderItemRenderer = $block->getLayout()->getBlock('product_list_item')
                                  $block->getTemplate(),
                                  $product->getStoreId(),
                                  $productViewModel->getCurrencyData()['code'],
+                                 (int) $hideDetails,
+                                 (int) $hideRatingSummary,
                                  /* category id */ '0'
                              ];
                              echo $sliderItemRenderer
                                    ->setData('product', $product)
-                                   ->setData('hide_details', true)
                                    ->setData('view_mode', $viewMode)
                                    ->setData('image_display_area', $imageDisplayArea)
                                    ->setData('show_description', $showDescription)
