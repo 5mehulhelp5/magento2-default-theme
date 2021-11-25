@@ -29,9 +29,9 @@ $cols = $block->getData('is_context_shipment') ? 3 : ($block->getData('is_contex
                     <div class="text-sm flex mt-1">
                         <span><?= $escaper->escapeHtml($option['label']) ?>:</span>
                         <?php if (!$block->getPrintStatus()): ?>
-                            <?php $_formatedOptionValue = $block->getFormatedOptionValue($option) ?>
+                            <?php $formatedOptionValue = $block->getFormatedOptionValue($option) ?>
                             <span class="ml-1">
-                                <?= $escaper->escapeHtml($_formatedOptionValue['value'], ['a']) ?>
+                                <?= $escaper->escapeHtml($formatedOptionValue['value'], ['a']) ?>
                         </span>
                         <?php else: ?>
                             <span class="ml-1">

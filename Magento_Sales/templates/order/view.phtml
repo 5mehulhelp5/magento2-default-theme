@@ -56,7 +56,7 @@ $giftMessageHelper = $this->helper(Message::class);
                 <div class="block-title"><strong><?= $escaper->escapeHtml(__('Gift Message for This Order')) ?></strong>
                 </div>
                 <?php
-                $_giftMessage =
+                $giftMessage =
                     $giftMessageHelper->getGiftMessageForEntity($order);
                 ?>
                 <div class="block-content">
@@ -65,13 +65,13 @@ $giftMessageHelper = $this->helper(Message::class);
                             <strong class="label">
                                 <?= $escaper->escapeHtml(__('From')) ?>
                             </strong>
-                            <?= $escaper->escapeHtml($_giftMessage->getSender()) ?>
+                            <?= $escaper->escapeHtml($giftMessage->getSender()) ?>
                         </dt>
                         <dt class="item-recipient">
                             <strong class="label">
                                 <?= $escaper->escapeHtml(__('To')) ?>
                             </strong>
-                            <?= $escaper->escapeHtml($_giftMessage->getRecipient()) ?>
+                            <?= $escaper->escapeHtml($giftMessage->getRecipient()) ?>
                         </dt>
                         <dd class="item-message">
                             <?= /* @noEscape */

@@ -81,7 +81,7 @@ if ($recaptchaViewModel !== null && $recaptchaData = $recaptchaViewModel->getRec
                                                      x-data="{ clickedRatingId: 0 }">
                                                     <?php $options = $rating->getOptions(); ?>
                                                     <?php $iterator = 1;
-                                                    foreach ($options as $_option): ?>
+                                                    foreach ($options as $option): ?>
                                                         <div class="relative"
                                                              @click="clickedRatingId = <?= (int)$iterator ?> || 0">
                                                             <input
@@ -94,17 +94,17 @@ if ($recaptchaViewModel !== null && $recaptchaData = $recaptchaViewModel->getRec
                                                                     ->escapeHtmlAttr(
                                                                         $rating->getRatingCode() .
                                                                         '_' .
-                                                                        $_option->getValue()
+                                                                        $option->getValue()
                                                                     ) ?>"
                                                                 value="<?= $escaper
-                                                                    ->escapeHtmlAttr($_option->getId()) ?>"/>
+                                                                    ->escapeHtmlAttr($option->getId()) ?>"/>
                                                             <label
                                                                 class="rating-<?= (int)$iterator ?> m-0 cursor-pointer"
                                                                 for="<?= $escaper
                                                                      ->escapeHtmlAttr(
                                                                          $rating->getRatingCode() .
                                                                          '_' .
-                                                                         $_option->getValue()
+                                                                         $option->getValue()
                                                                      ) ?>"
                                                                 title="<?= $escaper
                                                                        ->escapeHtmlAttr(
@@ -122,7 +122,7 @@ if ($recaptchaViewModel !== null && $recaptchaData = $recaptchaViewModel->getRec
                                                                     ->escapeHtmlAttr(
                                                                         $rating->getRatingCode() .
                                                                         '_' .
-                                                                        $_option->getValue()
+                                                                        $option->getValue()
                                                                     ) ?>_label">
                                                                 <span>
                                                                     <svg xmlns="http://www.w3.org/2000/svg"
