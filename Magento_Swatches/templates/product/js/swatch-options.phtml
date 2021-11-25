@@ -159,7 +159,7 @@ use Magento\Framework\View\Element\Template;
             showSwatches: false,
             initShowSwatchesIntersect() {
                 if ('IntersectionObserver' in window && !window.scrollY) {
-                    var io = new IntersectionObserver(
+                    const io = new IntersectionObserver(
                         entries => {
                             entries.map(entry => {
                                 if (entry.isIntersecting) {

@@ -72,7 +72,7 @@ $wishlistHelper = $this->helper(WishlistHelper::class);
 
                 },
                 addAllItemsToCart() {
-                    var urlParams = <?= /* @noEscape */ $block->getAddAllToCartParams() ?>,
+                    const urlParams = <?= /* @noEscape */ $block->getAddAllToCartParams() ?>,
                         separator = urlParams.action.indexOf('?') >= 0 ? '&' : '?';
 
                     Array.from(document.querySelectorAll('input[name^=qty]')).map(qty => {

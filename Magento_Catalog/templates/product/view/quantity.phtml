@@ -35,7 +35,7 @@ $step = $stockItemViewModel->getQtyIncrements($product)
 
 
 ?>
-<?php if ($block->shouldRenderQuantity()) :?>
+<?php if ($block->shouldRenderQuantity()): ?>
     <script>
         function initQtyField() {
             return {
@@ -43,13 +43,14 @@ $step = $stockItemViewModel->getQtyIncrements($product)
                 itemId: '<?= (int)$block->getRequest()->getParam('id') ?>',
                 productId: '<?= (int)$product->getId() ?>',
                 onGetCartData: function onGetCartData($dispatch) {
-                    var cart = event.detail.data && event.detail.data.cart;
+                    // This code seems buggy
+                    // Reference: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/288
+                    const cart = event.detail.data && event.detail.data.cart;
                     if (cart && cart.items) {
-                        $this = this;
-                        var cartItem = cart.items.find(function (item) {
+                        const cartItem = cart.items.find(function (item) {
                             return (
-                                item.item_id === $this.itemId
-                                && item.product_id === $this.productId
+                                item.item_id === this.itemId
+                                && item.product_id === this.productId
                             )
                         });
                         if (cartItem && cartItem.qty) {

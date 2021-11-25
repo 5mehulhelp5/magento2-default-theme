@@ -55,7 +55,7 @@ if ($block->getIsInCatalogProduct()) {
                 const formParentId = 'product_addtocart_form';
                 const returnUrlValue = "<?= $escaper->escapeUrl($block->getCheckoutUrl()) ?>";
                 if(!document.getElementById(this.returnUrlId)){
-                    var elReturnUrl = document.createElement('input');
+                    const elReturnUrl = document.createElement('input');
                     elReturnUrl.setAttribute('type', 'hidden');
                     elReturnUrl.setAttribute('name', 'return_url');
                     elReturnUrl.setAttribute('value', returnUrlValue);

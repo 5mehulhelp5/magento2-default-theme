@@ -46,7 +46,7 @@ $updateParams = $block->getUpdateParams() ?: null;
         return {
             addToWishlist: function addToWishlist(productId) {
 
-                var postParams = <?php if ($updateParams): ?>
+                const postParams = <?php if ($updateParams): ?>
                     <?= /* @noEscape */ $updateParams ?>
                 <?php else: ?>
                 {
@@ -114,7 +114,7 @@ $updateParams = $block->getUpdateParams() ?: null;
                                 : response.error_message
                         }], 5000
                     );
-                    var reloadCustomerDataEvent = new CustomEvent("reload-customer-section-data");
+                    const reloadCustomerDataEvent = new CustomEvent("reload-customer-section-data");
                     window.dispatchEvent(reloadCustomerDataEvent);
                 }).catch(function (error) {
                     typeof window.dispatchMessages !== "undefined" && window.dispatchMessages(

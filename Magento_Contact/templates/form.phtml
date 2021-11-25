@@ -122,7 +122,8 @@ if ($recaptchaViewModel !== null && $recaptchaData = $recaptchaViewModel->getRec
                 errors: 0,
                 hasCaptchaToken: 0,
                 submitForm() {
-                    var $form = document.querySelector('#<?= $escaper->escapeJs($formId) ?>');
+                    // Do not rename $form, it is expected to be declared in the child block output
+                    const $form = document.querySelector('#<?= $escaper->escapeJs($formId) ?>');
                     <?= $block->getChildHtml('recaptcha_validation'); ?>
 
                     if (this.errors === 0) {

@@ -191,7 +191,8 @@ if ($recaptchaViewModel !== null && $recaptchaData = $recaptchaViewModel->getRec
                 if (!this.checkPasswordsMatch()){
                     return;
                 }
-                var $form = document.querySelector('#form-validate');
+                // Do not rename $form, it is expected to be declared in the child block output
+                const $form = document.querySelector('#form-validate');
                 <?= $block->getChildHtml('recaptcha_validation_customer_edit'); ?>
 
                 if (this.errors === 0) {

@@ -48,7 +48,7 @@ function initPrint() {
 function initCompare() {
     return {
         removeFromCompare(productId, productName) {
-            const formKey = document.querySelector('input[name=form_key]').value;
+            const formKey = hyva.getFormKey();
             const postUrl = BASE_URL + 'catalog/product_compare/remove/';
             const confirmMessage = "<?= $escaper->escapeHtml(
                 __('Are you sure you want to remove this item from your Compare Products list?')
@@ -107,13 +107,11 @@ function initCompare() {
 function initWishlist() {
     return {
         addToWishlist(productId){
-            var formKey = document.querySelector('input[name=form_key]').value;
-            var postUrl = BASE_URL+"wishlist/index/add/";
-            fetch(postUrl, {
+            fetch(BASE_URL + "wishlist/index/add/", {
                 "headers": {
                     "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
                 },
-                "body": "form_key="+ formKey + "&product="+productId+"&uenc="+btoa(window.location.href),
+                "body": "form_key="+ hyva.getFormKey() + "&product="+productId+"&uenc="+btoa(window.location.href),
                 "method": "POST",
                 "mode": "cors",
                 "credentials": "include"
@@ -140,7 +138,7 @@ function initWishlist() {
                             : response.error_message
                     }], 5000
                 );
-                var reloadCustomerDataEvent = new CustomEvent("reload-customer-section-data");
+                const reloadCustomerDataEvent = new CustomEvent("reload-customer-section-data");
                 window.dispatchEvent(reloadCustomerDataEvent);
             }).catch(function (error) {
                 typeof window.dispatchMessages !== "undefined" && window.dispatchMessages(

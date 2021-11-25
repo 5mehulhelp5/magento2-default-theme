@@ -236,14 +236,14 @@ $productName = $block->getProduct()->getName();
                 if (document.getElementById('loadYoutubeAPI')) {
                     return;
                 }
-                var params = {};
-                var loadYoutubeAPI = document.createElement('script');
+                const params = {};
+                const loadYoutubeAPI = document.createElement('script');
                 loadYoutubeAPI.src = 'https://www.youtube.com/iframe_api';
                 loadYoutubeAPI.id = 'loadYoutubeAPI';
-                var firstScriptTag = document.getElementsByTagName('script')[0];
+                const firstScriptTag = document.getElementsByTagName('script')[0];
                 firstScriptTag.parentNode.insertBefore(loadYoutubeAPI, firstScriptTag);
 
-                var host = (videoData.useYoutubeNoCookie) ?
+                const host = (videoData.useYoutubeNoCookie) ?
                     'https://www.youtube-nocookie.com' :
                     'https://www.youtube.com';
 
@@ -253,7 +253,7 @@ $productName = $block->getProduct()->getName();
                 if (!this.relatedVideos) {
                     params.rel = 0;
                 }
-                var fireYoutubeAPI = document.createElement('script');
+                const fireYoutubeAPI = document.createElement('script');
                 fireYoutubeAPI.innerHTML = `function onYouTubeIframeAPIReady() {
                     window.youtubePlayer = new YT.Player('youtube-player', {
                         host: '${host}',

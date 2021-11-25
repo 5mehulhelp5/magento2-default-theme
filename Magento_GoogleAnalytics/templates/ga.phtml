@@ -88,7 +88,6 @@ use Magento\GoogleAnalytics\Helper\Data;
         };
     }
 
-    var googleAnalytics = new GoogleAnalytics();
-    window.addEventListener("load", googleAnalytics.initGoogleAnalytics);
+    window.addEventListener("load", new GoogleAnalytics().initGoogleAnalytics);
 
 </script>
