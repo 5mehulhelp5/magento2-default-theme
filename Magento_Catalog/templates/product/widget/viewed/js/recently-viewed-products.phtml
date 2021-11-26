@@ -14,6 +14,7 @@ use Hyva\Theme\ViewModel\Currency;
 use Hyva\Theme\ViewModel\RecentlyViewedProducts;
 use Hyva\Theme\ViewModel\Store;
 use Hyva\Theme\ViewModel\ProductPage;
+use Hyva\Theme\ViewModel\StoreConfig;
 use Magento\Catalog\Block\Product\Image;
 use Magento\Framework\Escaper;
 use Magento\Framework\View\Element\Template;
@@ -55,6 +56,9 @@ $productImage = $currentProduct
 /** @var Store $viewModelStore */
 $viewModelStore = $viewModels->require(Store::class);
 
+/** @var StoreConfig $storeConfig */
+$storeConfig = $viewModels->require(StoreConfig::class);
+
 /** @var Currency $viewModelCurrency */
 $viewModelCurrency = $viewModels->require(Currency::class);
 
@@ -67,7 +71,7 @@ $title = $title ?? __('Recently Viewed Products');
         const defaultOptions = {
             isSlider: false,
             useGraphQL: <?= /** @noEscape */ $recentlyViewed->isFetchRecentlyViewedEnabled() ? 'true' : 'false' ?>,
-            noOfProductsToShow: <?= (int) $block->getData('page_size') ?>
+            noOfProductsToShow: <?= (int) $storeConfig->getStoreConfig('catalog/recently_products/viewed_count') ?>
         };
         const config = Object.assign({}, defaultOptions, options || {});
 
@@ -100,6 +104,7 @@ $title = $title ?? __('Recently Viewed Products');
 
                 if (!itemsToShow.length) {
                     this.noOfProductsToShow = 0;
+                    this.loading = false;
                     return;
                 }
 
@@ -110,7 +115,9 @@ $title = $title ?? __('Recently Viewed Products');
 
             fetchProducts(itemsToShow) {
                 const skusToFetch = itemsToShow.map(product => product.sku);
-                const query = `<?= /* @noEscape */ $gqlViewModel->query("recently_viewed_products_query", 'query ($skus: [String!]!) {
+                const query = `<?= /** @noEscape */ $gqlViewModel->query(
+                    "recently_viewed_products_query",
+                    'query ($skus: [String!]!) {
   products(filter: { sku: { in: $skus } }) {
     items {
       sku
@@ -138,7 +145,8 @@ $title = $title ?? __('Recently Viewed Products');
       }
     }
   }
-}') ?>`;
+}'
+                ) ?>`;
                 const variables = JSON.stringify({skus: skusToFetch});
                 window.fetch('/graphql?' + new URLSearchParams({query, variables}), {
                     method: 'GET',
@@ -184,11 +192,16 @@ $title = $title ?? __('Recently Viewed Products');
             },
 
             addToWishlist(productId) {
+                const params = {
+                    form_key: hyva.getFormKey(),
+                    product: productId,
+                    uenc: btoa(window.location.href)
+                };
                 fetch(BASE_URL + 'wishlist/index/add/', {
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
                     },
-                    body: new URLSearchParams({form_key: hyva.getFormKey(), product: productId, uenc: btoa(window.location.href)}),
+                    body: new URLSearchParams(params),
                     method: 'POST',
                     mode: 'cors',
                     credentials: 'include'
@@ -228,11 +241,16 @@ $title = $title ?? __('Recently Viewed Products');
             }, // end addToWishlist()
 
             addToCompare(productId) {
+                const params = {
+                    form_key: hyva.getFormKey(),
+                    product: productId,
+                    uenc: btoa(window.location.href)
+                };
                 fetch(BASE_URL + 'catalog/product_compare/add/', {
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
                     },
-                    body: new URLSearchParams({form_key: hyva.getFormKey(), product: productId, uenc: btoa(window.location.href)}),
+                    body: new URLSearchParams(params),
                     method: 'POST',
                     mode: 'cors',
                     credentials: 'include'
@@ -255,7 +273,7 @@ $title = $title ?? __('Recently Viewed Products');
             getSlider() {
                 return this.$el.querySelector('.js_slides');
             },
-            pageSize: 1,
+            pageSize: 4,
             pageFillers: 0,
             calcPageSize() {
                 const slider = this.getSlider();

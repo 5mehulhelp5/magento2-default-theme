@@ -36,9 +36,10 @@ $title = __('Recently Viewed Products');
 $widgetAttributesToShow = explode(',', (string) $block->getData('show_attributes'));
 $widgetButtonsToShow = explode(',', (string) $block->getData('show_buttons'));
 
-$jsTemplate = 'Magento_Catalog::product/widget/viewed/recently-viewed-products-js.phtml';
+$jsTemplate = 'Magento_Catalog::product/widget/viewed/js/recently-viewed-products.phtml';
 /* @noEscape */ echo $block->assign(['uniqueId' => $uniqueId, 'title' => $title])
-    ->fetchView($block->getTemplateFile($jsTemplate));
+           ->fetchView($block->getTemplateFile($jsTemplate));
+
 ?>
 <section class="my-12 text-gray-700 body-font"
          x-data="initRecentlyViewedProductsComponent<?= /** @noEscape */ $uniqueId?>({isSlider: true})"
@@ -47,7 +48,7 @@ $jsTemplate = 'Magento_Catalog::product/widget/viewed/recently-viewed-products-j
          @resize.window.debounce="calcPageSize(); $nextTick( function() { calcActive() })"
 >
     <template x-if="products && products.length">
-        <div class="container relative px-5">
+        <div class="relative">
             <div class="container flex flex-col items-center pt-6 pb-3 mx-auto mb-6 border-b-2
                         border-gray-300 md:flex-row">
                 <h3 class="text-2xl font-medium text-gray-900 title-font">
