@@ -10,6 +10,7 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column"
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <update handle="checkout_cart_item_renderers"/>
+    <update handle="hyva_product_slider" />
     <body>
         <referenceBlock name="header-content">
             <arguments>
@@ -50,12 +51,15 @@
                 </block>
             </block>
 
-            <block name="crosssell" class="Magento\Catalog\Block\Product\View"
-                   template="Magento_Theme::elements/slider.phtml">
-                <arguments>
-                    <argument name="type" xsi:type="string">crosssell</argument>
-                    <argument name="title" xsi:type="string" translate="true">You might also like:</argument>
-                </arguments>
+            <block name="cart-slider-wrapper" template="Magento_Checkout::cart/slider-wrapper.phtml">
+                <block name="crosssell" class="Magento\Catalog\Block\Product\View"
+                       template="Magento_Catalog::product/slider/product-slider.phtml">
+                    <arguments>
+                        <argument name="type" xsi:type="string">crosssell</argument>
+                        <argument name="title" xsi:type="string" translate="true">You might also like:</argument>
+                        <argument name="hide_rating_summary" xsi:type="boolean">true</argument>
+                    </arguments>
+                </block>
             </block>
         </referenceContainer>
     </body>

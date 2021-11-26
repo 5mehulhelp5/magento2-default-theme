@@ -10,6 +10,7 @@
 <page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <update handle="catalog_product_opengraph"/>
+    <update handle="hyva_product_slider" />
     <body>
         <attribute name="itemtype" value="http://schema.org/Product"/>
         <attribute name="itemscope" value="itemscope"/>
@@ -145,6 +146,24 @@
                            as="product_options_wrapper_bottom"
                            template="Magento_Catalog::product/view/options/wrapper/bottom.phtml"/>
 
+                    <block name="upsell" class="Magento\Catalog\Block\Product\View"
+                           template="Magento_Catalog::product/slider/product-slider.phtml">
+                        <arguments>
+                            <argument name="type" xsi:type="string">upsell</argument>
+                            <argument name="title" xsi:type="string"
+                                      translate="true">We found other products you might like!
+                            </argument>
+                        </arguments>
+                    </block>
+
+                    <block name="related" class="Magento\Catalog\Block\Product\View"
+                           template="Magento_Catalog::product/slider/product-slider.phtml">
+                        <arguments>
+                            <argument name="type" xsi:type="string">related</argument>
+                            <argument name="title" xsi:type="string" translate="true">Related Products</argument>
+                        </arguments>
+                    </block>
+
                     <block class="Magento\Catalog\Block\Product\View\Details"
                            name="product.info.details"
                            template="Magento_Catalog::product/view/sections/product-sections.phtml">
@@ -181,30 +200,13 @@
                    ifconfig="catalog/recently_products/show_on_pdp"
                    template="Magento_Catalog::product/widget/viewed/list.phtml">
                 <arguments>
-                    <argument name="page_size" xsi:type="number">4</argument>
                     <argument name="show_buttons" xsi:type="string">add_to_cart,add_to_compare,add_to_wishlist</argument>
                     <argument name="show_attributes" xsi:type="string">name,image,price,learn_more</argument>
                 </arguments>
             </block>
 
+        </referenceContainer>
 
-        </referenceContainer>
-        <referenceContainer name="content.aside">
-            <block name="related" class="Magento\Catalog\Block\Product\View"
-                template="Magento_Theme::elements/slider.phtml">
-                <arguments>
-                    <argument name="type" xsi:type="string">related</argument>
-                    <argument name="title" xsi:type="string" translate="true">Related Products</argument>
-                </arguments>
-            </block>
-            <block name="upsell" class="Magento\Catalog\Block\Product\View"
-                        template="Magento_Theme::elements/slider.phtml">
-                <arguments>
-                    <argument name="type" xsi:type="string">upsell</argument>
-                    <argument name="title" xsi:type="string" translate="true">We found other products you might like!</argument>
-                </arguments>
-            </block>
-        </referenceContainer>
         <move element="alert.urls" destination="product.info" as="alert.urls"/>
 
         <referenceContainer name="before.body.end">
