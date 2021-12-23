@@ -142,7 +142,9 @@ $directoryViewModel = $viewModels->require(DirectoryViewModel::class);
                     this.cartData.items &&
                     Object.keys(this.cartData.items).length
                 );
-                this.initEstimateShipping();
+                if (this.showEstimateShipping) {
+                    this.initEstimateShipping();
+                }
                 window.dispatchEvent(new CustomEvent('cart-data-updated', {detail: {cart: this.cartData}}));
             },
             dispatchCouponMutationRequest() {
