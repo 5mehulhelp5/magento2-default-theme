@@ -28,7 +28,7 @@ $product = $block->getProduct();
 ?>
 
 <?php if ($attributes = $block->getAdditionalData()): ?>
-    <div class="table-wrapper max-w-prose overflow-x-auto">
+    <div class="table-wrapper max-w-prose overflow-x-auto" id="product-attributes">
         <table class="additional-attributes w-full">
             <?php foreach ($attributes as $attribute): ?>
                 <tr class="border-b border-gray-300 last:border-b-0">
