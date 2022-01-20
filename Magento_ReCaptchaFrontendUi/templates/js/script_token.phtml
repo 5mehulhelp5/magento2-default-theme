@@ -33,7 +33,6 @@ $action = is_object($parentBlock) && $parentBlock->getNameInLayout()
         <?php endif; ?>
         if (!this.hasCaptchaToken) {
             this.errors = 1;
-
             const recaptchaUrl = "https://www.google.com/recaptcha/api.js?render=<?= $escaper
                 ->escapeHtmlAttr($siteKey) ?>";
 
