@@ -14,6 +14,7 @@
                    template="Magento_ReCaptchaFrontendUi::js/script_token_selector.phtml">
                 <arguments>
                     <argument name="viewModelRecaptcha" xsi:type="object">Hyva\Theme\ViewModel\ReCaptcha</argument>
+                    <argument name="form_id" xsi:type="string">product_review</argument>
                 </arguments>
             </block>
             <!-- Do not remove the view model from layout -->
