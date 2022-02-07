@@ -213,7 +213,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 If you're upgrading from <1.1.8 please check the documentation page on upgrading. Any additional information and known bugs/issues to this release will be documented there.
 
-[1.1.9 Upgrading docs](https://docs.hyva.io/doc/upgrading-to-119-EVHqOIvJzs)
+[1.1.9 Upgrading docs](https://docs.hyva.io/hyva-themes/upgrading/upgrading-to-1-1-9.html)
 
 ### Added
 
@@ -362,7 +362,7 @@ If you're upgrading from <1.1.8 please check the documentation page on upgrading
 - **Use GraphQL variables instead of string replacements**
 
   This fixes a number of issues related to parameter escaping and serialization as well as making the queries
-  editable with the GraphqlEditor as described [in the docs](https://docs.hyva.io/doc/customizing-graphql-vtjgCN6FzD).
+  editable with the GraphqlEditor as described [in the docs](https://docs.hyva.io/hyva-themes/writing-code/customizing-graphql.html).
 
   A new GraphQlQueriesWithVariables view model provides the matching queries. The old GraphQlQueries view model still
   exists unchanged for backward compatibility.
