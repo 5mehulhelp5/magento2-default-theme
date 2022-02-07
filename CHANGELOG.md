@@ -1,4 +1,5 @@
-# Changelog
+# Changelog - Default Theme
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
@@ -6,7 +7,31 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-[Unreleased]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.1.11...main
+[Unreleased]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.1.12...main
+
+## [1.1.12] - 2022-02-07
+
+[1.1.12]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.1.11...1.1.12
+
+### Added
+
+- **Add extra action block to cart drawer**
+
+  This is  new extension point that allows displaying additional checkout option buttons.
+  In Luma, this block was rendered as HTML server side but then displayed using JavaScript.
+  In Hyvä, the block is rendered server side.
+
+  More information can be found in the [merge request #386](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/386)
+
+  Many thanks to Ravinder (redChamps) for the contribution!
+
+### Changed
+
+- Nothing
+
+### Removed
+
+- Nothing
 
 ## [1.1.11] - 2022-01-28
 
