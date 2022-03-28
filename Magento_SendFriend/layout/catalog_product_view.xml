@@ -11,9 +11,7 @@
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceBlock name="product.detail.page">
-            <block name="product.info.emailtofriend"
-                   template="Magento_SendFriend::product/view/emailtofriend.phtml"
-            />
+            <block name="product.info.emailtofriend" template="Magento_SendFriend::product/view/emailtofriend.phtml"/>
         </referenceBlock>
     </body>
 </page>
