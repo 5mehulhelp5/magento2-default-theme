@@ -50,12 +50,12 @@ use Magento\Framework\View\Element\Template;
             calculateSimpleIndex(selectedValues) {
                 const productIndexes = this.optionConfig.index;
                 return Object.keys(productIndexes).find(productIndex => {
-                    const currentProductOptions = productIndexes[productIndex];
+                    const productCandidateOptions = productIndexes[productIndex];
 
-                    for (const productOption in currentProductOptions) {
+                    for (const productOption in productCandidateOptions) {
                         if (
-                            selectedValues[productOption] &&
-                            selectedValues[productOption] !== currentProductOptions[productOption]
+                            ! selectedValues[productOption] ||
+                            selectedValues[productOption] !== productCandidateOptions[productOption]
                         ) {
                             return false;
                         }
@@ -109,14 +109,15 @@ use Magento\Framework\View\Element\Template;
             },
             getProductIdsForOption(option) {
                 const attributeId = this.findAttributeByOptionId(option.id);
-                const opt = (this.optionConfig[attributeId].options || []).find(o => o.id === option.id);
+                const allOptions = this.optionConfig.attributes[attributeId];
+                const opt = (allOptions && allOptions.options || []).find(o => o.id === option.id);
                 return opt && opt.products
                     ? opt.products
                     : [];
             },
             findCheapestProductForOption(option) {
                 return this.getProductIdsForOption(option).reduce((cheapest, simpleIdx) => {
-                    // first product is always the cheapest
+                    // in the first iteration we start with simpleIdx as the currently cheapest product
                     if (! this.optionConfig.optionPrices[cheapest]) return simpleIdx;
                     const knownCheapestPrice = this.optionConfig.optionPrices[cheapest].finalPrice.amount;
                     return knownCheapestPrice > this.optionConfig.optionPrices[simpleIdx].finalPrice.amount
