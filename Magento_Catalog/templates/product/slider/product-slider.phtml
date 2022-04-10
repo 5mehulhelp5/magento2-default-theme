@@ -34,7 +34,7 @@ $wishlistViewModel    = $viewModels->require(Wishlist::class);
 $compareViewModel     = $viewModels->require(ProductCompare::class);
 $storeViewModel       = $viewModels->require(Store::class);
 
-$categoryIds       = array_filter(explode(',', $block->getData('category_ids') ?: ''));
+$categoryIds       = $block->getData('category_ids') ?: '';
 $pageSize          = $block->getData('page_size') ?: 8;
 $priceFrom         = $block->getData('price_from');
 $priceTo           = $block->getData('price_to');
