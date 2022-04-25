@@ -1224,6 +1224,21 @@ select {
 	--tw-ring-color: rgba(30, 64, 175, var(--tw-ring-opacity));
 	--tw-ring-opacity: 0.5;
 }
+.field {
+	display: inline-table;
+}
+.field.messages {
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+}
+.field.field--error .messages {
+	--tw-text-opacity: 1;
+	color: rgba(239, 68, 68, var(--tw-text-opacity));
+}
+.field.generated-wrapper {
+    margin-top: 0;
+    margin-bottom: 0;
+}
 .page.messages {
 	position: -webkit-sticky;
 	position: sticky;
@@ -1463,6 +1478,11 @@ body {
 .columns .sidebar {
 	order: 3;
 }
+.page-main-full-width .columns {
+	max-width: none;
+	padding-left: 0px;
+	padding-right: 0px;
+}
 .page-with-filter .columns .sidebar-main {
 	order: 1;
 }
@@ -1553,7 +1573,7 @@ body {
 	color: rgba(0, 0, 0, var(--tw-text-opacity));
 }
 [x-cloak] {
-    display: none;
+    display: none !important;
 }
 .input {
 	margin-right: 0.5rem;
@@ -1699,11 +1719,36 @@ body {
         background-attachment: scroll !important;
     }
 [data-content-type='row'][data-appearance='full-width'] > .row-full-width-inner {
-	margin-left: auto;
-	margin-right: auto;
-	box-sizing: border-box;
 	width: 100%;
-	max-width: 1280px;
+	margin-right: auto;
+	margin-left: auto;
+	padding-right: 1.5rem;
+	padding-left: 1.5rem;
+}
+@media (min-width: 640px) {
+	[data-content-type='row'][data-appearance='full-width'] > .row-full-width-inner {
+		max-width: 640px;
+	}
+}
+@media (min-width: 768px) {
+	[data-content-type='row'][data-appearance='full-width'] > .row-full-width-inner {
+		max-width: 768px;
+	}
+}
+@media (min-width: 1024px) {
+	[data-content-type='row'][data-appearance='full-width'] > .row-full-width-inner {
+		max-width: 1024px;
+	}
+}
+@media (min-width: 1280px) {
+	[data-content-type='row'][data-appearance='full-width'] > .row-full-width-inner {
+		max-width: 1280px;
+	}
+}
+@media (min-width: 1536px) {
+	[data-content-type='row'][data-appearance='full-width'] > .row-full-width-inner {
+		max-width: 1536px;
+	}
 }
 /* Column Groups */
 [data-content-type='column-group'] {
@@ -2716,6 +2761,9 @@ a.pagebuilder-button-secondary:focus, button.pagebuilder-button-secondary:focus,
 .table {
 	display: table;
 }
+.table-caption {
+	display: table-caption;
+}
 .grid {
 	display: grid;
 }
@@ -2989,11 +3037,11 @@ a.pagebuilder-button-secondary:focus, button.pagebuilder-button-secondary:focus,
 .grid-cols-3 {
 	grid-template-columns: repeat(3, minmax(0, 1fr));
 }
-.grid-cols-1 {
-	grid-template-columns: repeat(1, minmax(0, 1fr));
-}
 .grid-cols-2 {
 	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.grid-cols-1 {
+	grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 .grid-cols-4 {
 	grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -4453,14 +4501,14 @@ fieldset ~ fieldset {
 	.lg\:grid-cols-2 {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
+	.lg\:grid-cols-4 {
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
 	.lg\:grid-cols-7 {
 		grid-template-columns: repeat(7, minmax(0, 1fr));
 	}
 	.lg\:grid-cols-6 {
 		grid-template-columns: repeat(6, minmax(0, 1fr));
-	}
-	.lg\:grid-cols-4 {
-		grid-template-columns: repeat(4, minmax(0, 1fr));
 	}
 	.lg\:grid-cols-8 {
 		grid-template-columns: repeat(8, minmax(0, 1fr));
