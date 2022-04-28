@@ -27,5 +27,7 @@ if ($recaptchaViewModel !== null && $formId && $recaptchaData = $recaptchaViewMo
 }
 ?>
 
-<?= $block->getBlockHtml($recaptchaScriptTokenBlock) ?>
+<?php if ($block->getBlockHtml($recaptchaScriptTokenBlock)): ?>
+    <?= $block->getBlockHtml($recaptchaScriptTokenBlock) ?>
+<?php endif; ?>
 
