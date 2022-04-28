@@ -1,11 +1,26 @@
 form,
 fieldset {
     .field {
-        @apply my-3;
+        @apply mt-1
+    }
+
+    /* Reserve space for single line form validation messages */
+    .field input,
+    .field textarea {
+        @apply mb-7
+    }
+
+    .field ul {
+        @apply -mt-6;
+        @apply pb-1 text-sm leading-5 /* The padding + leading have to match the negative margin on the line above */
+    }
+
+    .field textarea {
+        @apply align-top
     }
 
     label {
-        @apply mb-2 block text-secondary-darker;
+        @apply mb-2 block text-secondary-darker
     }
 
     .field.choice {
@@ -20,6 +35,10 @@ fieldset {
         @apply mb-0
     }
 
+    .field.field-error .messages {
+        @apply text-red-500
+    }
+
     legend {
         @apply text-primary text-xl mb-3
     }
@@ -30,5 +49,5 @@ fieldset {
 }
 
 fieldset ~ fieldset {
-    @apply mt-8;
+    @apply mt-8
 }
