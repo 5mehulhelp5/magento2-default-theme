@@ -35,7 +35,7 @@ fieldset {
         @apply mb-0
     }
 
-    .field.field--error .messages {
+    .field.field-error .messages {
         @apply text-red-500
     }
 

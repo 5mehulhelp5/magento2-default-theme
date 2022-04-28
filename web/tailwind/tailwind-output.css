@@ -3897,7 +3897,7 @@ form .field.choice input, fieldset .field.choice input {
 form .field.choice label, fieldset .field.choice label {
 	margin-bottom: 0px;
 }
-form .field.field--error .messages, fieldset .field.field--error .messages {
+form .field.field-error .messages, fieldset .field.field-error .messages {
 	--tw-text-opacity: 1;
 	color: rgba(239, 68, 68, var(--tw-text-opacity));
 }
