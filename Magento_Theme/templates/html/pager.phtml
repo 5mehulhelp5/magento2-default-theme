@@ -11,6 +11,13 @@ use Magento\Theme\Block\Html\Pager;
 
 /** @var Pager $block */
 /** @var Escaper $escaper */
+
+$pagerItemClass = "relative inline-flex items-center text-sm font-medium leading-5 bg-white border border-gray-300";
+$pagerItemBtnClass = $pagerItemClass
+    . " transition duration-150 ease-in-out"
+    . " hover:text-gray-400"
+    . " focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue"
+    . " active:bg-gray-100 active:text-gray-500";
 ?>
 <?php if ($block->getCollection()->getSize()): ?>
 
@@ -43,10 +50,7 @@ use Magento\Theme\Block\Html\Pager;
                 aria-label="<?= $escaper->escapeHtml(__('Page')) ?>"
             >
                 <?php if (!$block->isFirstPage()): ?>
-                    <li class="relative inline-flex items-center px-3 py-2 text-sm font-medium leading-5 text-gray-500
-                    transition duration-150 ease-in-out bg-white border border-gray-300 item pages-item-previous
-                    rounded-l-md hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300
-                    focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500">
+                    <li class="item pages-item-previous <?= $pagerItemClass ?> rounded-l-md px-3 py-2 text-gray-500">
                         <?php $text = $block->getAnchorTextForPrevious() ? $block->getAnchorTextForPrevious() : ''; ?>
                         <a class="<?= $escaper->escapeHtmlAttr($text ? 'link ' : 'action ') ?> previous"
                            href="<?= $escaper->escapeUrl($block->getPreviousPageUrl()) ?>"
@@ -70,10 +74,7 @@ use Magento\Theme\Block\Html\Pager;
                 <?php endif; ?>
 
                 <?php if ($block->canShowFirst()): ?>
-                    <li class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium leading-5
-                    text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 item
-                    hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue
-                    active:bg-gray-100 active:text-gray-700">
+                    <li class="item <?= $pagerItemBtnClass ?> px-4 py-2 -ml-px text-gray-500">
                         <a class="page first" href="<?= $escaper->escapeUrl($block->getFirstPageUrl()) ?>">
                             <span class="sr-only label"><?= $escaper->escapeHtml(__('Page')) ?></span>
                             <span>1</span>
@@ -82,8 +83,7 @@ use Magento\Theme\Block\Html\Pager;
                 <?php endif; ?>
 
                 <?php if ($block->canShowPreviousJump()): ?>
-                    <li class="relative inline-flex items-center -ml-px text-sm font-medium leading-5
-                        text-gray-700 bg-white border border-gray-300 item">
+                    <li class="item <?= $pagerItemBtnClass ?> -ml-px text-gray-700">
                         <a class="px-4 py-2 page previous jump"
                            title=""
                            href="<?= $escaper->escapeUrl($block->getPreviousJumpUrl()) ?>">
@@ -94,9 +94,7 @@ use Magento\Theme\Block\Html\Pager;
 
                 <?php foreach ($block->getFramePages() as $page): ?>
                     <?php if ($block->isPageCurrent($page)): ?>
-                        <li class="relative z-10 inline-flex items-center -ml-px text-sm font-medium leading-5
-                        text-gray-700 transition duration-150 ease-in-out bg-white bg-gray-100 border item
-                        current border-primary focus:outline-none">
+                        <li class="item <?= $pagerItemClass ?> z-10 -ml-px text-gray-700 bg-gray-100 border-primary">
                             <strong class="px-4 py-2 cursor-default page">
                                 <span class="sr-only label">
                                     <?= $escaper->escapeHtml(
@@ -107,10 +105,7 @@ use Magento\Theme\Block\Html\Pager;
                             </strong>
                         </li>
                     <?php else: ?>
-                        <li class="relative inline-flex items-center -ml-px text-sm font-medium leading-5 text-gray-700
-                            transition duration-150 ease-in-out bg-white border border-gray-300 item hover:text-gray-500
-                            focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue
-                            active:bg-gray-100 active:text-gray-700">
+                        <li class="item <?= $pagerItemBtnClass ?> -ml-px text-gray-700">
                             <a href="<?= $escaper->escapeUrl($block->getPageUrl($page)) ?>" class="px-4 py-2 page">
                                 <span class="sr-only label"><?= $escaper->escapeHtml(__('Page')) ?></span>
                                 <span><?= $escaper->escapeHtml($page) ?></span>
@@ -120,8 +115,7 @@ use Magento\Theme\Block\Html\Pager;
                 <?php endforeach; ?>
 
                 <?php if ($block->canShowNextJump()): ?>
-                    <li class="relative inline-flex items-center -ml-px text-sm font-medium leading-5
-                        text-gray-700 bg-white border border-gray-300 item">
+                    <li class="item <?= $pagerItemBtnClass ?> -ml-px text-gray-700">
                         <a class="px-4 py-2 page next jump" title="" href="<?= $escaper->escapeUrl($block->getNextJumpUrl()) ?>">
                             <span>...</span>
                         </a>
@@ -129,8 +123,7 @@ use Magento\Theme\Block\Html\Pager;
                 <?php endif; ?>
 
                 <?php if ($block->canShowLast()): ?>
-                    <li class="relative inline-flex items-center -ml-px text-sm font-medium leading-5
-                        text-gray-700 bg-white border border-gray-300 item">
+                    <li class="item <?= $pagerItemBtnClass ?> px-4 py-2 -ml-px text-gray-500">
                         <a class="px-4 py-2 page last" href="<?= $escaper->escapeUrl($block->getLastPageUrl()) ?>">
                             <span class="sr-only label"><?= $escaper->escapeHtml(__('Page')) ?></span>
                             <span><?= $escaper->escapeHtml($block->getLastPageNum()) ?></span>
@@ -139,10 +132,7 @@ use Magento\Theme\Block\Html\Pager;
                 <?php endif; ?>
 
                 <?php if (!$block->isLastPage()): ?>
-                    <li class="relative inline-flex items-center px-3 py-2 -ml-px text-sm font-medium
-                        leading-5 text-gray-500 transition duration-150 ease-in-out bg-white border border-gray-300
-                        item pages-item-next rounded-r-md hover:text-gray-400 focus:z-10 focus:outline-none
-                        focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500">
+                    <li class="item pages-item-next <?= $pagerItemClass ?> rounded-r-md -ml-px px-3 py-2 text-gray-500">
                         <?php $text = $block->getAnchorTextForNext() ? $block->getAnchorTextForNext() : ''; ?>
                         <a class="<?= /* @noEscape */ $text ? 'link ' : 'action ' ?> next"
                            href="<?= $escaper->escapeUrl($block->getNextPageUrl()) ?>"
