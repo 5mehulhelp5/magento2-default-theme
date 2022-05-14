@@ -84,7 +84,10 @@ $pagerItemBtnClass = $pagerItemClass
 
                 <?php if ($block->canShowFirst()): ?>
                     <li class="item -ml-px">
-                        <a class="page first <?= $pagerItemBtnClass ?> px-4 py-2 text-gray-500" href="<?= $escaper->escapeUrl($block->getFirstPageUrl()) ?>">
+                        <a
+                            href="<?= $escaper->escapeUrl($block->getFirstPageUrl()) ?>"
+                            class="page first <?= $pagerItemBtnClass ?> px-4 py-2 text-gray-500"
+                        >
                             <span class="sr-only label"><?= $escaper->escapeHtml(__('Page')) ?></span>
                             <span>1</span>
                         </a>
@@ -108,7 +111,8 @@ $pagerItemBtnClass = $pagerItemClass
                             <a
                                 href="<?= $escaper->escapeUrl($block->getPageUrl($page)) ?>"
                                 class="page <?= $pagerItemBtnClass ?> z-10 px-4 py-2 text-gray-700 bg-gray-100 border-primary"
-                                aria-current="page">
+                                aria-current="page"
+                            >
                                 <span class="sr-only label">
                                     <?= $escaper->escapeHtml(
                                         __('You\'re currently reading page')
@@ -119,8 +123,10 @@ $pagerItemBtnClass = $pagerItemClass
                         </li>
                     <?php else: ?>
                         <li class="item -ml-px">
-                            <a href="<?= $escaper->escapeUrl($block->getPageUrl($page)) ?>"
-                                class="page <?= $pagerItemBtnClass ?> px-4 py-2 text-gray-700">
+                            <a
+                                href="<?= $escaper->escapeUrl($block->getPageUrl($page)) ?>"
+                                class="page <?= $pagerItemBtnClass ?> px-4 py-2 text-gray-700"
+                            >
                                 <span class="sr-only label"><?= $escaper->escapeHtml(__('Page')) ?></span>
                                 <span><?= $escaper->escapeHtml($page) ?></span>
                             </a>
@@ -141,8 +147,10 @@ $pagerItemBtnClass = $pagerItemClass
 
                 <?php if ($block->canShowLast()): ?>
                     <li class="item -ml-px text-gray-500">
-                        <a class="page last <?= $pagerItemBtnClass ?> px-4 py-2"
-                        href="<?= $escaper->escapeUrl($block->getLastPageUrl()) ?>">
+                        <a
+                            href="<?= $escaper->escapeUrl($block->getLastPageUrl()) ?>"
+                            class="page last <?= $pagerItemBtnClass ?> px-4 py-2"
+                        >
                             <span class="sr-only label"><?= $escaper->escapeHtml(__('Page')) ?></span>
                             <span><?= $escaper->escapeHtml($block->getLastPageNum()) ?></span>
                         </a>
