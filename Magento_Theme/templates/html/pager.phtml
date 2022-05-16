@@ -81,7 +81,10 @@ $pagerItemBtnClass = $pagerItemClass
             </div>
             <ol class="relative z-0 inline-flex shadow-sm items pages-items">
                 <?php if ($block->canShowFirst()): ?>
-                    <li class="item -ml-px">
+                    <li
+                        class="item -ml-px"
+                        aria-label="<?= $escaper->escapeHtml(__('Page') . ' 1' . $page) ?>"
+                    >
                         <a
                             href="<?= $escaper->escapeUrl($block->getFirstPageUrl()) ?>"
                             class="page first <?= $pagerItemBtnClass ?> px-4 py-2 text-gray-500"
@@ -105,7 +108,10 @@ $pagerItemBtnClass = $pagerItemClass
 
                 <?php foreach ($block->getFramePages() as $page): ?>
                     <?php if ($block->isPageCurrent($page)): ?>
-                        <li class="item -ml-px">
+                        <li
+                            class="item -ml-px"
+                            aria-label="<?= $escaper->escapeHtml(__('Page') . ' ' . $page) ?>"
+                        >
                             <a
                                 href="<?= $escaper->escapeUrl($block->getPageUrl($page)) ?>"
                                 class="page <?= $pagerItemBtnClass ?> z-10 px-4 py-2 text-gray-700 bg-gray-100 border-primary"
@@ -120,7 +126,10 @@ $pagerItemBtnClass = $pagerItemClass
                             </a>
                         </li>
                     <?php else: ?>
-                        <li class="item -ml-px">
+                        <li
+                            class="item -ml-px"
+                            aria-label="<?= $escaper->escapeHtml(__('Page') . ' ' . $page) ?>"
+                        >
                             <a
                                 href="<?= $escaper->escapeUrl($block->getPageUrl($page)) ?>"
                                 class="page <?= $pagerItemBtnClass ?> px-4 py-2 text-gray-700"
@@ -144,7 +153,10 @@ $pagerItemBtnClass = $pagerItemClass
                 <?php endif; ?>
 
                 <?php if ($block->canShowLast()): ?>
-                    <li class="item -ml-px text-gray-500">
+                    <li
+                        class="item -ml-px text-gray-500"
+                        aria-label="<?= $escaper->escapeHtml(__('Page') . ' ' . $block->getLastPageNum()) ?>"
+                    >
                         <a
                             href="<?= $escaper->escapeUrl($block->getLastPageUrl()) ?>"
                             class="page last <?= $pagerItemBtnClass ?> px-4 py-2"
