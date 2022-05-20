@@ -36,6 +36,7 @@ $viewModel = $block->getViewModel();
 <form class="form-address-edit"
       x-data="initCustomerAddressEdit()"
       @private-content-loaded.window="onPrivateContentLoaded(event.detail.data)"
+      @submit.prevent="checkFieldsBeforeSubmit($event.target)"
       action="<?= $escaper->escapeUrl($block->getSaveUrl()) ?>"
       method="post"
       id="form-validate"
@@ -136,6 +137,7 @@ $viewModel = $block->getViewModel();
                            title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('postcode') ?>"
                            id="zip"
                            :required="isZipRequired"
+                           @change="changePostcode($event.target)"
                            class="form-input validate-zip-international">
                 </div>
             </div>
@@ -283,7 +285,12 @@ function initCustomerAddressEdit() {
     return {
         directoryData: {},
         availableRegions: {},
+        messageTime: 5000,
+        fieldsNames: [],
         selectedRegion: '<?= $escaper->escapeJs($block->getRegion() ?: 0) ?>',
+        postCodes: <?= /* @noEscape */ $block->getPostCodeConfig()->getSerializedPostCodes() ?>,
+        isPostCodeValid: false,
+        isPhoneValid: false,
         isZipRequired: true,
         isRegionRequired: true,
         showOptionalRegion: <?= $displayAll ? 'true': 'false' ?>,
@@ -319,6 +326,95 @@ function initCustomerAddressEdit() {
                     regionInputElement.value = value;
                 }
             })
+        },
+        checkFieldsBeforeSubmit(form) {
+            if (!this.fieldsNames.length) {
+                form.submit();
+                return true;
+            }
+
+            let message = '<?= $escaper->escapeHtml(__('Check the data is correct for ')) ?>';
+                message += (this.fieldsNames.length > 1) ? '<?= $escaper->escapeHtml(__('fields')) ?>' : '<?= $escaper->escapeHtml(__('field')) ?>';
+                message += ': ' + this.fieldsNames.join(', ') + '.';
+            this.initMessages('error', message, this.messageTime);
+
+            return false;
+        },
+        validatePhone(phoneElement) {
+            const phone = phoneElement.value ? !/[^\d\+\-]/.test(phoneElement.value) : '';
+
+            if (phone) {
+                return true;
+            }
+            this.invalidPhoneMessage();
+
+            return false;
+        },
+        validatePostCode(postCodeElement, countryId) {
+            let pattern, regex,
+                postCode = postCodeElement.value,
+                validatedPostCodeExample = [],
+                patterns = this.postCodes ? this.postCodes[countryId] : '';
+
+            if (postCode && patterns) {
+                for (pattern in patterns) {
+                    if (patterns.hasOwnProperty(pattern)) {
+                        validatedPostCodeExample.push(patterns[pattern].example);
+                        regex = new RegExp(patterns[pattern].pattern);
+                        if (regex.test(postCode)) {
+                            return true;
+                        }
+                    }
+                }
+                if (validatedPostCodeExample) {
+                    this.invalidPostcodeMessage(validatedPostCodeExample);
+                }
+
+                return false;
+            }
+
+            return true;
+        },
+        invalidPostcodeMessage(examples) {
+            let message = '<?= $escaper->escapeHtml(__('Provided Zip/Postal Code seems to be invalid.')) ?>';
+                message += '<?= $escaper->escapeHtml(__('Example: ')) ?>' + examples.join('; ') + '. ';
+                message += '<?= $escaper->escapeHtml(__('If you believe it is the right one you can ignore this notice.')) ?>';
+
+            this.initMessages('error', message, this.messageTime);
+        },
+        invalidPhoneMessage() {
+            let message = '<?= $escaper->escapeHtml(__('Phone number is not correct.')) ?>';
+                message += '<?= $escaper->escapeHtml(__(' Example: 1234567890')) ?>';
+
+            this.initMessages('error', message, this.messageTime);
+        },
+        initMessages(type, text, time) {
+            typeof window.dispatchMessages !== "undefined" && window.dispatchMessages(
+                [{
+                    type: type,
+                    text: text
+                }], time
+            );
+        },
+        changePhone(phoneElement) {
+            this.isPhoneValid = this.validatePhone(phoneElement);
+
+            if (!this.isPhoneValid && (this.fieldsNames.indexOf(phoneElement.name) < 0)) {
+                this.fieldsNames.push(phoneElement.name);
+            }
+            if (this.isPhoneValid && (this.fieldsNames.indexOf(phoneElement.name) >= 0)) {
+                this.fieldsNames = this.fieldsNames.filter(item => item !== phoneElement.name);
+            }
+        },
+        changePostcode(postcodeElement) {
+            this.isPostCodeValid = this.validatePostCode(postcodeElement, document.getElementById("country").value);
+
+            if (!this.isPostCodeValid && (this.fieldsNames.indexOf(postcodeElement.name) < 0)) {
+                this.fieldsNames.push(postcodeElement.name);
+            }
+            if (this.isPostCodeValid && (this.fieldsNames.indexOf(postcodeElement.name) >= 0)) {
+                this.fieldsNames = this.fieldsNames.filter(item => item !== postcodeElement.name);
+            }
         },
         changeCountry(countrySelectElement) {
             const selectedOption = countrySelectElement.options[countrySelectElement.selectedIndex];
