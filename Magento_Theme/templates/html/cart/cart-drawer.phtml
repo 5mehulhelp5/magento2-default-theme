@@ -13,21 +13,32 @@ use Magento\Framework\View\Element\Template;
 
 /** @var Escaper $escaper */
 /** @var Template $block */
+/** @var ViewModelRegistry $viewModels */
+
+/** @var Hyva\Theme\ViewModel\StoreConfig $storeConfig */
+$storeConfig = $viewModels->require(Hyva\Theme\ViewModel\StoreConfig::class);
+$maxItemsToDisplay = $storeConfig->getStoreConfig(\Magento\Checkout\Block\Cart\Sidebar::XML_PATH_CHECKOUT_SIDEBAR_COUNT);
 ?>
 <script>
     function initCartDrawer() {
         return {
             open: false,
             cart: {},
+            maxItemsToDisplay: <?= $maxItemsToDisplay ?>,
+            cartLineItemsCount: 0,
+            totalCartAmount: 0,
             getData(data) {
                 if (data.cart) {
-                    this.cart = data.cart
+                    this.cart = data.cart;
+                    this.cartLineItemsCount = this.cart.items.length;
+                    this.totalCartAmount = this.cart.summary_count;
                     this.setCartItems();
                 }
             },
             cartItems: {},
             setCartItems() {
                 this.cartItems = this.cart && this.cart.items.sort(function(a,b) { return a.item_id - b.item_id }) || {}
+                this.cartItems = this.cartItems.slice(parseInt(-this.maxItemsToDisplay, 10));
             },
             deleteItemFromCart(itemId) {
                 fetch(BASE_URL+"checkout/sidebar/removeItem/", {
@@ -119,6 +130,13 @@ use Magento\Framework\View\Element\Template;
                     <header class="px-4 sm:px-6">
                         <h2 id="cart-drawer-title" class="text-lg font-medium leading-7 text-gray-900">
                             <?= $escaper->escapeHtml(__('My Cart')) ?>
+                            <span class="items-total">
+                                <span class="text-xs"><?= $escaper->escapeHtml(__('(')) ?></span>
+                                <span :class="{ 'hidden': (maxItemsToDisplay >= cartLineItemsCount) }" class="count text-xs" x-html="maxItemsToDisplay"></span>
+                                <span :class="{ 'hidden': (maxItemsToDisplay >= cartLineItemsCount) }" class="text-xs"><?= $escaper->escapeHtml(__('of')) ?></span>
+                                <span class="count text-xs" x-html="totalCartAmount"></span>
+                                <span class="text-xs"><?= $escaper->escapeHtml(__(')')) ?></span>
+                            </span>
                         </h2>
                     </header>
                     <div class="relative grid gap-6 px-4 py-6 overflow-y-auto bg-white border-b
