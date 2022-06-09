@@ -16,11 +16,6 @@ use Magento\Sales\Block\Reorder\Sidebar;
 <script>
     function initReorderSidebar() {
         function reorderSidebarFetchHandler(body, postUrl) {
-            const messages = {
-                "success": "<?= $escaper->escapeJs(__("You added %1 to your shopping cart")) ?>",
-                "warning": "<?= $escaper->escapeJs(__("Could not add item to your shopping cart")) ?>"
-            }
-
             const postHeaders = {
                 "headers": {
                     "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
@@ -31,29 +26,26 @@ use Magento\Sales\Block\Reorder\Sidebar;
                 "credentials": "include"
             };
 
-            return fetch(postUrl, postHeaders).then(function (response) {
+            return fetch(postUrl, postHeaders).then(response => {
                 if (response.redirected) {
+                    <?php // This is the regular path, regardless if the items could be reordered or not ?>
                     window.location.href = response.url;
                 } else if (response.ok) {
                     return response.json();
                 } else {
-                    typeof window.dispatchMessages !== "undefined" && window.dispatchMessages(
-                        [{ type: "warning", text: messages.warning }], 5000
-                    );
+                    const messageText = "<?= $escaper->escapeJs(__("Cannot add product to cart")) ?>";
+                    window.dispatchMessages && window.dispatchMessages([{type: "warning", text: messageText}], 5000);
                 }
-            }).then(function (response) {
-                if (!response) return;
-                typeof window.dispatchMessages !== "undefined" && window.dispatchMessages(
-                    [{
-                        type: (response.success) ? "success" : "error",
-                        text: (response.success) ? messages.success : response.error_message
-                    }], 5000
-                );
+            }).then(result => {
+                if (!result) return;
+                if (result.error_message) {
+                    const message = {type: "error", text: result.error_message};
+                    window.dispatchMessages && window.dispatchMessages([message], 5000);
+                }
                 window.dispatchEvent(new CustomEvent("reload-customer-section-data"));
-            }).catch(function (error) {
-                typeof window.dispatchMessages !== "undefined" && window.dispatchMessages(
-                    [{ type: "error", text: error }], 5000
-                );
+            }).catch(error => {
+                const message = { type: "error", text: error };
+                window.dispatchMessages && window.dispatchMessages([message], 5000);
             });
         }
 
@@ -69,12 +61,10 @@ use Magento\Sales\Block\Reorder\Sidebar;
                     this.reorderProducts = data['last-ordered-items'];
                     this.itemCount = this.reorderProducts.items.length;
                     this.reorderItems = this.reorderProducts.items;
-                    this.isShowAddToCart = this.reorderItems.some(function(product) {
-                        return product.is_saleable === true;
-                    });
+                    this.isShowAddToCart = this.reorderItems.some(product => product.is_saleable === true);
                 }
             },
-            addToCart: function (postUrl) {
+            addToCart(postUrl) {
                 let params = '';
                 const checkboxes = document.getElementsByName('order_items[]');
                 for (let i=0; i<checkboxes.length; i++) {
@@ -96,34 +86,35 @@ use Magento\Sales\Block\Reorder\Sidebar;
      :class="{ 'hidden': itemCount === 0 }">
     <div class="border-t border-container mb-6 pt-5">
         <strong id="block-reorder-heading" role="heading" aria-level="2">
-            <?= $block->escapeHtml(__('Recently Ordered')) ?>
+            <?= $escaper->escapeHtml(__('Recently Ordered')) ?>
         </strong>
     </div>
     <div class="block-content" aria-labelledby="block-reorder-heading">
         <form method="post" class="form reorder"
-              action="<?= $block->escapeUrl($block->getFormActionUrl()) ?>" id="reorder-validate-detail">
-            <strong class="subtitle hidden"><?= $block->escapeHtml(__('Last Ordered Items')) ?></strong>
+              action="<?= $escaper->escapeUrl($block->getFormActionUrl()) ?>" id="reorder-validate-detail">
+            <strong class="subtitle hidden"><?= $escaper->escapeHtml(__('Last Ordered Items')) ?></strong>
             <template x-if="itemCount">
                 <ol id="cart-sidebar-reorder" class="product-items product-items-names">
                     <template x-for="product in reorderItems">
                         <li class="flex items-start mb-4">
                             <div class="flex-shrink-0 mr-2">
                                 <label class="label hidden">
-                                    <span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
+                                    <span><?= $escaper->escapeHtml(__('Add to Cart')) ?></span>
                                 </label>
                                 <div class="control">
                                     <input type="checkbox"
                                            name="order_items[]"
                                            :id="checkboxId + product.id"
                                            :value="product.id"
-                                           :title="product.is_saleable ? '<?= $block->escapeHtml(__('Add to Cart')) ?>' :
-                                           '<?= $block->escapeHtml(__('Product is not salable.')) ?>'"
+                                           :title="product.is_saleable
+                                            ? '<?= $escaper->escapeJs(__('Add to Cart')) ?>'
+                                            : '<?= $escaper->escapeJs(__('Product is not salable.')) ?>'"
                                            :disabled="!product.is_saleable"
                                     />
                                 </div>
                             </div>
-                            <strong class="text-sm leading-6 font-normal">
-                                <a :href="product.url" :title="product.name" x-html="product.name"></a>
+                            <strong class="text-sm leading-6 font-normal hover:underline">
+                                <a :href="product.url" :title="product.name" x-text="product.name"></a>
                             </strong>
                         </li>
                     </template>
@@ -132,11 +123,11 @@ use Magento\Sales\Block\Reorder\Sidebar;
                 <div class="flex flex-wrap items-center md:mt-5 text-sm">
                     <template x-if="isShowAddToCart">
                         <button
-                            @click.prevent="addToCart('<?= $block->escapeUrl($block->getFormActionUrl()) ?>')"
+                            @click.prevent="addToCart('<?= $escaper->escapeUrl($block->getFormActionUrl()) ?>')"
                             aria-label="<?= $escaper->escapeHtmlAttr(__('Remove Product')) ?>"
-                            title="<?= $block->escapeHtml(__('Add to Cart')) ?>"
+                            title="<?= $escaper->escapeHtmlAttr(__('Add to Cart')) ?>"
                             class="action tocart primary btn btn-primary">
-                            <?= $block->escapeHtml(__('Add to Cart')) ?>
+                            <?= $escaper->escapeHtml(__('Add to Cart')) ?>
                         </button>
                     </template>
                     <a href="<?= $escaper->escapeUrl($block->getUrl('customer/account')) ?>#my-orders-table"
