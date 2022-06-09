@@ -2909,6 +2909,15 @@ a.pagebuilder-button-secondary:focus, button.pagebuilder-button-secondary:focus,
 .w-auto {
 	width: auto;
 }
+.w-10 {
+	width: 2.5rem;
+}
+.w-44 {
+	width: 11rem;
+}
+.w-60 {
+	width: 15rem;
+}
 .w-9 {
 	width: 2.25rem;
 }
