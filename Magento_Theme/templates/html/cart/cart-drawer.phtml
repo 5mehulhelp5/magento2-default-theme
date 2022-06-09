@@ -61,7 +61,9 @@ $maxItemsToDisplay = $storeConfig->getStoreConfig('checkout/sidebar/max_items_di
                     mode: 'cors',
                     credentials: 'include'
                 }).then(response => {
-                    if (response.ok) {
+                    if (response.redirected) {
+                        window.location.href = response.url;
+                    } else if (response.ok) {
                         return response.json();
                     } else {
                         window.dispatchMessages && window.dispatchMessages([{
