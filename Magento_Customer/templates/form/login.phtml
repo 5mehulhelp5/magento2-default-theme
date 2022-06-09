@@ -57,6 +57,7 @@ if ($recaptchaViewModel !== null && $recaptchaData = $recaptchaViewModel->getRec
                     <div class="control">
                         <input name="login[username]"
                                class="form-input"
+                               required
                                value="<?= $escaper->escapeHtmlAttr($block->getUsername()) ?>"
                             <?php if ($block->isAutocompleteDisabled()): ?>
                                 autocomplete="off"
@@ -71,6 +72,7 @@ if ($recaptchaViewModel !== null && $recaptchaData = $recaptchaViewModel->getRec
                     <div class="control">
                         <input name="login[password]"
                                class="form-input"
+                               required
                                type="password"
                             <?php if ($block->isAutocompleteDisabled()): ?>
                                 autocomplete="off"
