@@ -45,7 +45,20 @@ use Magento\Framework\View\Element\Template;
             },
             findSimpleIndex() {
                 // a better method name would be `updateSelectedSimpleIndex` but keeping for bc
-                this.productIndex = this.calculateSimpleIndexForFullSelection(this.selectedValues);
+                let productIndexIds = Object.keys(this.optionConfig.index);
+                Object.keys(this.optionConfig.attributes).forEach((attribute) => {
+                    // For each attribute, check if a value is selected for the attribute
+                    // If it is, find product with that attribute available
+                    const productsWithAttributeMatch = this.selectedValues[attribute] ? productIndexIds.filter((productIndex) => {
+                        return this.optionConfig.index[productIndex][attribute] === this.selectedValues[attribute]
+                    }) : [];
+
+                    // if we found matches, only keep the ones that match
+                    // otherwise, keep all products
+                    productIndexIds = productsWithAttributeMatch.length ? productsWithAttributeMatch : productIndexIds
+                })
+                // return the first available product from results
+                this.productIndex = productIndexIds[0];
             },
             calculateSimpleIndexForFullSelection(selectedValues) {
                 const productIndexes = this.optionConfig.index;
