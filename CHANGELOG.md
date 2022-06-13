@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [1.1.15]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.1.14...1.1.15
 
+### Upgrade guide
+
+If you're upgrading from <1.1.15 please check the [documentation page on upgrading](https://docs.hyva.io/hyva-themes/upgrading/upgrading-to-1-1-15.html). Any additional information and known bugs/issues to this release will be documented there.
+
 ### Added
 
 - **Support for reCaptcha v2 "I'm not a robot" and v2 invisible**
@@ -112,7 +116,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - **Reserve space for form validation message on validation container, not input field**
 
-  The previous solution requied awkward workarounds for multiple inputs like radio buttons within a container.
+  The previous solution required awkward workarounds for multiple inputs like radio buttons within a container.
 
   For more information please refer to the [Merge Request #445](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/445).
 
