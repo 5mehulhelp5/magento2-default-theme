@@ -16,16 +16,11 @@ use Magento\Framework\View\Element\Template;
 /** @var Escaper $escaper */
 /** @var ViewModelRegistry $viewModels */
 
-// This is the reCaptcha v3 invisible script loader
+// This is the reCaptcha script loader (for v2 and v3)
 
 /** @var $storeConfig StoreConfig */
 $storeConfig = $viewModels->require(StoreConfig::class);
-$siteKeyV3   = $storeConfig->getStoreConfig('recaptcha_frontend/type_recaptcha_v3/public_key');
-
-if (! $siteKeyV3) {
-    // No v3 google API credentials configured
-    return;
-}
+$siteKeyV3   = (string) $storeConfig->getStoreConfig('recaptcha_frontend/type_recaptcha_v3/public_key');
 
 ?>
 <script>
