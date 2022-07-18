@@ -75,6 +75,17 @@ $recaptcha = $block->getData('viewModelRecaptcha');
                                title="<?= $escaper->escapeHtmlAttr(__('Password')) ?>"/>
                     </div>
                 </div>
+                <div class="field choice">
+                    <input name="show-password"
+                           class="checkbox"
+                           id="show-password"
+                           type="checkbox"
+                           x-model="showPassword"
+                           title="<?= $escaper->escapeHtmlAttr(__('Show Password')) ?>"/>
+                    <label for="show-password" class="label">
+                        <span><?= $escaper->escapeHtml(__('Show Password')) ?></span>
+                    </label>
+                </div>
 
                 <?= $recaptcha ? $recaptcha->getInputHtml('customer_login') : '' ?>
                 <?= $block->getChildHtml('form_additional_info') ?>
@@ -109,6 +120,7 @@ $recaptcha = $block->getData('viewModelRecaptcha');
             return {
                 errors: 0,
                 hasCaptchaToken: 0,
+                showPassword: false,
                 displayErrorMessage: false,
                 errorMessages: [],
                 setErrorMessages(messages) {
