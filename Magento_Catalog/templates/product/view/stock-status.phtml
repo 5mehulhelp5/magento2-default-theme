@@ -22,9 +22,11 @@ use Magento\Framework\View\Element\Template;
 $currentProduct = $viewModels->require(CurrentProduct::class);
 
 /** @var Product $product */
-$product = $currentProduct->get();
+$product = $this->hasData('product')
+    ? $this->getData('product')
+    : $currentProduct->get();
 
-if (!$product->getId()) {
+if (!$product || !$product->getId()) {
     return;
 }
 ?>
