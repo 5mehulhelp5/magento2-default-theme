@@ -149,6 +149,10 @@ $hideRatingSummary = $block->getData('hide_rating_summary') ?: false;
                     <?= $escaper->escapeHtml(__('Add to Cart')) ?>
                 </span>
             </button>
+            <?php else: ?>
+            <div class="w-auto justify-center <?= $viewIsGrid ? 'mr-auto' : 'mr-auto md:mr-0' ?>">
+                <?= $block->getChildBlock('stockstatus')->setData('product', $product)->toHtml() ?>
+            </div>
             <?php endif; ?>
             <?php if ($showAddToWishlist): ?>
             <button x-data="initWishlist()"
