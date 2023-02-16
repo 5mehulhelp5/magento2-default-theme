@@ -37,43 +37,65 @@ $block->setData('cache_tags', $viewModelNavigation->getIdentities());
          @load.window="setActiveMenu($root)"
          class="hidden lg:block lg:relative lg:min-h-0 lg:px-8 lg:w-auto lg:pt-0">
         <nav
-            class="w-full duration-150 ease-in-out transform flex justify-start
-            w-auto relative min-h-0 transition-display"
-        >
-            <?php foreach ($menuItems as $index => $menuItem): ?>
-                <div class="relative mr-2 level-0"
-                     @mouseenter="hoverPanelActiveId = '<?= /* @noEscape */ (string) $index ?>'"
-                     @mouseleave="hoverPanelActiveId = 0"
-                >
-                    <span class="flex items-center block p-3 text-md bg-opacity-95">
-                        <a class="w-full py-3 text-base text-gray-700 hover:underline level-0"
-                           href="<?= $escaper->escapeUrl($menuItem['url']) ?>"
-                           title="<?= $escaper->escapeHtmlAttr($menuItem['name']) ?>"
+            class="duration-150 ease-in-out transform w-auto relative min-h-0 transition-display"
+            aria-label="<?= $escaper->escapeHtmlAttr(__('Main menu')) ?>"
+        >   
+            <ul class="flex justify-start">
+                <?php foreach ($menuItems as $index => $menuItem): ?>
+                    <li class="relative mr-2 level-0"
+                        @mouseenter="hoverPanelActiveId = '<?= /* @noEscape */ (string) $index ?>'"
+                        @mouseleave="hoverPanelActiveId = 0"
+                        @keyup.escape="hoverPanelActiveId = 0"
+                    >
+                        <span class="flex items-center block p-3 text-md bg-opacity-95"
+                            <?php if (!empty($menuItem['childData'])): ?>
+                                :aria-expanded="hoverPanelActiveId === '<?= /* @noEscape */ (string) $index ?>' ? 'true' : 'false'"
+                            <?php endif; ?> 
                         >
-                            <?= $escaper->escapeHtml($menuItem['name']) ?>
-                        </a>
-                    </span>
-                    <?php if (!empty($menuItem['childData'])): ?>
-                        <div
-                            class="absolute z-10 hidden px-6 py-4 -ml-6 shadow-lg bg-container-lighter/95"
-                            :class="{
-                                'hidden' : hoverPanelActiveId !== '<?= /* @noEscape */ (string) $index ?>',
-                                'block' : hoverPanelActiveId === '<?= /* @noEscape */ (string) $index ?>'
-                            }">
-                            <?php foreach ($menuItem['childData'] as $subMenuItem): ?>
-                                <a href="<?= $escaper->escapeUrl($subMenuItem['url']) ?>"
-                                   title="<?= $escaper->escapeHtmlAttr($subMenuItem['name']) ?>"
-                                   class="block w-full px-3 py-1 my-1 whitespace-nowrap first:mt-0 hover:underline"
+                            <a class="w-full py-3 text-base text-gray-700 hover:underline level-0"
+                               href="<?= $escaper->escapeUrl($menuItem['url']) ?>"
+                               title="<?= $escaper->escapeHtmlAttr($menuItem['name']) ?>"
+                               @focus="hoverPanelActiveId = 0"
+                            >
+                                <?= $escaper->escapeHtml($menuItem['name']) ?>
+                            </a>
+                            <?php if (!empty($menuItem['childData'])): ?>
+                                <button class="sr-only -right-2 h-5 w-5 focus:not-sr-only focus:absolute"
+                                        :aria-expanded="hoverPanelActiveId === '<?= /* @noEscape */ (string) $index ?>' ? 'true' : 'false'"
+                                        @click="hoverPanelActiveId = '<?= /* @noEscape */ (string) $index ?>'"
                                 >
-                                    <span class="text-base text-gray-700">
-                                        <?= $escaper->escapeHtml($subMenuItem['name']) ?>
+                                    <?= $heroiconsSolid->chevronDownHtml("flex self-center h-5 w-5", 25, 25) ?>
+                                    <span class="sr-only">
+                                        <?= $escaper->escapeHtml(__('Show submenu for %1 category', $menuItem['name'])) ?>
                                     </span>
-                                </a>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php endif; ?>
-                </div>
-            <?php endforeach; ?>
+                                </button>
+                            <?php endif; ?>
+                        </span>
+                        <?php if (!empty($menuItem['childData'])): ?>
+                            <ul
+                                class="absolute z-10 hidden px-6 py-4 -ml-6 shadow-lg bg-container-lighter/95"
+                                :class="{
+                                    'hidden' : hoverPanelActiveId !== '<?= /* @noEscape */ (string) $index ?>',
+                                    'block' : hoverPanelActiveId === '<?= /* @noEscape */ (string) $index ?>'
+                                }"
+                            >
+                                <?php foreach ($menuItem['childData'] as $subMenuItem): ?>
+                                    <li>
+                                        <a href="<?= $escaper->escapeUrl($subMenuItem['url']) ?>"
+                                           title="<?= $escaper->escapeHtmlAttr($subMenuItem['name']) ?>"
+                                           class="block w-full px-3 py-1 my-1 whitespace-nowrap first:mt-0 hover:underline"
+                                        >
+                                            <span class="text-base text-gray-700">
+                                                <?= $escaper->escapeHtml($subMenuItem['name']) ?>
+                                            </span>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php endif; ?>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
         </nav>
     </div>
 </div>
