@@ -31,6 +31,9 @@ $showMiniCart = $storeConfig->getStoreConfig(\Magento\Checkout\Block\Cart\Sideba
             cart: {},
             getData(data) {
                 if (data.cart) { this.cart = data.cart }
+            },
+            get isCartEmpty () {
+                return !this.cart.summary_count
             }
         }
     }
@@ -136,11 +139,11 @@ $showMiniCart = $storeConfig->getStoreConfig(\Magento\Checkout\Block\Cart\Sideba
                @focus.prevent.stop="showTooltip = true"
                @blur.prevent.stop="showTooltip = false"
                :aria-label="
-                cart.summary_count === 0 ?
+                isCartEmpty ?
                     '<?= $escaper->escapeHtml(__('Cart is empty')) ?>' :
                     hyva.str('You have %1 products in your cart.', cart.summary_count)
                 "
-               :aria-disabled="cart.summary_count === 0"
+               :aria-disabled="isCartEmpty"
             >
                 <span class="sr-only label">
                     <?= $escaper->escapeHtml(__('Cart')) ?>
@@ -148,7 +151,7 @@ $showMiniCart = $storeConfig->getStoreConfig(\Magento\Checkout\Block\Cart\Sideba
 
                 <span
                     x-cloak
-                    x-show="cart.summary_count === 0 && showTooltip"
+                    x-show="isCartEmpty && showTooltip"
                     x-transition:enter="transition ease-out duration-200"
                     x-transition:enter-start="opacity-0 scale-90"
                     x-transition:enter-end="opacity-100 scale-100"
@@ -156,11 +159,25 @@ $showMiniCart = $storeConfig->getStoreConfig(\Magento\Checkout\Block\Cart\Sideba
                     x-transition:leave-start="opacity-100 scale-100"
                     x-transition:leave-end="opacity-0 scale-90"
                     class="
-                        absolute left-1/2 -translate-x-1/2 translate-y-8 px-4 py-1 shadow-md whitespace-nowrap
-                        rounded-md text-white bg-gray-800 text-sm pointer-events-none
+                        absolute left-1/2 -translate-x-1/2 translate-y-6 p-4 whitespace-nowrap text-sm
+                        leading-tight text-black bg-white rounded-lg shadow-t-lg
+                        pointer-events-none
                     "
                 >
                     <?= $escaper->escapeHtml(__('Cart is empty')) ?>
+                    <svg
+                        class="
+                            absolute top-1.5 left-1/2 z-10 text-white -translate-x-1/2
+                            -translate-y-full rotate-[135deg] fill-current
+                        "
+                        width="12"
+                        height="12"
+                        viewBox="0 0 6 6"
+                        focusable="false"
+                        aria-hidden="true"
+                    >
+                        <path d="m0 0 6 6H0Z"/>
+                    </svg>
                 </span>
 
                 <?= $heroicons->shoppingCartHtml(
