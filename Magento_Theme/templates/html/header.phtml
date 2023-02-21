@@ -141,7 +141,11 @@ $showMiniCart = $storeConfig->getStoreConfig(\Magento\Checkout\Block\Cart\Sideba
                :aria-label="
                 isCartEmpty ?
                     '<?= $escaper->escapeHtml(__('Cart is empty')) ?>' :
-                    hyva.str('You have %1 products in your cart.', cart.summary_count)
+                    hyva.str(
+                        'You have %1 product%2 in your cart.',
+                        cart.summary_count,
+                        cart.summary_count === 1 ? '' : 's'
+                    )
                 "
                :aria-disabled="isCartEmpty"
             >
