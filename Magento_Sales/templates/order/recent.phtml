@@ -91,12 +91,12 @@ $heroicons = $viewModels->require(HeroiconsOutline::class);
                     <?php endif; ?>
                 </div>
             </div>
-            <div
-                role="row"
-                class="grid grid-cols-3 lg:grid-cols-6"
-            >
-                <?php $i = 0; ?>
-                <?php foreach ($orders as $order): ?>
+            <?php $i = 0; ?>
+            <?php foreach ($orders as $order): ?>
+                <div
+                    role="row"
+                    class="grid grid-cols-3 lg:grid-cols-6"
+                >
                     <?php $i++; ?>
                     <div
                         id="order<?= $escaper->escapeHtmlAttr($order->getRealOrderId()) ?>"
@@ -177,8 +177,8 @@ $heroicons = $viewModels->require(HeroiconsOutline::class);
                             </form>
                         <?php endif ?>
                     </div>
-                <?php endforeach; ?>
-            </div>
+                </div>
+            <?php endforeach; ?>
         <?php else: ?>
             <div class="message info empty"><span><?= $escaper->escapeHtml(__('You have placed no orders.')) ?></span>
             </div>
