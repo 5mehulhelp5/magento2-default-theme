@@ -151,9 +151,7 @@ $heroicons = $viewModels->require(HeroiconsOutline::class);
                             title="<?= $escaper->escapeHtmlAttr(__('View Order')) ?>"
                             aria-label="View order <?= $escaper->escapeHtmlAttr($order->getRealOrderId()) ?>"
                         >
-                            <span aria-hidden="true">
-                                <?= $heroicons->eyeHtml() ?>
-                            </span>
+                            <?= $heroicons->eyeHtml('', 24, 24, ['aria-hidden' => 'true']) ?>
                         </a>
                         <?php if ($this->helper(Reorder::class)->canReorder($order->getEntityId())): ?>
                             <?php $formData = json_decode(
@@ -174,7 +172,7 @@ $heroicons = $viewModels->require(HeroiconsOutline::class);
                                     class="inline-block text-sm text-secondary-darker"
                                     aria-label="Reorder <?= $escaper->escapeHtmlAttr($order->getRealOrderId()) ?>"
                                 >
-                                    <?= $heroicons->refreshHtml() ?>
+                                    <?= $heroicons->refreshHtml('', 24, 24, ['aria-hidden' => 'true']) ?>
                                 </button>
                             </form>
                         <?php endif ?>
