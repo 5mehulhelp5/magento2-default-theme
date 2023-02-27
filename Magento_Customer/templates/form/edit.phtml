@@ -63,7 +63,7 @@ $passwordMinCharacterSets = $block->getRequiredCharacterClassesNumber();
                 id="change-email"
                 value="1"
                 title="<?= $escaper->escapeHtmlAttr(__('Change Email')) ?>"
-                @change="handleCheckboxChange"
+                @change="handleCheckboxChange('change-email')"
                 class="checkbox"
                 :aria-expanded="showEmailField"
                 aria-controls="change-email-fields"
@@ -80,7 +80,7 @@ $passwordMinCharacterSets = $block->getRequiredCharacterClassesNumber();
                 id="change-password"
                 value="1"
                 title="<?= $escaper->escapeHtmlAttr(__('Change Password')) ?>"
-                @change="handleCheckboxChange"
+                @change="handleCheckboxChange('change-password')"
                 <?php if ($block->getChangePassword()): ?> checked="checked"<?php endif; ?>
                 class="checkbox"
                 :aria-expanded="showPasswordFields"
@@ -258,21 +258,20 @@ $passwordMinCharacterSets = $block->getRequiredCharacterClassesNumber();
                         }
                     })
             },
-            handleCheckboxChange(event) {
-                const { target: { id }} = event
+            handleCheckboxChange(checkboxId) {
 
-                if(id.includes('email')) {
+                if(checkboxId.includes('email')) {
                     this.showEmailField = !this.showEmailField
                 }
-                if(id.includes('password')) {
+                if(checkboxId.includes('password')) {
                     this.showPasswordFields = !this.showPasswordFields
                 }
 
                 this.$nextTick(() => {
                     const firstFocusableElement = document.querySelector(`
-                        #${id}-fields input,
-                        #${id}-fields textarea,
-                        #${id}-fields select
+                        #${checkboxId}-fields input,
+                        #${checkboxId}-fields textarea,
+                        #${checkboxId}-fields select
                     `)
 
                     firstFocusableElement?.focus()
