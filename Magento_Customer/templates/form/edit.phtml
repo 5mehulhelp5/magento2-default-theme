@@ -63,10 +63,10 @@ $passwordMinCharacterSets = $block->getRequiredCharacterClassesNumber();
                 id="change-email"
                 value="1"
                 title="<?= $escaper->escapeHtmlAttr(__('Change Email')) ?>"
-                @change="handleCheckboxChange('change-email')"
+                @change="handleCheckboxChange('email-fields')"
                 class="checkbox"
                 :aria-expanded="showEmailField"
-                aria-controls="change-email-fields"
+                aria-controls="email-fields"
             />
             <label class="label" for="change-email">
                 <span><?= $escaper->escapeHtml(__('Change Email')) ?></span>
@@ -80,11 +80,11 @@ $passwordMinCharacterSets = $block->getRequiredCharacterClassesNumber();
                 id="change-password"
                 value="1"
                 title="<?= $escaper->escapeHtmlAttr(__('Change Password')) ?>"
-                @change="handleCheckboxChange('change-password')"
+                @change="handleCheckboxChange('password-fields')"
                 <?php if ($block->getChangePassword()): ?> checked="checked"<?php endif; ?>
                 class="checkbox"
                 :aria-expanded="showPasswordFields"
-                aria-controls="change-password-fields"
+                aria-controls="password-fields"
             />
             <label class="label" for="change-password">
                 <span><?= $escaper->escapeHtml(__('Change Password')) ?></span>
@@ -94,7 +94,7 @@ $passwordMinCharacterSets = $block->getRequiredCharacterClassesNumber();
         <template x-if="showEmailField">
             <div
                 class="field field-reserved email required"
-                id="change-email-fields"
+                id="email-fields"
             >
                 <label class="label" for="email"><span><?= $escaper->escapeHtml(__('Email')) ?></span></label>
                 <div class="control">
@@ -109,7 +109,7 @@ $passwordMinCharacterSets = $block->getRequiredCharacterClassesNumber();
         <template x-if="showEmailField || showPasswordFields">
             <div
                 class="field field-reserved password current required"
-                id="change-password-fields"
+                id="password-fields"
             >
                 <label class="label" for="current-password">
                     <span><?= $escaper->escapeHtml(__('Current Password')) ?></span>
@@ -259,19 +259,18 @@ $passwordMinCharacterSets = $block->getRequiredCharacterClassesNumber();
                     })
             },
             handleCheckboxChange(checkboxId) {
-
-                if(checkboxId.includes('email')) {
+                if(checkboxId === 'email-fields') {
                     this.showEmailField = !this.showEmailField
                 }
-                if(checkboxId.includes('password')) {
+                if(checkboxId ==='password-fields') {
                     this.showPasswordFields = !this.showPasswordFields
                 }
 
                 this.$nextTick(() => {
                     const firstFocusableElement = document.querySelector(`
-                        #${checkboxId}-fields input,
-                        #${checkboxId}-fields textarea,
-                        #${checkboxId}-fields select
+                        #${checkboxId} input,
+                        #${checkboxId} textarea,
+                        #${checkboxId} select
                     `)
 
                     firstFocusableElement?.focus()
