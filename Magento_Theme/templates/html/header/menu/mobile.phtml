@@ -93,6 +93,8 @@ $block->setData('cache_tags', $viewModelNavigation->getIdentities());
                                 class="absolute right-0 flex items-center justify-center w-11 h-11 mr-8 cursor-pointer
                                 bg-container-lighter border-container"
                                 aria-label="<?= $escaper->escapeHtmlAttr(__('Open %1 subcategories', $menuItem['name'])) ?>"
+                                aria-haspopup="true"
+                                :aria-expanded="mobilePanelActiveId === '<?= /* @noEscape */ (string) $index ?>'"
                             >
                                 <div class="w-8 h-8 border rounded">
                                     <?= $heroicons->chevronRightHtml(
