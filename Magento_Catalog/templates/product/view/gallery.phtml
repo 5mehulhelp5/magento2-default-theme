@@ -48,7 +48,12 @@ $productName = $block->getProduct()->getName();
      x-bind="eventListeners"
      class="order-1 w-full md:w-5/12 lg:w-1/2 md:h-auto"
     >
-    <div :class="{'w-full h-full fixed block top-0 left-0 bg-white z-50 flex': fullscreen}">
+    <div
+        :class="{'w-full h-full fixed block top-0 left-0 bg-white z-50 flex': fullscreen}"
+        :role="fullscreen ? 'dialog' : false"
+        :aria-modal="fullscreen"
+        :aria-label="fullscreen ? 'Gallery modal fullscreen' : false"
+    >
         <div class="relative self-center w-full"
              x-transition:enter="ease-out duration-500"
              x-transition:enter-start="opacity-0"
@@ -93,6 +98,7 @@ $productName = $block->getProduct()->getName();
                             ? `${image.caption || '<?= $escaper->escapeJs($productName) ?>'}`
                             : 'Click to view image in fullscreen'
                         "
+    :role="fullscreen ?  'button' : 'img'"
                     />
                 </template>
                 <div class="absolute inset-0 hidden w-full h-full bg-white nonmobile"
