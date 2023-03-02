@@ -95,21 +95,25 @@ $showMiniCart = $storeConfig->getStoreConfig(\Magento\Checkout\Block\Cart\Sideba
             </a>
 
             <!--Search Icon-->
-            <button id="menu-search-icon"
-                    class="inline-block ml-1 no-underline sm:ml-3 hover:text-black"
-                    @click.prevent="
-                        searchOpen = !searchOpen;
-                        $dispatch('search-open');
-                    "
+            <button
+                id="menu-search-icon"
+                class="inline-block ml-1 no-underline sm:ml-3 hover:text-black"
+                @click.prevent="
+                    searchOpen = !searchOpen;
+                    $dispatch('search-open');
+                "
+                :aria-label="hyva.str('Toggle search form')"
+                aria-haspopup="true"
+                :aria-expanded="searchOpen"
             >
-                <span class="sr-only label">
-                    <?= $escaper->escapeHtml(__('Search')) ?>
-                </span>
-
                 <?= $heroicons->searchHtml(
                     "w-8 h-8 md:h-6 md:w-6 hover:text-black",
                     25,
-                    25
+                    25,
+                    [
+                        "focusable" => "false",
+                        "aria-hidden" => "true"
+                    ]
                 ) ?>
             </button>
 
