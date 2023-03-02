@@ -93,6 +93,10 @@ $helper = $this->helper(SearchHelper::class);
                @focus.once="suggest"
                @input.debounce.300="suggest"
                @keydown.arrow-down.prevent="focusElement($root.querySelector('[tabindex]'))"
+               @search-open.window.debounce.5="
+                    $el.focus()
+                    $el.select()
+               "
         />
          <template x-if="suggestions.length > 0">
              <div class="w-full leading-normal transition appearance-none text-grey-800 flex flex-col mt-1">

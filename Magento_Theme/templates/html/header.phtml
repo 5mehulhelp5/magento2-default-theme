@@ -99,11 +99,7 @@ $showMiniCart = $storeConfig->getStoreConfig(\Magento\Checkout\Block\Cart\Sideba
                     class="inline-block ml-1 no-underline sm:ml-3 hover:text-black"
                     @click.prevent="
                         searchOpen = !searchOpen;
-                        $nextTick(() => {
-                         const searchInput = document.querySelector('#search');
-                         searchInput.focus();
-                         searchInput.select();
-                     });
+                        $dispatch('search-open');
                     "
             >
                 <span class="sr-only label">
@@ -151,7 +147,7 @@ $showMiniCart = $storeConfig->getStoreConfig(\Magento\Checkout\Block\Cart\Sideba
     <!--Search-->
     <div class="absolute z-10 w-full border-t shadow-sm bg-container-lighter border-container-lighter"
          id="search-content"
-         :class="{ 'block': searchOpen}" x-cloak x-show="searchOpen"
+         x-cloak x-show="searchOpen"
          @click.outside="searchOpen = false"
     >
         <?= $block->getChildHtml('header-search'); ?>
