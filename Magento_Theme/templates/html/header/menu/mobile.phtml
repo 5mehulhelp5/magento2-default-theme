@@ -50,7 +50,7 @@ $block->setData('cache_tags', $viewModelNavigation->getIdentities());
     >
         <?= $heroicons->menuHtml(
             'p-3', 48, 48,
-            [":class" => "{ 'hidden' : open, 'block': !open }", "role" => "presentation", "focusable" => "false"]
+            [":class" => "{ 'hidden' : open, 'block': !open }", "aria-hidden" => "true"]
         );?>
     </button>
     <div
