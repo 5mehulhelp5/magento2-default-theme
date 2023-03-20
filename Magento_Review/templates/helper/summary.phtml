@@ -29,7 +29,8 @@ $uniqueId = $productId . uniqid();
         x-data="initRating<?= $uniqueId ?>()"
         @keyup.enter="scrollToRatings()"
         @click="scrollToRatings()"
-        class="rating-summary flex cursor-pointer"
+        class="rating-summary flex"
+        :class="{'cursor-pointer' : reviewsSection}"
         <?php if (!$rating): ?>
             title="<?= $escaper->escapeHtmlAttr(__('Be the first to review this product')) ?>"
         <?php endif; ?>
