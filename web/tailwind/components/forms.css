@@ -13,15 +13,12 @@
     }
 }
 
-:is(
-    .required,
-    .field-reserved
-):has(
-    :is(
-        input,
-        select,
-        textarea
-    )[required]
+/* TODO: Update the selector when possible */
+
+.field:has(
+    input[required],
+    select[required],
+    textarea[required]
 ) label:after {
     content: '';
     background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAzMiAzMicgZmlsbD0nI2RjMjYyNic+PHBhdGggZD0nbTAgMTQgMi03IDEyIDUtMS0xMmg3bC0xIDEyIDExLTUgMiA3LTEyIDMgOSA5LTYgNC03LTEwLTYgMTAtNi00IDgtOS0xMi0zJy8+PC9zdmc+") no-repeat;
