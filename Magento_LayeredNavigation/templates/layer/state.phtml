@@ -30,6 +30,7 @@ $heroicons = $viewModels->require(HeroiconsOutline::class);
             aria-controls="filter-current-content"
             :aria-expanded="open"
             aria-label="<?= $escaper->escapeHtmlAttr(__("Adjust active filtering")) ?>"
+            x-init="$nextTick(() => $el.focus())"
         >
             <strong><?= $escaper->escapeHtml(__('Active filtering')) ?></strong>
             <span class="py-1 px-1 rounded border border-container">
