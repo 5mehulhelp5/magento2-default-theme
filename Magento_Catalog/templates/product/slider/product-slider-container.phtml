@@ -131,7 +131,7 @@ if ($isSharedItemRenderer && $block->getChildBlock('slider.item.template')) {
     @resize.window.debounce="calcPageSize(); $nextTick( function() { calcActive() })"
     role="group"
     aria-roledescription="carousel"
-    aria-label="<?= $escaper->escapeHtml(__('Carousel %1', $title)) ?>"
+    aria-label="<?= $escaper->escapeHtmlAttr(__('Carousel %1', $title)) ?>"
     :aria-describedby="$id('slider-desc')"
 >
     <?php if ($items): ?>
