@@ -144,6 +144,14 @@ if ($isSharedItemRenderer && $block->getChildBlock('slider.item.template')) {
                     </h3>
                 </div>
             <?php endif; ?>
+            <span
+                class="sr-only"
+                :id="$id('slider-desc')"
+                tabindex="-1"
+            >
+                <?= $escaper->escapeHtml(__('Navigating through the elements of the carousel is possible using the tab key. You can skip the carousel or go straight to carousel navigation using the skip links.')) ?>
+            </span>
+
             <a
                 :href="`#${$id('slider-end')}`"
                 class="action skip sr-only focus:not-sr-only focus:absolute focus:z-30 focus:bg-white"
@@ -158,14 +166,6 @@ if ($isSharedItemRenderer && $block->getChildBlock('slider.item.template')) {
             >
                 <?= $escaper->escapeHtml(__('Press to go to carousel navigation')) ?>
             </a>
-            <span
-                class="sr-only"
-                :id="$id('slider-desc')"
-                tabindex="-1"
-            >
-                <?= $escaper->escapeHtml(__('Navigating through the elements of the carousel is possible using the tab key. You can skip the carousel or go straight to carousel navigation using the skip links.')) ?>
-            </span>
-
             <div class="flex-none relative w-full overflow-x-hidden focus-within:ring-2 ring-offset-2 active:ring-0 ring-blue-500/50">
                 <div class="relative flex flex-nowrap w-full overflow-auto js_slides snap md:px-1 xl:px-2"
                      @scroll.debounce="calcActive"
