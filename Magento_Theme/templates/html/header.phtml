@@ -138,8 +138,7 @@ $showMiniCart = $storeConfig->getStoreConfig(\Magento\Checkout\Block\Cart\Sideba
                 id="menu-cart-icon"
                 class="relative inline-block ml-1 no-underline sm:ml-3 hover:text-black"
                 x-data="initCartButton()"
-                @mouseover.prevent.stop="showTooltip = true"
-                @mouseleave.prevent.stop="showTooltip = false"
+                @click.prevent.stop="showTooltip = true"
                 @focus.prevent.stop="showTooltip = true"
                 @blur.prevent.stop="showTooltip = false"
                 :aria-disabled="isCartEmpty"
@@ -170,23 +169,22 @@ $showMiniCart = $storeConfig->getStoreConfig(\Magento\Checkout\Block\Cart\Sideba
                 <span
                     x-cloak
                     x-show="isCartEmpty && showTooltip"
-                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter="transition ease-out duration-100"
                     x-transition:enter-start="opacity-0 scale-90"
                     x-transition:enter-end="opacity-100 scale-100"
-                    x-transition:leave="transition ease-in duration-200"
+                    x-transition:leave="transition ease-in duration-100"
                     x-transition:leave-start="opacity-100 scale-100"
                     x-transition:leave-end="opacity-0 scale-90"
                     class="
-                        absolute left-1/2 -translate-x-3/4 translate-y-10 p-4 whitespace-nowrap text-sm
-                        leading-tight text-black bg-white rounded-lg shadow-t-lg pointer-events-none
-                        lg:-translate-x-1/2
+                        absolute top-full -left-[24px] -translate-x-1/2 bg-white px-6 py-4 mt-3 rounded-sm shadow-t-lg
+                        text-black pointer-events-none whitespace-nowrap
                     "
                 >
                     <?= $escaper->escapeHtml(__('Cart is empty')) ?>
                     <svg
                         class="
-                            absolute top-1.5 left-3/4 z-10 text-white -translate-x-1/2
-                            -translate-y-full rotate-[135deg] fill-current lg:left-1/2
+                            absolute top-1.5 right-[24px] -translate-x-1/2 -translate-y-full rotate-[135deg] text-white
+                            fill-current z-10
                         "
                         width="12"
                         height="12"
