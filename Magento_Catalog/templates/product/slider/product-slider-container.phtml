@@ -179,7 +179,7 @@ if ($isSharedItemRenderer && $block->getChildBlock('slider.item.template')) {
                     <?php foreach ($items as $product): ?>
                         <div class="flex shrink-0 w-full mr-1 p-1 js_slide md:w-1/2 lg:w-1/3 xl:w-1/4"
                              role="group"
-                             aria-label="<?= $escaper->escapeHtmlAttr(__('Slide %1', $sliderIndex++)) ?>"
+                             aria-label="<?= $escaper->escapeHtmlAttr(__('Item %1', $sliderIndex++)) ?>"
                              aria-describedby="slide-desc-<?= $escaper->escapeHtmlAttr($product->getId().'-'.$uniqueId) ?>"
                         >
                             <?= /** @noEscape */ $productListItemViewModel->getItemHtmlWithRenderer(
@@ -228,7 +228,7 @@ if ($isSharedItemRenderer && $block->getChildBlock('slider.item.template')) {
                                     'hidden': (pageSize !== 1 && !!(<?= (int) $i ?> % pageSize))
                                 }"
                             :aria-current="active === <?= (int) $i ?>"
-                            :aria-label="hyva.strf('<?= $escaper->escapeJs(__('Go to slide %1', (int) $i + 1)) ?>')"
+                            :aria-label="hyva.strf('<?= $escaper->escapeJs(__('Display slide %0')) ?>', (<?= (int) $i ?> / pageSize) + 1)"
                             @click="scrollTo(<?= (int) $i ?>)"
                         >
                             <span
