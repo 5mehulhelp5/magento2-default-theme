@@ -37,7 +37,9 @@ $product = $currentProductViewModel->exists() ? $currentProductViewModel->get() 
 ?>
 <nav class="breadcrumbs bg-container-lighter shadow-sm" aria-label="Breadcrumb">
     <div class="container">
-        <ol x-data="initBreadcrumbsProduct()" x-init="$nextTick(() => { setTimeout(()=>{ $el.scrollLeft = $el.scrollWidth }, 200) })" class="items list-reset py-4 rounded flex flex-nowrap text-grey text-sm overflow-x-auto">
+        <ol x-data="initBreadcrumbsProduct()"
+            x-init="$nextTick(() => { setTimeout(()=>{ $el.scrollLeft = $el.scrollWidth }, 200) })"
+            class="items list-reset py-4 rounded flex flex-nowrap text-grey text-sm overflow-x-auto">
             <span>&#8203;</span>
             <template x-for="item in breadcrumbs">
                 <li class="item inline-flex whitespace-nowrap">
