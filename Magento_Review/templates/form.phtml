@@ -121,20 +121,16 @@ $recaptcha = $block->getData('viewModelRecaptcha');
                                                                 >
                                                                     <?= $heroiconsSolid->starHtml('', 32, 32, ["aria-hidden" => "true"]); ?>
                                                                 </span>
-                                                                    <input
+                                                                <input
                                                                     class="absolute opacity-0 bottom-0 left-0 cursor-pointer"
                                                                     type="radio"
                                                                     <?php if ($iterator === 1): ?>required<?php endif; ?>
-                                                                    name="ratings[<?= $escaper
-                                                                        ->escapeHtmlAttr($rating->getId()) ?>]"
-                                                                    id="<?= $escaper
-                                                                        ->escapeHtmlAttr(
+                                                                    name="ratings[<?= $escaper->escapeHtmlAttr($rating->getId()) ?>]"
+                                                                    id="<?= $escaper->escapeHtmlAttr(
                                                                             $rating->getRatingCode() . '_' . $option->getValue()
                                                                         ) ?>"
-                                                                    value="<?= $escaper
-                                                                        ->escapeHtmlAttr($option->getId()) ?>"
-                                                                    aria-label=" <?= $escaper
-                                                                        ->escapeHtmlAttr(
+                                                                    value="<?= $escaper->escapeHtmlAttr($option->getId()) ?>"
+                                                                    aria-label="<?= $escaper->escapeHtmlAttr(
                                                                             __('%1 %2', $iterator, $iterator > 1 ? __('stars') : __('star'))
                                                                         )
                                                                     ?>"
