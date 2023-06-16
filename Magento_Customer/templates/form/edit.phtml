@@ -273,7 +273,7 @@ $passwordMinCharacterSets = $block->getRequiredCharacterClassesNumber();
                         #${checkboxId} select
                     `)
 
-                    firstFocusableElement?.focus()
+                    firstFocusableElement && firstFocusableElement.focus()
                 })
             }
         }
