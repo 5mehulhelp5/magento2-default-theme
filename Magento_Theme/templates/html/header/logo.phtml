@@ -43,7 +43,7 @@ $logoSrc = $logoPathResolver && method_exists($logoPathResolver, 'getLogoSrc')
     >
         <img
             src="<?= $escaper->escapeUrl($logoSrc) ?>"
-            alt="<?= $block->getLogoAlt() ? $escaper->escapeHtmlAttr($block->getLogoAlt()) : __('store') ?> logo"
+            alt="<?= $escaper->escapeHtmlAttr($block->getLogoAlt() ? $block->getLogoAlt() : __('store logo')) ?>"
             <?= $logoWidth
                 ? 'width="' . $escaper->escapeHtmlAttr($logoWidth) . '"'
                 : 'width="200"'
