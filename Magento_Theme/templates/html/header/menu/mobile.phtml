@@ -126,6 +126,7 @@ $block->setData('cache_tags', $viewModelNavigation->getIdentities());
                             >
                                 <li>
                                     <button
+                                        type="button"
                                         class="flex items-center px-8 py-4 border-b cursor-pointer bg-container border-container w-full border-t"
                                         @click="backToMainCategories('<?= /* @noEscape */ $index ?>-main')"
                                         aria-label="<?= $escaper->escapeHtmlAttr(__('Back to main categories')) ?>"
