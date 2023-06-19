@@ -52,7 +52,7 @@ $productName = $block->getProduct()->getName();
         :class="{'w-full h-full fixed block top-0 left-0 bg-white z-50 flex': fullscreen}"
         :role="fullscreen ? 'dialog' : false"
         :aria-modal="fullscreen"
-        :aria-label="fullscreen ? 'Gallery modal fullscreen' : false"
+        :aria-label="fullscreen ? '<?= $escaper->escapeJs(__('Gallery modal fullscreen')) ?>' : false"
     >
         <div class="relative self-center w-full"
              x-transition:enter="ease-out duration-500"
