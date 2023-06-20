@@ -46,6 +46,7 @@ $customerRegistration = $viewModels->require(CustomerRegistration::class);
         x-cloak
         x-show="open"
         aria-labelledby="customer-menu"
+        @click.outside="open = false"
     >
         <?php if ($block->customerLoggedIn()): ?>
             <a class="block px-4 py-2 lg:px-5 lg:py-2 hover:bg-gray-100"
