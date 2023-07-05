@@ -19,7 +19,18 @@ use Magento\GoogleGtag\Block\Ga;
 /** @var $storeConfig StoreConfig */
 $storeConfig = $viewModels->require(StoreConfig::class);
 
+$measurementId = $storeConfig->getStoreConfig('google/gtag/analytics4/measurement_id');
+if (empty($measurementId)) return;
+
 $anonymize = (bool)$storeConfig->getStoreConfig('google/gtag/anonymize');
+
+/**
+ * We skip over lazy-loading if cookieRestriction is enabled, because the scripts are not executed
+ * before cookies are accepted anyway. The script is executed when cookies are accepted by the visitor.
+ *
+ * Additionally, on subsequent requests the scripts can render on pageload (if cookies are accepted),
+ * without a performance penalty because the scripts are cached in the browser.
+ */
 $lazyLoadScript = $storeConfig->getStoreConfig('google/gtag/lazyload')
     && !$block->isCookieRestrictionModeEnabled();
 
@@ -30,7 +41,7 @@ $analyticsData = $block->getAnalyticsData();
     <!-- BEGIN GOOGLE ANALYTICS 4 CODE -->
     <script>
         (function initGoogleGA(){
-            const config = <?= /* @noEscape */ $block->getAnalyticsData() ?>;
+            const config = <?= /* @noEscape */ $analyticsData ?>;
             const anonymize_ip = <?= $anonymize ? 'true' : 'false' ?>;
 
             let allowServices = false,

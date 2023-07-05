@@ -21,7 +21,11 @@
         </referenceBlock>
 -->
         <referenceContainer name="before.body.end">
-            <block class="Magento\GoogleAnalytics\Block\Ga" name="google_analytics" as="google_analytics" template="Magento_GoogleAnalytics::ga.phtml" after="-" />
+            <block class="Magento\GoogleAnalytics\Block\Ga"
+                   name="google_analytics"
+                   as="google_analytics"
+                   template="Magento_GoogleAnalytics::ga.phtml"
+                   after="-" />
         </referenceContainer>
     </body>
 </page>

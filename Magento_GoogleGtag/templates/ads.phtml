@@ -27,10 +27,19 @@ $storeViewModel = $viewModels->require(StoreViewModel::class);
 
 $useConversionLabel = $block->getUseConversionLabel();
 $anonymize = (bool)$storeConfig->getStoreConfig('google/gtag/anonymize');
-$lazyLoadScript = (bool)$storeConfig->getStoreConfig('google/gtag/lazyload');
 
 $cookieHelper = $this->helper(Cookie::class);
 $cookieRestriction = (bool)$cookieHelper->isCookieRestrictionModeEnabled();
+
+/**
+ * We skip over lazy-loading if cookieRestriction is enabled, because the scripts are not executed
+ * before cookies are accepted anyway. The script is executed when cookies are accepted by the visitor.
+ *
+ * Additionally, on subsequent requests the scripts can render on pageload (if cookies are accepted),
+ * without a performance penalty because the scripts are cached in the browser.
+ */
+$lazyLoadScript = $storeConfig->getStoreConfig('google/gtag/lazyload')
+    && !$cookieRestriction;
 ?>
 
 <?php if ($adsViewModel->isGoogleAdwordsConfigurable() && $adsViewModel->isGoogleAdwordsActive()): ?>
