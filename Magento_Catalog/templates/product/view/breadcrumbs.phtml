@@ -40,7 +40,7 @@ $product = $currentProductViewModel->exists() ? $currentProductViewModel->get() 
         <ol x-data="initBreadcrumbsProduct()"
             x-init="$nextTick(() => { setTimeout(()=>{ $el.scrollLeft = $el.scrollWidth }, 200) })"
             class="items list-reset py-4 rounded flex flex-nowrap text-grey text-sm overflow-x-auto">
-            <span>&#8203;</span>
+            <li>&ZeroWidthSpace;</li>
             <template x-for="item in breadcrumbs">
                 <li class="item inline-flex whitespace-nowrap">
                     <template x-if="item.name !== 'home'">
