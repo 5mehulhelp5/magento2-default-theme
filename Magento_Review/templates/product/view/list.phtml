@@ -67,7 +67,10 @@ $format = $block->getDateFormat() ?: \IntlDateFormatter::SHORT;
                                     <?= $escaper->escapeHtml($vote->getRatingCode()) ?>
                                 </div>
                                 <span class="hidden" itemprop="ratingValue"><?= /** @noEscape */ $starsFilled; ?></span>
-                                <div class="flex flex-row">
+                                <div
+                                    class="flex flex-row"
+                                    role="img"
+                                >
                                     <?php $i = 0; ?>
                                     <?php while ($i < $starsFilled): ?>
                                         <?= $heroiconsSolid->starHtml('text-yellow-400'); ?>
