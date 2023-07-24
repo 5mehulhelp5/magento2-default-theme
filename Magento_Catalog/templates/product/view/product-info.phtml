@@ -63,7 +63,7 @@ $product = $productViewModel->getProduct();
 
     <div class="flex flex-col sm:flex-row items-end my-4">
 
-        <div>
+        <div role="group" aria-label="<?= $escaper->escapeHtmlAttr('Price') ?>">
             <?= $block->getChildHtml("product.info.price") ?>
         </div>
 
