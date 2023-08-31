@@ -168,7 +168,7 @@ Acronyms:
 
 - **Use semantic markup for tables table in customer account pages**
 
-  This applies to order history, downloadable product list, and recent orders.
+    This applies to order history, downloadable product list, and recent orders.
 
 - **Bind order item labels to checkbox on order history page in customer account**
 
