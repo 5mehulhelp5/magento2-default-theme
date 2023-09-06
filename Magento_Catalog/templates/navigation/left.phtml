@@ -8,6 +8,7 @@
 
 declare(strict_types=1);
 
+use Magento\Catalog\Block\Navigation;
 use Magento\Framework\Escaper;
 
 /** @var Escaper $escaper */
@@ -15,7 +16,7 @@ use Magento\Framework\Escaper;
 /**
  * Category left navigation
  *
- * @var \Magento\Catalog\Block\Navigation $block
+ * @var Navigation $block
  */
 ?>
 <?php if (!$block->getCategory()) {
@@ -29,9 +30,8 @@ use Magento\Framework\Escaper;
             <strong><?= $escaper->escapeHtml(__('Shop By')) ?></strong>
         </div>
         <div class="content">
-            <strong class="subtitle"><?= $escaper->escapeHtml(__('Shopping Options')) ?></strong>
             <dl class="options" id="narrow-by-list2">
-                <dt><?= $escaper->escapeHtml(__('Category')) ?></dt>
+                <dt class="subtitle"><strong class="subtitle"><?= $escaper->escapeHtml(__('Category')) ?></strong></dt>
                 <dd>
                     <ol class="items">
                         <?php /** @var \Magento\Catalog\Model\Category $category */ ?>
