@@ -62,14 +62,12 @@ $productCollection = $block->getLoadedProductCollection();
                     : '' ?>"
             >
                 <?php
-                    /** @var \Magento\Catalog\Model\Product $product */
-                    foreach (array_values($productCollection->getItems()) as $i => $product):
+                /** @var \Magento\Catalog\Model\Product $product */
+                foreach (array_values($productCollection->getItems()) as $i => $product):
+                    if ($i < $eagerLoadImagesCount) {
+                        $product->setData('image_custom_attributes', ['loading' => 'eager', 'fetchpriority' => 'high']);
+                    }
                 ?>
-                    <?php
-                        if ($i < $eagerLoadImagesCount) {
-                            $product->setData('image_custom_attributes', ['loading' => 'eager', 'fetchpriority' => 'high']);
-                        }
-                    ?>
                     <li>
                         <?= $productListItemViewModel->getItemHtml(
                             $product,
