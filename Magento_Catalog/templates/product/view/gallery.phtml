@@ -53,6 +53,8 @@ $productName = $block->getProduct()->getName();
         :aria-modal="fullscreen"
         :aria-label="fullscreen ? '<?= $escaper->escapeJs(__('Gallery modal fullscreen')) ?>' : false"
         x-ref="galleryBody"
+        @keyup.arrow-right="nextItem"
+        @keyup.arrow-left="previousItem"
     >
         <div class="relative self-center w-full"
              @touchstart="handleTouchStart"
@@ -516,7 +518,13 @@ $productName = $block->getProduct()->getName();
             },
             getNextIndex() {
                 return this.active + 1 === this.itemCount ? 0 : this.active + 1;
-            }
+            },
+            previousItem() {
+                this.setActiveAndScrollTo(this.active > 0 ? this.active - 1 : this.itemCount - 1);
+            },
+            nextItem() {
+                this.setActiveAndScrollTo(this.active + 1 === this.itemCount ? 0 : this.active + 1);
+            },
         }
      }
 </script>
