@@ -34,7 +34,7 @@ if (!$productId || !$attributeId) {
     <template x-if="optionIsEnabled(<?= (int) $attributeId ?>, item.id) && optionIsActive(<?= (int) $attributeId ?>, item.id)">
         <label
             :for="$id('attribute-option-<?= (int) $productId ?>-'+item.id)"
-            class="swatch-option relative border-2 shadow-sm cursor-pointer select-none bg-container-lighter product-option-value-label"
+            class="swatch-option relative border-2 shadow-sm cursor-pointer bg-container-lighter product-option-value-label focus-within:border-container-lighter focus-within:ring focus-within:ring-primary/75"
             :class="{
                 'border-container-lighter ring ring-primary/50':
                     (selectedValues[<?= (int)$attributeId ?>] === item.id),
@@ -60,8 +60,6 @@ if (!$productId || !$attributeId) {
                 type="radio"
                 class="inline-block absolute p-0 border-0 focus:border-0 focus:ring-0 product-option-value-input"
                 style="z-index:-1"
-                x-on:focus="focusLabel(item.id)"
-                x-on:blur="blurLabel()"
                 x-on:change="changeOption(<?= (int) $attributeId ?>, $event.target.value)"
                 x-on:click="clearOptionIfActive(<?= (int) $attributeId ?>, item.id)"
                 x-model="selectedValues[<?= (int) $attributeId ?>]"
