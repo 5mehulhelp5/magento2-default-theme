@@ -434,27 +434,39 @@ $productName = $block->getProduct()->getName();
                     this.resetGallery();
                 }
             },
+            focusTrapHandler: function(firstFocusableElement, lastFocusableElement, e) {
+                const isTabPressed = e.key === 'Tab' || e.keyCode === 9;
+
+                if (!isTabPressed) {
+                    return;
+                }
+
+                e.shiftKey
+                    ? document.activeElement === firstFocusableElement && (lastFocusableElement.focus(), e.preventDefault())
+                    : document.activeElement === lastFocusableElement && (firstFocusableElement.focus(), e.preventDefault());
+            },
             openFullscreen(node) {
                 this.fullscreen = true;
-                document.body.style.overflow = "hidden";
-                hyva.trapFocus(node);
 
-                this.$nextTick(() => {
-                    window.requestAnimationFrame(() => {
-                        this.calcPageSize()
-                    });
-                });
+                const focusableElements = 'button, [href], input, select, textarea';
+                const focusableContent = Array.from(node.querySelectorAll(focusableElements))
+                    .filter(el => (el.attributes.tabindex >= 0 || !el.attributes.tabindex) && el.style.display !== 'none');
+
+                const firstFocusableElement = focusableContent.length > 0
+                    ? focusableContent[0]
+                    : null;
+                const lastFocusableElement = focusableContent.length > 0
+                    ? focusableContent[focusableContent.length - 1]
+                    : null;
+
+                this.focusTrapListener = this.focusTrapHandler.bind(this, firstFocusableElement, lastFocusableElement);
+
+                document.addEventListener('keydown', this.focusTrapListener);
             },
             closeFullScreen(node) {
                 this.fullscreen = false;
-                document.body.style.overflow = null;
-                hyva.releaseFocus(node);
 
-                this.$nextTick(() => {
-                    window.requestAnimationFrame(() => {
-                        this.calcPageSize()
-                    });
-                });
+                document.removeEventListener('keydown', this.focusTrapListener);
             },
             handleTouchStart(event) {
                 if (this.images.length <= 1) {
