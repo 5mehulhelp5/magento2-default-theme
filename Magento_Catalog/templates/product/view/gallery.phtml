@@ -474,6 +474,10 @@ $productName = $block->getProduct()->getName();
                 document.addEventListener('keydown', this.focusTrapListener);
             },
             closeFullScreen(node) {
+                if (this.fullscreen) {
+                    this.$refs.galleryMainImage.focus();
+                }
+
                 this.fullscreen = false;
 
                 document.removeEventListener('keydown', this.focusTrapListener);
