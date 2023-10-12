@@ -56,13 +56,11 @@ $productName = $block->getProduct()->getName();
         <div class="relative self-center w-full"
              @touchstart="handleTouchStart"
              @touchmove="handleTouchMove"
-             @keyup.arrow-right="nextItem"
-             @keyup.arrow-left="previousItem"
              x-transition:enter="ease-out duration-500"
              x-transition:enter-start="opacity-0"
              x-transition:enter-end="opacity-100"
         >
-            <div x-ref="galleryBody" class="relative mb-6" aria-live="polite" aria-atomic="true">
+            <div class="relative mb-6" aria-live="polite" aria-atomic="true">
                 <span class="invisible" id="main-image-description"><?= $escaper->escapeHtml(__('Main image')) ?></span>
                 <span class="invisible" id="fullscreen-btn-label"><?= $escaper->escapeHtml(__('Click to view image in fullscreen')) ?></span>
                 <?php
@@ -258,8 +256,6 @@ $productName = $block->getProduct()->getName();
                 this.setActive(active);
             },
             setActive(index) {
-                const currentFocus = document.activeElement;
-
                 this.active = index;
                 if (window.youtubePlayer) {
                     window.youtubePlayer.stopVideo();
@@ -270,12 +266,6 @@ $productName = $block->getProduct()->getName();
                 if (this.images[index].type === 'video') {
                     this.activateVideo();
                 }
-
-                this.$nextTick(() => {
-                    if (currentFocus.hasAttribute('x-ref') && currentFocus.getAttribute('x-ref') === "galleryMainImage") {
-                        this.$refs.galleryBody.document.querySelector('[tabindex="0"]').focus();
-                    }
-                })
             },
             activateVideo() {
                 const videoData = this.getVideoData();
@@ -451,6 +441,14 @@ $productName = $block->getProduct()->getName();
                 },
                 ['@reset-gallery.window'](event) {
                     this.resetGallery();
+                },
+                ['@keyup.arrow-right.window']() {
+                    if (!this.fullscreen) return;
+                    this.nextItem();
+                },
+                ['@keyup.arrow-left.window']() {
+                    if (!this.fullscreen) return;
+                    this.previousItem();
                 },
             },
             scrollLock(use = true) {
