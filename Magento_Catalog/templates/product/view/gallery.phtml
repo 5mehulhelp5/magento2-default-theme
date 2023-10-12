@@ -450,12 +450,10 @@ $productName = $block->getProduct()->getName();
                 ['@reset-gallery.window'](event) {
                     this.resetGallery();
                 },
-                ['@keyup.arrow-right.window']() {
-                    if (!this.fullscreen) return;
+                ['@keyup.arrow-right']() {
                     this.nextItem();
                 },
-                ['@keyup.arrow-left.window']() {
-                    if (!this.fullscreen) return;
+                ['@keyup.arrow-left']() {
                     this.previousItem();
                 }
             },
