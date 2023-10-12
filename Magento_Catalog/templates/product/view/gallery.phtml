@@ -443,14 +443,12 @@ $productName = $block->getProduct()->getName();
                     this.resetGallery();
                 },
                 ['@keyup.arrow-right.window']() {
-                    if (this.fullscreen) {
-                        this.nextItem();
-                    }
+                    if (!this.fullscreen) return;
+                    this.nextItem();
                 },
                 ['@keyup.arrow-left.window']() {
-                    if (this.fullscreen) {
-                        this.previousItem();
-                    }
+                    if (!this.fullscreen) return;
+                    this.previousItem();
                 }
             },
             scrollLock(use = true) {
