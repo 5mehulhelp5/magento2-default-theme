@@ -52,8 +52,6 @@ $productName = $block->getProduct()->getName();
         :role="fullscreen ? 'dialog' : false"
         :aria-modal="fullscreen"
         :aria-label="fullscreen ? '<?= $escaper->escapeJs(__('Gallery modal fullscreen')) ?>' : false"
-        @keyup.arrow-right="nextItem"
-        @keyup.arrow-left="previousItem"
     >
         <div class="relative self-center w-full"
              @touchstart="handleTouchStart"
@@ -442,6 +440,16 @@ $productName = $block->getProduct()->getName();
                 },
                 ['@reset-gallery.window'](event) {
                     this.resetGallery();
+                },
+                ['@keyup.arrow-right.window']() {
+                    if (this.fullscreen) {
+                        this.nextItem();
+                    }
+                },
+                ['@keyup.arrow-left.window']() {
+                    if (this.fullscreen) {
+                        this.previousItem();
+                    }
                 }
             },
             scrollLock(use = true) {
