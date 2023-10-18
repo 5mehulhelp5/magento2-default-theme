@@ -59,7 +59,7 @@ list($defaultQty, $canChangeQty) = $block->getDefaultValues();
                     selected="selected"
                 <?php endif; ?>
                 <?php if (!$selection->isSaleable()): ?>
-                    disabled="disabled"
+                    disabled
                 <?php endif; ?>
                     data-option-id="<?= $escaper->escapeHtmlAttr($optionSelectionId) ?>"
             >

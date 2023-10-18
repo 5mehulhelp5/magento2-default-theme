@@ -59,7 +59,7 @@ $activeSelectOptions = [];
                     echo 'selected = "selected"';
                 } ?>
                 <?php if (!$selection->isSaleable()): ?>
-                    disabled="disabled"
+                    disabled
                 <?php endif; ?>
                 data-option-id="<?= $escaper->escapeHtmlAttr($optionSelectionId) ?>"
             >

@@ -85,7 +85,7 @@ $activeSelectOptions = [];
                             echo 'checked = "checked"';
                     } ?>
                     <?php if (!$selection->isSaleable()): ?>
-                            disabled="disabled"
+                            disabled
                     <?php endif; ?>
                     value="<?= (int)$selectionId ?>"
                     data-option-id="<?= $escaper->escapeHtmlAttr($optionSelectionId) ?>"
