@@ -59,6 +59,8 @@ $showDescription = $block->getData('show_description');
 $showAddToWishlist = $wishlistViewModel->isEnabled();
 $showAddToCompare = $compareViewModel->showInProductList();
 $viewIsGrid = $viewMode === 'grid';
+$productType = $product->getTypeId();
+$isProductGroupedOrBundle = $productType === 'bundle' || $productType === "grouped";
 
 if (!$product) {
     return '';
@@ -152,6 +154,13 @@ $productName = $catalogOutputHelper->productAttribute($product, $product->getNam
                 }
             }
         </script>
+        
+        <?php if ($isProductGroupedOrBundle): ?>
+            <span class="sr-only">
+                <?= $escaper->escapeHtml(__('Price depends on the chosen options on the product page')) ?>
+            </span>
+        <?php endif; ?>
+
         <div class="pt-1 text-gray-900"
              x-data="initPriceBox_<?= /** @noEscape */ $uniqueId ?>()"
              @update-prices-<?= (int)$productId ?>.window="updatePrice($event.detail);"
@@ -163,7 +172,11 @@ $productName = $catalogOutputHelper->productAttribute($product, $product->getNam
             <?php if ($product->isSaleable()): ?>
             <button class="w-auto btn btn-primary justify-center text-sm
                 <?= $viewIsGrid ? 'mr-auto' : 'mr-auto md:mr-0' ?>"
-                aria-label="<?= $escaper->escapeHtmlAttr(__('Add to Cart') . ' ' . $productName) ?>"
+                <?php if ($isProductGroupedOrBundle): ?>
+                    aria-label="<?= $escaper->escapeHtmlAttr(__('Go to %1 product page to choose options', $productName)) ?>"
+                <?php else: ?>
+                    aria-label="<?= $escaper->escapeHtmlAttr(__('Add to Cart') . ' ' . $productName) ?>"
+                <?php endif; ?>
             >
                 <?= $heroicons->shoppingCartHtml("h-6 w-6 border-current inline", 25, 25, ['aria-hidden' => 'true']) ?>
                 <span class="ml-2 inline <?= $viewIsGrid ? 'md:ml-0 md:hidden lg:ml-2 lg:inline' : '' ?>">
