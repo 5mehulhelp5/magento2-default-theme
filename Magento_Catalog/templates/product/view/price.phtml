@@ -200,7 +200,7 @@ $displayTax = $productPriceViewModel->displayPriceIncludingTax();
                       content="<?= $escaper->escapeHtmlAttr($productViewModel->getCurrencyData()['code']) ?>">
             </div>
         </div>
-    </template>
+    </div>
     <template x-if="activeProductsPriceData &&
         activeProductsPriceData.oldPrice &&
         activeProductsPriceData[finalPriceKey].amount < activeProductsPriceData[regularPriceKey].amount
