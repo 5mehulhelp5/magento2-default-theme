@@ -169,15 +169,15 @@ use Magento\Framework\View\Element\Template;
                         entries => {
                             entries.map(entry => {
                                 if (entry.isIntersecting) {
+                                    this.showSwatches = true
                                     io.unobserve(this.$root);
-                                    this.showSwatches = true;
                                 }
                             })
                         }
                     );
                     io.observe(this.$root);
                 } else {
-                    this.showSwatches = true;
+                    this.showSwatches = true
                 }
             }
         }

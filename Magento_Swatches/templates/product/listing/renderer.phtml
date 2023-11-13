@@ -182,11 +182,11 @@ $swatchItemBlock->setData('product_id', $productId);
                         id="attribute-label-<?= $escaper->escapeHtmlAttr($productId . '-' . $attributeId) ?>"
                         class="flex flex-nowrap w-full overflow-auto snap items-center py-1"
                         role="radiogroup"
-                        aria-label="<?= $escaper->escapeHtml($productAttribute->getStoreLabel()) ?>"
                         x-bind="scrollEvents"
+                        aria-label="<?= $escaper->escapeHtml($productAttribute->getStoreLabel()) ?>"
                     >
                         <template x-for="(item, index) in optionConfig.attributes[<?= (int) $attributeId ?>].options"
-                                    :key="item.id"
+                                  :key="item.id"
                         >
                             <?= /* @noEscape */ $swatchItemBlock->setData('attribute_id', $attributeId)->toHtml(); ?>
                         </template>
