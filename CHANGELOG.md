@@ -7,7 +7,56 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-[Unreleased]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.1.25...1.1.x-main
+[Unreleased]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.1.26...1.1.x-main
+
+
+## [1.1.26] - 2023-11-17
+
+[1.1.26]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.1.25...1.1.26
+
+### Added
+
+- **Added new containers for Customer Custom Attributes**
+
+  Containers were added to the customer_account_create, customer_account_edit, customer_address_form, and layout XML instructions to facilitate rendering custom customer attributes.
+
+  Note: while these changes reference features in Adobe Commerce, no Commerce code is depended upon.
+
+  For more information, please refer to [issue #812](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/812).
+
+### Changed
+
+- **Fix: Mobile Safari iOS double click required to start swatch selection**
+
+  For more information, please refer to [merge request #941](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/941).
+
+- **Allow adding additional links to header customer menu**
+
+  Previously, it was not possible to add additional links to the customer-menu.phtml template without overriding the template.
+
+  For more information please refer to the 1.1.26 upgrade notes or [issue #730](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/730).
+
+- **Render customer.account.dashboard.info.blocks container on customer dashboard**
+
+  Additional blocks can now be rendered by assigning them as children of the  `customer.account.dashboard.info.blocks` container.
+
+  For more information, please refer to [issue #812](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/812).
+
+- **Render SVG icons on customer dashboard with view model**
+
+  Previously the SVG icons were declared as inline markup in the template without using the SVG icons view model.
+
+  For more information, please refer to [issue #812](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/812).
+
+- **Update version constraint for hyva-themes/magento2-reset-theme to 1.1.5**
+
+  The updated reset theme contains the resets for the Adobe Sensei related modules.
+  
+  For more information please refer to [merge request #951](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/951).
+
+### Removed
+
+- Nothing removed
 
 ## [1.1.25] - 2023-07-31
 
