@@ -102,8 +102,8 @@ $productName = $block->getProduct()->getName();
                     x-ref="galleryFullscreenBtn"
                     x-show="!fullscreen"
                     x-cloak
-                    @click="openFullscreen($root)"
-                    @keydown.enter="openFullscreen($root)"
+                    @click="openFullscreen()"
+                    @keydown.enter="openFullscreen()"
                 ></button>
                 <div class="absolute inset-0 hidden w-full h-full bg-white nonmobile"
                      :class="{ 'hidden': activeVideoType !== 'youtube' }"
@@ -182,7 +182,7 @@ $productName = $block->getProduct()->getName();
             </div>
         </div>
         <div class="absolute top-0 right-0 pt-4 pr-4">
-            <button @click="closeFullScreen($root)"
+            <button @click="closeFullScreen()"
                     type="button"
                     class="hidden text-gray-500 p-3 hover:text-gray-600 focus:text-gray-600
                         transition ease-in-out duration-150"
@@ -426,7 +426,7 @@ $productName = $block->getProduct()->getName();
             eventListeners: {
                 ['@keydown.window.escape']() {
                     if (!this.fullscreen) return;
-                    this.closeFullScreen(this.$root)
+                    this.closeFullScreen()
                 },
                 ['@update-gallery.window'](event) {
                     this.receiveImages(event.detail);
@@ -435,18 +435,18 @@ $productName = $block->getProduct()->getName();
                     this.resetGallery();
                 }
             },
-            openFullscreen(node) {
+            openFullscreen() {
                 this.fullscreen = true;
                 this.$nextTick(() => this.calcPageSize());
 
-                hyva.trapFocus(node);
+                hyva.trapFocus(this.$root);
             },
-            closeFullScreen(node, setFocusTo = this.$refs.galleryFullscreenBtn) {
+            closeFullScreen(setFocusTo = this.$refs.galleryFullscreenBtn) {
                 this.fullscreen = false;
-                hyva.releaseFocus(node);
+                hyva.releaseFocus(this.$root);
                 this.$nextTick(() => {
                     this.calcPageSize();
-                    setFocusTo.focus();
+                    setFocusTo && setFocusTo.focus()
                 });
             },
             handleTouchStart(event) {
