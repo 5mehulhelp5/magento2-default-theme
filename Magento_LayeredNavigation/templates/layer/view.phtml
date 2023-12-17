@@ -49,8 +49,8 @@ $heroicons = $viewModels->require(HeroiconsOutline::class);
                     <?= $escaper->escapeHtml(__('Shop By')) ?>
                 </span>
                 <span
-                    class="py-1 px-1 bg-container-lighter rounded border border-container-darker hidden"
-                    :class="{ 'block' : isMobile, 'hidden': !isMobile }"
+                    class="py-1 px-1 bg-container-lighter rounded border border-container-darker invisible"
+                    :class="{ 'invisible': !isMobile }"
                 >
                     <?= $heroicons->chevronDownHtml(
                         'transition-transform transform duration-300 ease-in-out',
