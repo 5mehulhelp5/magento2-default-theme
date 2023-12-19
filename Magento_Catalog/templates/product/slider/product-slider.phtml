@@ -107,7 +107,7 @@ if (empty($sliderHtml)) {
     return '';
 }
 ?>
-<div class="product-slider <?= $type ?>-product-slider">
+<div class="product-slider <?= is_string($type) && strpos($type, '\\') === false  ? $escaper->escapeHtmlAttr($type) : 'generic' ?>-product-slider">
     <div>
         <?= /* @noEscape */ $sliderHtml ?>
     </div>
