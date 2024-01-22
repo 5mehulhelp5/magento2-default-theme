@@ -22,7 +22,7 @@ $heroicons = $viewModels->require(HeroiconsOutline::class);
 ?>
 
 <div
-    class="relative inline-block ml-1 sm:ml-3"
+    class="relative inline-block"
     x-data="{ open: false }"
     @keyup.escape="open = false"
     @click.outside="open = false"
@@ -30,7 +30,7 @@ $heroicons = $viewModels->require(HeroiconsOutline::class);
     <button
         type="button"
         id="customer-menu"
-        class="block rounded text-gray-600 hover:text-black outline-offset-2"
+        class="block rounded p-1 hover:bg-primary/10 outline-offset-2"
         @click="open = !open"
         :aria-expanded="open ? 'true' : 'false'"
         aria-label="<?= $escaper->escapeHtmlAttr(__('My Account')) ?>"

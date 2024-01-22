@@ -81,10 +81,10 @@ $showMiniCart = $storeConfig->getStoreConfig(SidebarCart::XML_PATH_CHECKOUT_SIDE
         <!--Main Navigation-->
         <?= $block->getChildHtml('topmenu') ?>
 
-        <div class="flex items-center order-3">
+        <div class="flex items-center gap-0.5 sm:gap-1 order-3 sm:-mr-1">
             <!--Compare Icon-->
             <a id="compare-link"
-               class="relative inline-block rounded ml-1 sm:ml-3 text-gray-600 hover:text-black outline-offset-2 invisible"
+               class="relative inline-block rounded p-1 hover:bg-primary/10 outline-offset-2 invisible"
                :class="{ 'invisible': !(itemCount > 0) }"
                href="<?= $escaper->escapeUrl($block->getUrl('catalog/product_compare/index')) ?>"
                title="<?= $escaper->escapeHtml(__('View Compare')) ?>"
@@ -105,7 +105,7 @@ $showMiniCart = $storeConfig->getStoreConfig(SidebarCart::XML_PATH_CHECKOUT_SIDE
                 <?= $heroicons->scaleHtml("md:h-6 md:w-6", 32, 32, ["aria-hidden" => "true"]) ?>
                 <span
                     x-text="itemCount"
-                    class="absolute -top-2.5 -right-3 h-5 px-2 py-1 rounded-full bg-yellow-500 text-white
+                    class="absolute -top-1.5 -right-2 h-5 px-2 py-1 rounded-full bg-yellow-500 text-white
                         text-xs font-semibold leading-none text-center uppercase tabular-nums"
                     aria-hidden="true"
                 ></span>
@@ -114,7 +114,7 @@ $showMiniCart = $storeConfig->getStoreConfig(SidebarCart::XML_PATH_CHECKOUT_SIDE
             <!--Search Icon-->
             <button
                 id="menu-search-icon"
-                class="rounded ml-1 sm:ml-3 text-gray-600 hover:text-black outline-offset-2"
+                class="rounded p-1 hover:bg-primary/10 outline-offset-2"
                 @click.prevent="
                     searchOpen = !searchOpen;
                     $dispatch('search-open');
@@ -137,7 +137,7 @@ $showMiniCart = $storeConfig->getStoreConfig(SidebarCart::XML_PATH_CHECKOUT_SIDE
                 <a
             <?php endif ?>
                 id="menu-cart-icon"
-                class="relative inline-block rounded ml-1 sm:ml-3 text-gray-600 hover:text-black outline-offset-2"
+                class="relative inline-block rounded p-1 hover:bg-primary/10 outline-offset-2"
                 x-ref="cartButton"
                 :aria-disabled="isCartEmpty()"
                 :aria-label="`
@@ -168,7 +168,7 @@ $showMiniCart = $storeConfig->getStoreConfig(SidebarCart::XML_PATH_CHECKOUT_SIDE
                     x-text="cart.summary_count"
                     x-show="!isCartEmpty()"
                     x-cloak
-                    class="absolute -top-2.5 -right-3 h-5 px-2 py-1 rounded-full bg-primary text-white
+                    class="absolute -top-1.5 -right-2 h-5 px-2 py-1 rounded-full bg-primary text-white
                         text-xs font-semibold leading-none text-center uppercase tabular-nums"
                     aria-hidden="true"
                 ></span>
