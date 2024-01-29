@@ -31,7 +31,15 @@ use Magento\Search\Model\QueryResult;
                 >
                     <span><?= $escaper->escapeHtml($additionalInfo->getQueryText()) ?></span>
                     <?php if ($block->isShowResultsCount()): ?>
-                        <span class="count">(<?= /* @noEscape */ $localeFormatter->formatNumber((int)$additionalInfo->getResultsCount()) ?>)</span>
+                        <?php $resultsCount = $localeFormatter->formatNumber((int)$additionalInfo->getResultsCount()) ?>
+                        <span
+                            class="count"
+                            aria-label="<?= $escaper->escapeHtmlAttr(
+                                $resultsCount > 1
+                                    ? __('%1 search results', $resultsCount)
+                                    : __('%1 search result', $resultsCount)
+                            ) ?>"
+                        >(<?= /* @noEscape */ $resultsCount ?>)</span>
                     <?php endif; ?>
                 </a>
             </dd>
