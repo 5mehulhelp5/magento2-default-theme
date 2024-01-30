@@ -9,6 +9,7 @@
 declare(strict_types=1);
 
 use Hyva\Theme\Model\ViewModelRegistry;
+use Hyva\Theme\ViewModel\StoreConfig;
 use Hyva\Theme\ViewModel\HeroiconsOutline;
 use Magento\Catalog\Block\Product\View\Gallery;
 use Magento\Catalog\Helper\Image;
@@ -17,6 +18,9 @@ use Magento\Framework\Escaper;
 /** @var Escaper $escaper */
 /** @var Gallery $block */
 /** @var ViewModelRegistry $viewModels */
+
+/** @var StoreConfig $storeConfig */
+$storeConfig = $viewModels->require(StoreConfig::class);
 
 /** @var HeroiconsOutline $heroicons */
 $heroicons = $viewModels->require(HeroiconsOutline::class);
@@ -38,6 +42,8 @@ $smallWidth = $block->getImageAttribute('product_page_image_small', 'width', 90)
 $smallHeight = $block->getImageAttribute('product_page_image_small', 'height', 90);
 $mediumWidth = $block->getImageAttribute('product_page_image_medium', 'width', 700);
 $mediumHeight = $block->getImageAttribute('product_page_image_medium', 'height', 700);
+
+$galleryOptionShowRelated = $storeConfig->getStoreConfig('catalog/product_video/show_related') ?? false;
 
 $productName = $block->getProduct()->getName();
 ?>
@@ -209,7 +215,7 @@ $productName = $block->getProduct()->getName();
             "activeVideoType": false,
             "autoplayVideo": false,
             "loopVideo": true,
-            "relatedVideos": false,
+            "relatedVideos": <?= /* @noEscape */ $galleryOptionShowRelated ? 'true' : 'false' ?>,
             "vimeoPlayer": null,
             "fullscreen": false,
             "isSlider": false,
