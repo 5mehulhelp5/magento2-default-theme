@@ -40,9 +40,10 @@ $renderTargetElementId = sprintf('paypalInContextRenderTarget%d', $isMinicart)
       )"
      id="<?= $escaper->escapeHtmlAttr($renderTargetElementId) ?>"
      <?php if ($isMinicart): ?>
-     x-init="cartSection = cart; checkAndInitializeButtons()"
+     x-init="cartSection = cart"
+     @toggle-cart.window="checkAndInitializeButtons()"
      <?php endif; ?>
-     class="paypal checkout paypal-logo min-h-a11y cart-extra-actions-container"
+     class="paypal checkout paypal-logo min-h-a11y cart-extra-actions-container isolate"
     <?php if ($isCartPage): ?>
      @private-content-loaded.window="getData($event.detail.data); checkAndInitializeButtons()"
     <?php endif; ?>
@@ -104,7 +105,7 @@ $renderTargetElementId = sprintf('paypalInContextRenderTarget%d', $isMinicart)
 
                             return window.fetch(config.getTokenUrl, {
                                 headers: {
-                                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
                                     'X-Requested-With': 'XMLHttpRequest',
                                 },
                                 body: params,
@@ -126,7 +127,7 @@ $renderTargetElementId = sprintf('paypalInContextRenderTarget%d', $isMinicart)
 
                             return window.fetch(config.onAuthorizeUrl, {
                                 headers: {
-                                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
                                     'X-Requested-With': 'XMLHttpRequest',
                                 },
                                 body: params,

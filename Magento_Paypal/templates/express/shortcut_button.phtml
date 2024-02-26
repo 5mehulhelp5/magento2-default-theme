@@ -28,7 +28,7 @@ $clientConfig = json_encode($widgetData['Magento_Paypal/js/in-context/product-ex
      @private-content-loaded.window="getData($event.detail.data)"
      class="min-h-a11y"
 >
-    <div id="paypalInContextPDP" class="paypal checkout paypal-logo product-shortcuts-container">
+    <div id="paypalInContextPDP" class="paypal checkout paypal-logo product-shortcuts-container isolate">
     </div>
 </div>
 <script>
@@ -95,7 +95,7 @@ $clientConfig = json_encode($widgetData['Magento_Paypal/js/in-context/product-ex
 
                             return window.fetch(postUrl, {
                                 headers: {
-                                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
                                     'X-Requested-With': 'XMLHttpRequest',
                                 },
                                 body: formData,
@@ -116,7 +116,7 @@ $clientConfig = json_encode($widgetData['Magento_Paypal/js/in-context/product-ex
 
                             return window.fetch(config.getTokenUrl, {
                                 headers: {
-                                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
                                     'X-Requested-With': 'XMLHttpRequest',
                                 },
                                 body: params,
@@ -137,7 +137,7 @@ $clientConfig = json_encode($widgetData['Magento_Paypal/js/in-context/product-ex
 
                             return window.fetch(config.onAuthorizeUrl, {
                                 headers: {
-                                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
                                     'X-Requested-With': 'XMLHttpRequest',
                                 },
                                 body: params,
