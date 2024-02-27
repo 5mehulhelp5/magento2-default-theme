@@ -32,7 +32,8 @@ $renderTargetElementId = sprintf('paypalInContextRenderTarget%d', $isMinicart)
 ?>
 <div x-data="initPayPalInContextButton(
         '<?= $escaper->escapeJs($renderTargetElementId) ?>',
-        <?= $escaper->escapeHtmlAttr($clientConfig) ?>
+        <?= $escaper->escapeHtmlAttr($clientConfig) ?>,
+        <?= (int) $isMinicart ?>
       )"
      id="<?= $escaper->escapeHtmlAttr($renderTargetElementId) ?>"
     <?php if ($isMinicart): ?>
@@ -46,7 +47,7 @@ $renderTargetElementId = sprintf('paypalInContextRenderTarget%d', $isMinicart)
 >
 </div>
 <script>
-    function initPayPalInContextButton(renderTargetId, config) {
+    function initPayPalInContextButton(renderTargetId, config, isMinicart) {
         return {
             cartSection: false,
             actions: {},
@@ -144,10 +145,31 @@ $renderTargetElementId = sprintf('paypalInContextRenderTarget%d', $isMinicart)
                                 });
                         },
                         onCancel(data, actions) {
-                            // No changes as should remain on the same page
+                            window.dispatchEvent(new Event('reload-customer-section-data'));
+
+                            if (isMinicart) {
+                                window.dispatchEvent(new CustomEvent('toggle-cart', {detail: {isOpen: false}}));
+                            }
+
+                            return window.dispatchMessages([{
+                                type: 'error',
+                                text: '<?= $escaper->escapeJs(__('Express Checkout has been canceled.')) ?>'
+                            }]);
                         },
                         onError(err) {
-                            // window.location.href = config.onCancelUrl;
+                            window.dispatchEvent(new Event('reload-customer-section-data'));
+
+                            // Alternative: forward to cart
+                            //window.location.href = config.onCancelUrl;
+
+                            if (isMinicart) {
+                                window.dispatchEvent(new CustomEvent('toggle-cart', {detail: {isOpen: false}}));
+                            }
+
+                            return window.dispatchMessages([{
+                                type: 'error',
+                                text: '<?= $escaper->escapeJs(__('Error initializing Express Checkout, please try again later or choose a different checkout method.')) ?>'
+                            }]);
                         }
                     }).render(document.getElementById(renderTargetId));
                 } catch (error) {
