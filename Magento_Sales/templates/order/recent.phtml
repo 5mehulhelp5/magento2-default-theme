@@ -82,15 +82,13 @@ $count  = count($orders);
                     <?php foreach ($orders as $order): ?>
                         <?php $shippingAddress = $order->getShippingAddress(); ?>
                         <?php $billingAddress = $order->getBillingAddress(); ?>
-                        <?php $shipToName = ''; ?>
+                        <?php $shipToName = '&nbsp;'; ?>
                         <?php if ($shippingAddress && $shippingAddress->getCompany()): ?>
                             <?php $shipToName = $shippingAddress->getCompany() ?>
                         <?php elseif ($billingAddress && $billingAddress->getCompany()): ?>
                             <?php $shipToName = $billingAddress->getCompany() ?>
                         <?php elseif ($shippingAddress && $shippingAddress->getLastName()): ?>
                             <?php $shipToName = $shippingAddress->getFirstname() . ' ' . $shippingAddress->getMiddlename() . ' ' . $shippingAddress->getLastName()  ?>
-                        <?php else: ?>
-                            <?php $shipToName = '&nbsp;'; ?>
                         <?php endif; ?>
 
                         <tr class="align-top even:bg-container-darker">
