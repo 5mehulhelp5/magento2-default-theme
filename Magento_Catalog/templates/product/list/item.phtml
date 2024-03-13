@@ -169,20 +169,30 @@ $productName = $catalogOutputHelper->productAttribute($product, $product->getNam
         <div class="mt-auto pt-3 flex flex-wrap justify-center items-center">
             <?php if ($product->isSaleable()): ?>
                 <?php if ($isProductGroupedOrBundle): ?>
-                <a href="<?= $escaper->escapeUrl($product->getProductUrl()) ?>">
-                    <?= $escaper->escapeHtml(__('Configure product options on the product page')) ?>
+                <a
+                    href="<?= $escaper->escapeUrl($product->getProductUrl()) ?>"
+                    class="w-auto btn btn-primary justify-center text-sm <?= $viewIsGrid ? 'mr-auto' : 'mr-auto md:mr-0' ?>"
+                    title="<?= $escaper->escapeHtmlAttr(__('Configure %1 on the product page')) ?>"
+                    aria-label="<?= $escaper->escapeHtmlAttr(__('Configure %1 on the product page', $productName)) ?>"
+                >
+                    <?= $heroicons->pencilAltHtml('', 24, 24, ['aria-hidden' => 'true']) ?>
+                    <span class="ml-2 inline <?= $viewIsGrid ? 'md:ml-0 md:hidden lg:ml-2 lg:inline' : '' ?>">
+                        <?= $escaper->escapeHtml(__('Configure')) ?>
+                    </span>
                 </a>
                 <?php else: ?>
-                <button class="w-auto btn btn-primary justify-center text-sm
-                    <?= $viewIsGrid ? 'mr-auto' : 'mr-auto md:mr-0' ?>"
+                <button
+                    class="w-auto btn btn-primary justify-center text-sm <?= $viewIsGrid ? 'mr-auto' : 'mr-auto md:mr-0' ?>"
+                    title="<?= $escaper->escapeHtmlAttr(__('Add to Cart') . ' ' . $productName) ?>"
                     aria-label="<?= $escaper->escapeHtmlAttr(__('Add to Cart') . ' ' . $productName) ?>"
                 >
-                    <?= $heroicons->shoppingCartHtml("h-6 w-6 border-current inline", 25, 25, ['aria-hidden' => 'true']) ?>
+                    <?= $heroicons->shoppingCartHtml('', 24, 24, ['aria-hidden' => 'true']) ?>
                     <span class="ml-2 inline <?= $viewIsGrid ? 'md:ml-0 md:hidden lg:ml-2 lg:inline' : '' ?>">
                         <?= $escaper->escapeHtml(__('Add to Cart')) ?>
                     </span>
                 </button>
                 <?php endif; ?>
+
             <?php else: ?>
             <div class="w-auto justify-center <?= $viewIsGrid ? 'mr-auto' : 'mr-auto md:mr-0' ?>">
                 <?= $block->getChildBlock('stockstatus')->setData('product', $product)->toHtml() ?>
