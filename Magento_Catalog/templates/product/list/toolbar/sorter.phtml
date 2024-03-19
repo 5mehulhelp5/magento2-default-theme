@@ -25,7 +25,7 @@ $heroicons = $viewModels->require(HeroiconsOutline::class);
     <label class="inline-block mr-3">
         <select data-role="sorter"
                 class="form-select sorter-options"
-                aria-label="<?= $escaper->escapeHtml(__('Sort By')) ?>"
+                aria-label="<?= $escaper->escapeHtmlAttr(__('Sort By')) ?>"
                 @change="changeUrl(
                     'product_list_order',
                     $event.currentTarget.options[$event.currentTarget.selectedIndex].value,
