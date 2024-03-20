@@ -24,5 +24,4 @@
 /* purgecss end ignore */
 
 @import "tailwindcss/utilities";
-@import "utilities/icons";
 @import "theme.css";
