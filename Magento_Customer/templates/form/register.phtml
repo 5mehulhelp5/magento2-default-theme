@@ -64,9 +64,7 @@ $passwordMinCharacterSets = $block->getRequiredCharacterClassesNumber();
         <div class="md:grid grid-cols-2 gap-4">
             <fieldset class="my-8 card">
                 <legend class="contents">
-                    <span>
-                        <?= $escaper->escapeHtml(__('Personal Information')) ?>
-                    </span>
+                    <span><?= $escaper->escapeHtml(__('Personal Information')) ?></span>
                 </legend>
                 <input type="hidden" name="success_url" value="<?= $escaper->escapeUrl($block->getSuccessUrl()) ?>">
                 <input type="hidden" name="error_url" value="<?= $escaper->escapeUrl($block->getErrorUrl()) ?>">
@@ -108,14 +106,11 @@ $passwordMinCharacterSets = $block->getRequiredCharacterClassesNumber();
             </fieldset>
             <fieldset class="my-8 card">
                 <legend class="contents">
-                    <span>
-                        <?= $escaper->escapeHtml(__('Sign-in Information')) ?></span>
+                    <span><?= $escaper->escapeHtml(__('Sign-in Information')) ?></span>
                 </legend>
                 <div class="field field-reserved required">
                     <label for="email_address" class="label">
-                        <span>
-                            <?= $escaper->escapeHtml(__('Email')) ?>
-                        </span>
+                        <span><?= $escaper->escapeHtml(__('Email')) ?></span>
                     </label>
                     <div class="control">
                         <input
@@ -131,11 +126,9 @@ $passwordMinCharacterSets = $block->getRequiredCharacterClassesNumber();
                         />
                     </div>
                 </div>
-                <div class="field field-reserved">
+                <div class="field field-reserved required">
                     <label for="password" class="label">
-                        <span>
-                            <?= $escaper->escapeHtml(__('Password')) ?>
-                        </span>
+                        <span><?= $escaper->escapeHtml(__('Password')) ?></span>
                     </label>
                     <div class="flex flex-wrap gap-4">
                         <div class="control flex items-center">
@@ -198,9 +191,7 @@ $passwordMinCharacterSets = $block->getRequiredCharacterClassesNumber();
                 </div>
                 <div class="field field-reserved">
                     <label for="password-confirmation" class="label">
-                        <span>
-                            <?= $escaper->escapeHtml(__('Confirm Password')) ?>
-                        </span>
+                        <span><?= $escaper->escapeHtml(__('Confirm Password')) ?></span>
                     </label>
                     <div class="control flex items-center">
                         <div class="sr-only" aria-live="polite">
@@ -278,8 +269,9 @@ $passwordMinCharacterSets = $block->getRequiredCharacterClassesNumber();
                         'street'
                     ); ?>
                 <div class="field field-reserved street required">
-                    <label for="street_1" class="label"><span><?= /* @noEscape */
-                            $block->getAttributeData()->getFrontendLabel('street') ?></span></label>
+                    <label for="street_1" class="label">
+                        <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('street') ?></span>
+                    </label>
                     <div class="control">
                         <input type="text" name="street[]"
                                value="<?= $escaper->escapeHtmlAttr($block->getFormData()->getStreet(0)) ?>"
@@ -314,9 +306,7 @@ $passwordMinCharacterSets = $block->getRequiredCharacterClassesNumber();
 
                 <div class="field field-reserved required">
                     <label for="city" class="label">
-                        <span>
-                            <?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('city') ?>
-                        </span>
+                        <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('city') ?></span>
                     </label>
                     <div class="control">
                         <input type="text" name="city"
@@ -330,9 +320,11 @@ $passwordMinCharacterSets = $block->getRequiredCharacterClassesNumber();
                     </div>
                 </div>
 
-                <div class="field field-reserved region w-full"
-                      x-cloak
-                      x-show="(hasAvailableRegions() && isRegionRequired) || showOptionalRegions"
+                <div
+                    class="field field-reserved region w-full"
+                    x-cloak
+                    x-show="(hasAvailableRegions() && isRegionRequired) || showOptionalRegions"
+                    :class="{ 'required': isRegionRequired }"
                 >
                     <label class="label" for="region_id">
                         <span><?= /* @noEscape */ $regionLabel ?></span>
@@ -371,11 +363,9 @@ $passwordMinCharacterSets = $block->getRequiredCharacterClassesNumber();
                     </div>
                 </div>
 
-                <div class="field field-reserved zip w-full">
+                <div class="field field-reserved zip w-full" :class="{ 'required': isZipRequired }">
                     <label class="label" for="zip">
-                    <span>
-                        <?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('postcode') ?>
-                    </span>
+                        <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('postcode') ?></span>
                     </label>
                     <div class="control">
                         <input type="text"
@@ -392,11 +382,9 @@ $passwordMinCharacterSets = $block->getRequiredCharacterClassesNumber();
                     </div>
                 </div>
 
-                <div class="field field-reserved country w-full">
+                <div class="field field-reserved required country w-full">
                     <label class="label" for="country">
-                    <span>
-                        <?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('country_id') ?>
-                    </span>
+                        <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('country_id') ?></span>
                     </label>
                     <div class="control">
                         <?php $countries = $block
