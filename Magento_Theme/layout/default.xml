@@ -9,9 +9,6 @@
 -->
 <page layout="3columns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
-        <!-- The dummy touchstart event listener prevents mobile safari from requiring a double tap to select swatches, buttons and links -->
-        <attribute name="ontouchstart" value="() => {}"/>
-
         <referenceContainer name="after.body.start">
             <block class="Magento\Framework\View\Element\FormKey" name="formkey" />
             <block class="Magento\Theme\Block\Html\Notices" name="global_notices" template="Magento_Theme::html/notices.phtml"/>
@@ -108,6 +105,7 @@
 
         <referenceContainer name="after.body.start">
             <block class="Magento\Framework\View\Element\Js\Components" name="head.components" as="components" template="Magento_Theme::html/container.phtml"/>
+            <block name="mobile-safari-bug-workaround" template="Magento_Theme::html/mobile-safari-bug-workaround.phtml"/>
         </referenceContainer>
 
         <referenceContainer name="before.body.end">
