@@ -344,7 +344,6 @@ $totalsOutput = $viewModels->require(TotalsOutput::class);
 <div id="block-shipping"
      class="flex flex-col pb-2 my-2 border-b-2 border-gray-300 estimate-shipping-form"
      x-data="initShippingEstimation()"
-     x-init=""
      @private-content-loaded.window="receiveCustomerData($event.detail.data)"
 >
     <h3 class="title" id="block-shipping-title">
