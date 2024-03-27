@@ -473,13 +473,13 @@ $totalsOutput = $viewModels->require(TotalsOutput::class);
                             <div>
                                 <h4 class="font-semibold" x-text="carrier"></h4>
                                 <template x-for="(rate, index) in getRatesForCarrier(carrier)" :key="index">
-                                    <label class="flex items-center px-2 cursor-pointer">
+                                    <label class="flex items-center px-2 gap-2 cursor-pointer">
                                         <input class="mr-2 cursor-pointer" type="radio"
                                                :id="'shipping_method_' + rate.method_code"
                                                :value="rate.carrier_code + '_' + rate.method_code"
                                                x-model="shippingMethod"
                                                @change="updateShippingMethod()"/>
-                                        <span x-text="rate.method_title"></span>
+                                        <span x-text="rate.method_title" class="break-words shrink hyphens-auto"></span>
                                         <div class="flex flex-col justify-end ml-auto">
                                             <?php if ($totalsOutput->displayCartShippingInclTax() || $totalsOutput->displayCartShippingBoth()): ?>
                                                 <span
