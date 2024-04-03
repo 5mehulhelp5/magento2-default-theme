@@ -2,10 +2,6 @@
     scrollbar-gutter: stable;
 }
 
-body {
-    overflow-y: scroll;
-}
-
 .clearfix::after {
     content: "";
     display: block;
