@@ -1,5 +1,6 @@
 .account-nav li {
-    & :is(a, strong) {
+    & a,
+    & strong {
         @apply flex justify-between text-secondary py-1;
     }
 
