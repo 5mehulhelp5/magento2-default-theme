@@ -85,22 +85,22 @@ mutation cancelOrder($order_id: ID!, $reason: String!) {
                         }
                     }),
                 })
-                    .then(response => response.json())
-                    .then(result => {
-                        if (result.errors && result.errors.length) {
-                            return dispatchMessages(result.errors.map(error => {
-                                return {text: error.message, type: 'error'}
-                            }));
-                        }
-                        if (result.data.cancelOrder.error) {
-                            return dispatchMessages([{text: result.data.cancelOrder.error, type: 'error'}]);
-                        }
-                        hyva.setCookie('mage-messages', JSON.stringify([{
-                            text: hyva.str('<?= $escaper->escapeJs(__('Order %1 cancelled.')) ?>', result.data.cancelOrder.order.increment_id),
-                            type: 'success'
-                        }]), 1, true);
-                        window.location.reload();
-                    })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.errors && result.errors.length) {
+                        return dispatchMessages(result.errors.map(error => {
+                            return {text: error.message, type: 'error'}
+                        }));
+                    }
+                    if (result.data.cancelOrder.error) {
+                        return dispatchMessages([{text: result.data.cancelOrder.error, type: 'error'}]);
+                    }
+                    hyva.setCookie('mage-messages', JSON.stringify([{
+                        text: hyva.str('<?= $escaper->escapeJs(__('Order %1 cancelled.')) ?>', result.data.cancelOrder.order.increment_id),
+                        type: 'success'
+                    }]), 1, true);
+                    window.location.reload();
+                })
             },
         }
     }
