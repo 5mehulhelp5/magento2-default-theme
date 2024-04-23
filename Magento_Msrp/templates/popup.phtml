@@ -49,11 +49,11 @@ $heroicons = $viewModels->require(HeroiconsOutline::class);
                 <dl class="price-box">
                     <div class="flex gap-2">
                         <dt class="font-semibold whitespace-nowrap"><?= $escaper->escapeHtml(__('Price')) ?>:</dt>
-                        <dd x-html="msrpPrice"></dd>
+                        <dd x-html="msrpPrice" class="flex flex-col"></dd>
                     </div>
                     <div class="flex gap-2">
                         <dt class="font-semibold whitespace-nowrap"><?= $escaper->escapeHtml(__('Actual Price')) ?>:</dt>
-                        <dd x-html="actualPrice"></dd>
+                        <dd x-html="actualPrice" class="flex flex-col"></dd>
                     </div>
                 </dl>
             </div>
