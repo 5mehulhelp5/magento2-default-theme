@@ -21,9 +21,7 @@
             100% { transform: translate(0%, 0%); }
         }
     </style>
-    <g>
-        <circle cx="5" cy="50" r="5" style="animation: spinner-ball-triangle1 2.2s linear infinite"/>
-        <circle cx="27" cy="5" r="5" style="animation: spinner-ball-triangle2 2.2s linear infinite"/>
-        <circle cx="49" cy="50" r="5" style="animation: spinner-ball-triangle3 2.2s linear infinite"/>
-    </g>
+    <circle cx="5" cy="50" r="5" style="animation: spinner-ball-triangle1 2.2s linear infinite"/>
+    <circle cx="27" cy="5" r="5" style="animation: spinner-ball-triangle2 2.2s linear infinite"/>
+    <circle cx="49" cy="50" r="5" style="animation: spinner-ball-triangle3 2.2s linear infinite"/>
 </svg>
