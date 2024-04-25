@@ -83,7 +83,7 @@ $hasCouponCode = (bool) strlen($block->getCouponCode() ?: "");
 
                 <div class="fieldset coupon">
 
-                    <input type="hidden" name="remove" id="remove-coupon" value="<?= (int) $hasCouponCode ?>"/>
+                    <input type="hidden" name="remove" id="remove-coupon" value="<?= (int) $hasCouponCode ?>">
 
                     <div class="flex flex-col sm:flex-row gap-2 justify-center md:justify-start">
 
@@ -104,7 +104,7 @@ $hasCouponCode = (bool) strlen($block->getCouponCode() ?: "");
                                     <?php else: ?>
                                         required
                                     <?php endif; ?>
-                            />
+                            >
                         </div>
 
                         <div>
