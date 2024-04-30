@@ -11,6 +11,7 @@ declare(strict_types=1);
 use Hyva\Theme\Model\ViewModelRegistry;
 use Hyva\Theme\ViewModel\Logo\LogoSizeResolver;
 use Hyva\Theme\ViewModel\Logo\LogoPathResolver;
+use Hyva\Theme\ViewModel\StoreConfig;
 use Magento\Framework\Escaper;
 use Magento\Theme\Block\Html\Header\Logo;
 
@@ -18,7 +19,9 @@ use Magento\Theme\Block\Html\Header\Logo;
 /** @var Escaper $escaper */
 /** @var ViewModelRegistry $viewModels */
 
-$storeName = $block->getThemeName();
+/** @var StoreConfig $storeConfig */
+$storeConfig = $viewModels->require(StoreConfig::class);
+$storeName = $storeConfig->getStoreConfig('general/store_information/name') ?: $block->getThemeName() ?: __('Store logo');
 
 /** @var LogoSizeResolver $logoSizeResolver */
 $logoSizeResolver = $viewModels->require(LogoSizeResolver::class);
@@ -44,7 +47,7 @@ $logoSrc = $logoPathResolver && method_exists($logoPathResolver, 'getLogoSrc')
     >
         <img
             src="<?= $escaper->escapeUrl($logoSrc) ?>"
-            alt="<?= $escaper->escapeHtmlAttr($block->getLogoAlt() ? $block->getLogoAlt() : __('Store logo')) ?>"
+            alt="<?= $escaper->escapeHtmlAttr($block->getLogoAlt() ?: $storeName) ?>"
             <?= $logoWidth
                 ? 'width="' . $escaper->escapeHtmlAttr($logoWidth) . '"'
                 : 'width="200"'
