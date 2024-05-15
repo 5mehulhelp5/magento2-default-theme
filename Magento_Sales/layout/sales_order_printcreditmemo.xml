@@ -18,5 +18,6 @@
     <body>
         <referenceBlock name="page.main.title" remove="true"/>
         <referenceBlock name="sales.order.info.links" remove="true"/>
+        <referenceBlock name="sales.creditmemo.buttons" remove="true"/>
     </body>
 </page>
