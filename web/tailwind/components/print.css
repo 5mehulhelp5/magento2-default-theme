@@ -29,7 +29,7 @@
     }
 
     /* Optionaly hide the header and footer, depends on your design an prefrence */
-    :is(.page-header, .page-footer) {
+    /* :is(.page-header, .page-footer) {
         display: none !important;
-    }
+    } */
 }
