@@ -20,7 +20,7 @@ $order = $block->getOrder();
             <div class="text-2xl"><?= $escaper->escapeHtml(__('Order # %1', $order->getRealOrderId())) ?></div>
             <?= $block->getChildHtml('order.date') ?>
         </div>
-        <div class="mt-3 md:mt-0 lg:inline-block lg:ml-5 print:ml-5 print:mt-0">
+        <div class="mt-3 lg:mt-0 lg:inline-block lg:ml-5 print:ml-5 print:mt-0">
             <?= $block->getChildHtml('order.status') ?>
         </div>
     </div>
