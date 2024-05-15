@@ -34,25 +34,25 @@ $logoSrc = $logoPathResolver && method_exists($logoPathResolver, 'getLogoSrc')
     ? $logoPathResolver->getLogoSrc($block->getData('logo_file'))
     : $block->getLogoSrc();
 ?>
-    <a
-        class="flex items-center justify-center text-xl font-medium tracking-wide text-gray-800
-            no-underline hover:no-underline font-title"
-        href="<?= $escaper->escapeUrl($block->getUrl('')) ?>"
-        aria-label="<?= $escaper->escapeHtmlAttr(__('Go to Home page')) ?>"
-    >
-        <img
-            src="<?= $escaper->escapeUrl($logoSrc) ?>"
-            alt="<?= $escaper->escapeHtmlAttr($block->getLogoAlt() ? $block->getLogoAlt() : __('Store logo')) ?>"
-            <?= $logoWidth
-                ? 'width="' . $escaper->escapeHtmlAttr($logoWidth) . '"'
-                : 'width="200"'
-            ?>
-            <?= $logoHeight
-                ? 'height="' . $escaper->escapeHtmlAttr($logoHeight) . '"'
-                : 'height="150"'
-            ?>
-        />
-        <?php if (!$logoSrc): ?>
-            <?= $escaper->escapeHtml($storeName) ?>
-        <?php endif; ?>
-    </a>
+<a
+    class="flex items-center justify-center text-xl font-medium tracking-wide text-gray-800
+        no-underline hover:no-underline font-title"
+    href="<?= $escaper->escapeUrl($block->getUrl('')) ?>"
+    aria-label="<?= $escaper->escapeHtmlAttr(__('Go to Home page')) ?>"
+>
+    <img
+        src="<?= $escaper->escapeUrl($logoSrc) ?>"
+        alt="<?= $escaper->escapeHtmlAttr($block->getLogoAlt() ? $block->getLogoAlt() : __('Store logo')) ?>"
+        <?= $logoWidth
+            ? 'width="' . $escaper->escapeHtmlAttr($logoWidth) . '"'
+            : 'width="200"'
+        ?>
+        <?= $logoHeight
+            ? 'height="' . $escaper->escapeHtmlAttr($logoHeight) . '"'
+            : 'height="150"'
+        ?>
+    />
+    <?php if (!$logoSrc): ?>
+        <?= $escaper->escapeHtml($storeName) ?>
+    <?php endif; ?>
+</a>
