@@ -76,28 +76,6 @@ $helper = $this->helper(SearchHelper::class);
     }
 </script>
 <div class="container py-2 mx-auto text-black" x-data="initMiniSearch()">
-        <label class="sr-only" for="search" data-role="minisearch-label">
-            <span><?= $escaper->escapeHtml(__('Search')) ?></span>
-        </label>
-        <input id="search"
-               x-ref="searchInput"
-               type="search"
-               autocomplete="off"
-               name="<?= $escaper->escapeHtmlAttr($helper->getQueryParamName()) ?>"
-               value="<?= /** @noEscape */ $helper->getEscapedQueryText() ?>"
-               placeholder="<?= $escaper->escapeHtmlAttr(__('Search entire store here...')) ?>"
-               maxlength="<?= $escaper->escapeHtmlAttr($helper->getMaxQueryLength()) ?>"
-               class="w-full p-2 text-lg leading-normal transition appearance-none text-grey-800
-                focus:outline-none focus:border-transparent lg:text-xl"
-               @focus.once="suggest"
-               @input.debounce.300="suggest"
-               @keydown.arrow-down.prevent="focusElement($root.querySelector('[tabindex]'))"
-               @search-open.window.debounce.10="
-                    $el.focus()
-                    $el.select()
-               "
-        />
-        <button type="submit"
      <form
         id="search_mini_form"
         class="form minisearch"
@@ -107,12 +85,34 @@ $helper = $this->helper(SearchHelper::class);
         method="get"
         role="search"
     >
+        <div class="flex">
+            <label class="sr-only" for="search" data-role="minisearch-label">
+                <span><?= $escaper->escapeHtml(__('Search')) ?></span>
+            </label>
+            <input
+                id="search"
+                x-ref="searchInput"
+                type="search"
+                autocomplete="off"
+                name="<?= $escaper->escapeHtmlAttr($helper->getQueryParamName()) ?>"
+                value="<?= /** @noEscape */ $helper->getEscapedQueryText() ?>"
+                placeholder="<?= $escaper->escapeHtmlAttr(__('Search entire store here...')) ?>"
+                maxlength="<?= $escaper->escapeHtmlAttr($helper->getMaxQueryLength()) ?>"
+                class="w-full text-lg leading-normal lg:text-xl text-grey-800 focus:border-transparent focus:outline-none"
+                @focus.once="suggest"
+                @input.debounce.300="suggest"
+                @keydown.arrow-down.prevent="focusElement($root.querySelector('[tabindex]'))"
+                @search-open.window.debounce.10="$el.focus(); $el.select()"
+            >
+            <button
+                type="submit"
+                class="action search"
                 title="<?= $escaper->escapeHtml(__('Search')) ?>"
-                class="action search sr-only"
-                aria-label="Search"
-        >
-            <?= $escaper->escapeHtml(__('Search')) ?>
-        </button>
+                aria-label="search"
+            >
+                <?= $escaper->escapeHtml(__('Search')) ?>
+            </button>
+        </div>
         <template x-if="suggestions.length > 0">
             <div class="w-full leading-normal transition appearance-none text-grey-800 flex flex-col mt-1">
                 <template x-for="suggestion in suggestions">
