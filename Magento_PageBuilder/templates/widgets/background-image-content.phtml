@@ -1,0 +1,73 @@
+<?php
+/**
+ * Hyvä Themes - https://hyva.io
+ * Copyright © Hyvä Themes 2022-present. All rights reserved.
+ * This product is licensed per Magento install
+ * See https://hyva.io/license
+ */
+
+declare(strict_types=1);
+
+use Hyva\Theme\Model\ViewModelRegistry;
+use Magento\Framework\Escaper;
+use Magento\Framework\View\Element\Template;
+
+/** @var Template $block */
+/** @var Escaper $escaper */
+/** @var ViewModelRegistry $viewModels */
+?>
+<script>
+    'use strict';
+
+    <?php /* Lazy load slider background images when the slider intersects the viewport */ ?>
+
+    (() => {
+        const lazyBackgrounds = document.querySelectorAll('[data-background-images]');
+        if (! lazyBackgrounds.length) {
+            return;
+        }
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const lazyBackgrounds = entry.target.querySelectorAll('[data-background-images]');
+                    <?php /* Inject css to load all background images of the content element. Could be multiple for sliders or tabs. */ ?>
+                    const css = Array.from(lazyBackgrounds)
+                        .filter(element => element.dataset.backgroundImages !== "{}")
+                        .map(element => {
+                            try {
+                                const parsedImages = JSON.parse(element.dataset.backgroundImages.replaceAll('\\', ''));
+                                const image = window.innerWidth <= 768 && (parsedImages.mobile_image_webp || parsedImages.mobile_image)
+                                    ? parsedImages.mobile_image_webp || parsedImages.mobile_image
+                                    : parsedImages.desktop_image_webp || parsedImages.desktop_image;
+                                const cssClass = Array.from(element.classList).find(cssClass => cssClass.startsWith('background-image-'));
+                                return `.${cssClass} {background-image: url(${image})}`;
+                            } catch (error) {
+                                console.error(error)
+                            }
+                        })
+                        .join("\n");
+                    const style = document.createElement('style');
+                    style.innerText = css;
+                    entry.target.append(style);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {threshold: 0.01});
+
+        lazyBackgrounds.forEach(element => {
+            <?php /* In case the styles were not removed by the theme-module plugin. */ ?>
+            if (getComputedStyle(element).backgroundImage !== 'none') {
+                return;
+            }
+            const contentElement = element.closest('[data-content-type]');
+
+            <?php /* Ensure every content element is only observed once even if it contains multiple children with background image */ ?>
+            if (contentElement.isObserved) {
+                return;
+            }
+            contentElement.isObserved = true;
+            observer.observe(contentElement)
+        })
+    })();
+</script>
