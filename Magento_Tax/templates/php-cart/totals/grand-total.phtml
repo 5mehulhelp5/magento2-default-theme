@@ -12,7 +12,7 @@
 ?>
 <!-- display subtotal excluding tax -->
 <template x-if="segment.code === 'grand_total' && checkoutConfig.includeTaxInGrandTotal">
-    <div class="contents">
+    <div class="mt-6 mb-12 divide-y">
         <div :class="wrapperClassTotals">
             <dt x-text="`${segment.title} ${includingTaxMessage}`" class="font-semibold"></dt>
             <dd x-text="hyva.formatPrice(segment.value)" class="justify-self-end"></dd>
@@ -26,7 +26,7 @@
 
 <!-- display subtotal including tax -->
 <template x-if="segment.code === 'grand_total' && !checkoutConfig.includeTaxInGrandTotal">
-    <div :class="wrapperClassTotals">
+    <div :class="wrapperClassTotals" class="mt-6 mb-12">
         <dt x-text="`${segment.title}`" class="font-semibold"></dt>
         <dd x-text="hyva.formatPrice(segment.value)" class="justify-self-end"></dd>
     </div>

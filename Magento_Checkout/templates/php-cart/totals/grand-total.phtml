@@ -1,5 +1,5 @@
 <template x-if="segment.code === 'grand_total'">
-    <div :class="wrapperClassTotals">
+    <div :class="wrapperClassTotals" class="mt-6 mb-12">
         <dt x-text="segment.title" class="font-semibold"></dt>
         <dd x-text="hyva.formatPrice(segment.value)" class="justify-self-end"></dd>
     </div>
