@@ -153,9 +153,9 @@ $serializedCheckoutConfig =  $block->getItemsCount() ? $checkoutConfigViewModel-
     }
 </script>
 <div x-data="initCartForm()"
-     class="cart-form clearfix"
      @private-content-loaded.window="checkCartShouldUpdate($event.detail.data)"
      @storage.window="onStorageChange($event)"
+    class="cart-form"
 >
     <?php if ($block->getItemsCount()): ?>
         <?= $block->getChildHtml('with-items') ?>
