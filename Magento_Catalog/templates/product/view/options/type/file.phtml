@@ -97,7 +97,6 @@ if ($productPriceViewModel->displayPriceInclAndExclTax()) {
         />
         <input type="hidden" name="<?= /* @noEscape */ $fieldNameAction ?>"
                id="<?= /* @noEscape */ $fileName ?>-hidden"
-               x-ref="option-<?= $escaper->escapeHtmlAttr($optionId) ?>-hidden"
                class="product-custom-option hidden-form-file"
                data-price-amount="<?= $escaper->escapeHtmlAttr($option->getPrice()) ?>"
                data-price-type="<?= $escaper->escapeHtmlAttr($option->getPriceType()) ?>"
