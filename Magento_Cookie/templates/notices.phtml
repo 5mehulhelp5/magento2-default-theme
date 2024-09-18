@@ -53,12 +53,6 @@ if ($cookieHelper->isCookieRestrictionModeEnabled()): ?>
             cookieValue: '<?= /* @noEscape */ $cookieHelper->getAcceptedSaveCookiesWebsiteIds() ?>',
             cookieLifetime: '<?= /* @noEscape */ $cookieHelper->getCookieRestrictionLifetime() ?>',
             noCookiesUrl: '<?= $escaper->escapeJs($block->getUrl('cookie/index/noCookies')) ?>',
-            init() {
-                window.addEventListener('private-content-loaded', () => {
-                    this.checkAcceptCookies()
-                }, { once: true });
-                window.dispatchEvent(new CustomEvent('reload-customer-section-data'));
-            },
             checkAcceptCookies() {
                 this.showCookieBanner = ! isAllowedSaveCookie();
             },
@@ -78,7 +72,8 @@ if ($cookieHelper->isCookieRestrictionModeEnabled()): ?>
 <section id="notice-cookie-block"
          aria-label="<?= $escaper->escapeHtmlAttr(__('We use cookies to make your experience better.')) ?>"
          x-data="initCookieBanner()"
-         x-defer="intersect"
+         x-init="checkAcceptCookies()"
+         x-defer="idle"
 >
     <template x-if="showCookieBanner">
         <div role="dialog"
