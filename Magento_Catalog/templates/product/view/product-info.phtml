@@ -83,7 +83,7 @@ $productType = $product->getTypeId();
 
     </div>
 
-    <?php if ($product->isSaleable()): ?>
+    <?php if ($product->isSaleable() && $block->getChildHtml('addtocart.shortcut.buttons')): ?>
         <div class="flex mt-4 justify-end">
             <?= $block->getChildHtml('addtocart.shortcut.buttons') ?>
         </div>
