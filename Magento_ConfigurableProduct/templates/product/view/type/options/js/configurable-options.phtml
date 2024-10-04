@@ -47,6 +47,8 @@ $currentProduct = $viewModels->require(CurrentProduct::class);
                             this.changeOption(attributeId, value + '');
                         }
                     }
+                    this.preselectQuerystringItems();
+                    this.preselectLocationHashItems();
                 });
             },
             findSimpleIndex() {
@@ -316,8 +318,6 @@ $currentProduct = $viewModels->require(CurrentProduct::class);
                 <?php if ($currentProduct->exists()): /* Only preconfigure the main product on product detail pages */ ?>
                 if (this.productId === '<?= (int) $currentProduct->get()->getEntityId() ?>') {
                     this.preselectCartItems(data);
-                    this.preselectQuerystringItems();
-                    this.preselectLocationHashItems();
                 }
                 <?php endif; ?>
             },
