@@ -7,10 +7,16 @@
  */
 
 declare(strict_types=1);
+
+use Magento\Catalog\Block\Product\Widget\Link;
+use Magento\Framework\Escaper;
+
+/** @var Link $block */
+/** @var Escaper $escaper */
 ?>
 
 <div class="widget block-product-link">
     <a class="underline font-medium" <?= /* @noEscape */ $block->getLinkAttributes() ?>>
-        <span><?= $block->escapeHtml($block->getLabel()) ?></span>
+        <span><?= $escaper->escapeHtml($block->getLabel()) ?></span>
     </a>
 </div>
