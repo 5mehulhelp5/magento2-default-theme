@@ -158,14 +158,6 @@ $slideItemClasses = $block->getData('maybe_purged_tailwind_slide_item_classes') 
                     </<?= /* @noEscape */ $headingTag ?>>
                 </div>
             <?php endif; ?>
-            <span
-                class="sr-only"
-                :id="$id('slider-desc')"
-                tabindex="-1"
-            >
-                <?= $escaper->escapeHtml(__('Navigating through the elements of the carousel is possible using the tab key. You can skip the carousel or go straight to carousel navigation using the skip links.')) ?>
-            </span>
-
             <a
                 href="#<?= $escaper->escapeHtmlAttr($name) ?>-slider-end"
                 class="action skip sr-only focus:not-sr-only focus:absolute focus:z-30 focus:bg-white"
