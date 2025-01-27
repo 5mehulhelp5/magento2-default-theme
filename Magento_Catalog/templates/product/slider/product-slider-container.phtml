@@ -133,7 +133,6 @@ $slideItemClasses = $block->getData('maybe_purged_tailwind_slide_item_classes') 
     class="<?= $escaper->escapeHtmlAttr($sliderSectionClasses) ?>"
     x-data="initSliderComponent()"
     x-init="calcPageSize();"
-    x-id="['slider-nav', 'slider-id']"
     @resize.window.debounce="calcPageSize(); $nextTick( function() { calcActive() })"
     aria-roledescription="<?= $escaper->escapeHtmlAttr(__('Carousel')) ?>"
     aria-label="<?= $escaper->escapeHtmlAttr($title ?: $name) ?>"
@@ -185,10 +184,7 @@ $slideItemClasses = $block->getData('maybe_purged_tailwind_slide_item_classes') 
             </div>
             <div style="min-height: 76px">
             <template x-if="itemCount > pageSize">
-                <div
-                    class="flex items-center justify-center py-4"
-                    :id="$id('slider-nav')"
-                >
+                <div class="flex items-center justify-center py-4">
                     <button
                         type="button"
                         aria-label="<?= $escaper->escapeHtmlAttr(__('Previous slide')) ?>"
