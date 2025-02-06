@@ -84,7 +84,7 @@ $recaptcha = $block->getData('viewModelRecaptcha');
             <label for="coupon_code" class="label sr-only">
                 <?= $escaper->escapeHtml(__('Enter discount code')) ?>
             </label>
-            <div class="flex flex-col gap-2">
+            <div class="space-y-2">
                 <div class="control">
                     <input
                         type="text"
@@ -102,11 +102,11 @@ $recaptcha = $block->getData('viewModelRecaptcha');
                     >
                 </div>
                 <?php if (!$hasCouponCode): ?>
-                    <button type="submit" class="btn btn-primary" value="<?= $escaper->escapeHtmlAttr(__('Apply Discount')) ?>">
+                    <button type="submit" class="btn btn-primary w-full" value="<?= $escaper->escapeHtmlAttr(__('Apply Discount')) ?>">
                         <?= $escaper->escapeHtml(__('Apply Discount')) ?>
                     </button>
                 <?php else: ?>
-                    <button type="submit" class="btn btn-primary" value="<?= $escaper->escapeHtmlAttr(__('Cancel Coupon')) ?>">
+                    <button type="submit" class="btn btn-primary w-full" value="<?= $escaper->escapeHtmlAttr(__('Cancel Coupon')) ?>">
                         <?= $escaper->escapeHtml(__('Cancel Coupon')) ?>
                     </button>
                 <?php endif; ?>
