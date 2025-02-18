@@ -204,7 +204,7 @@ $isAutocompleteEnabled = $storeConfig->getStoreConfig('customer/password/autocom
                                                type="email"
                                                required
                                                autocomplete="<?= $isAutocompleteEnabled ? 'username' : 'off' ?>"
-                                               class="form-input input-text"
+                                               class="form-input"
                                         >
                                     </div>
                                 </div>
@@ -216,7 +216,7 @@ $isAutocompleteEnabled = $storeConfig->getStoreConfig('customer/password/autocom
                                         <input name="password"
                                                id="form-login-password"
                                                type="password"
-                                               class="form-input input-text"
+                                               class="form-input"
                                                required
                                                x-ref="customer-password"
                                                autocomplete="<?= $isAutocompleteEnabled ? 'current-password' : 'off' ?>"
