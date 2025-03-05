@@ -179,10 +179,11 @@ mutation createProductReviewMutation(
                                 <span><?= $escaper->escapeHtml(__('Nickname')) ?></span>
                             </label>
                             <div>
-                                <input class="form-input mt-3 block w-full text-sm"
+                                <input class="form-input mt-3 block w-full"
                                        required
                                        placeholder="<?= $escaper->escapeHtmlAttr(__('Nickname') . '*') ?>" type="text"
-                                       name="nickname" id="nickname_field"/>
+                                       name="nickname" id="nickname_field"
+                                       autocomplete="nickname"/>
                             </div>
                         </div>
                         <div>
@@ -190,11 +191,12 @@ mutation createProductReviewMutation(
                                 <span><?= $escaper->escapeHtml(__('Summary')) ?></span>
                             </label>
                             <div>
-                                <input class="form-input mt-3 block w-full text-sm"
+                                <input class="form-input mt-3 block w-full"
                                        required
                                        placeholder="<?= $escaper->escapeHtml(__('Summary') . '*') ?>" type="text"
                                        name="title"
-                                       id="summary_field"/>
+                                       id="summary_field"
+                                       autocomplete="off"/>
                             </div>
                         </div>
                         <div>
@@ -202,11 +204,11 @@ mutation createProductReviewMutation(
                                 <span><?= $escaper->escapeHtml(__('Review')) ?></span>
                             </label>
                             <div>
-                            <textarea class="form-input mt-3 block w-full text-sm"
+                            <textarea class="form-input mt-3 block w-full"
                                       required
                                       placeholder="<?= $escaper->escapeHtml(__('Review') . '*') ?>" name="detail"
                                       id="review_field" cols="5"
-                                      rows="3"></textarea>
+                                      rows="3" autocomplete="off"></textarea>
                             </div>
                         </div>
                     </div>
