@@ -46,8 +46,8 @@ $defaultSuccessMessageTimeout = $storeConfig->getStoreConfig('hyva_theme_general
             hasMessage() {
                 return !!this.message;
             },
-            removeMessage(index) {
-                this.messages[Number.isInteger(index) ? index : this.index] = undefined;
+            removeMessage() {
+                this.messages[this.index] = undefined;
             },
             addMessages(messages, hideAfter) {
                 messages.map((message) => {
@@ -62,7 +62,7 @@ $defaultSuccessMessageTimeout = $storeConfig->getStoreConfig('hyva_theme_general
             },
             setHideTimeOut(messageIndex, hideAfter) {
                 setTimeout((messageIndex) => {
-                    this.removeMessage(messageIndex);
+                    this.messages[messageIndex] = undefined;
                 }, hideAfter, messageIndex);
             },
             eventListeners: {
