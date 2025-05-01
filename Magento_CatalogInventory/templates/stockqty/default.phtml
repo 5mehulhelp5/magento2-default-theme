@@ -15,11 +15,7 @@ use Magento\Framework\Escaper;
 /** @var Escaper $escaper */
 ?>
 <?php if ($block->isMsgVisible()): ?>
-    <p class="availability only flex items-center gap-x-2"
-       title="<?= $escaper->escapeHtmlAttr(__('Only %1 left', ($block->getStockQtyLeft()))) ?>"
-    >
-        <span>
-            <?= /* @noEscape */ __('Only %1 left', "<span class='font-bold'>{$escaper->escapeHtml($block->getStockQtyLeft())}</span>") ?>
-        </span>
+    <p class="availability only">
+        <?= /* @noEscape */ __('Only %1 left', "<span class='font-bold'>{$escaper->escapeHtml($block->getStockQtyLeft())}</span>") ?>
     </p>
 <?php endif ?>
