@@ -217,7 +217,7 @@ $isAutocompleteEnabled = $block->getConfig('customer/password/autocomplete_on_st
                             data-validate='{"equalTo": "password"}'
                             @input.debounce="onChange"
                             required
-                            class="form-input w-full"
+                            class="form-input"
                             autocomplete="<?= $isAutocompleteEnabled ? 'new-password' : 'off' ?>"
                         >
                         <button
@@ -323,7 +323,7 @@ $isAutocompleteEnabled = $block->getConfig('customer/password/autocomplete_on_st
                 </div>
 
                 <div
-                    class="field field-reserved region w-full"
+                    class="field field-reserved region"
                     x-cloak
                     x-show="(hasAvailableRegions() && isRegionRequired) || showOptionalRegions"
                     :class="{ 'required': isRegionRequired }"
@@ -359,13 +359,13 @@ $isAutocompleteEnabled = $block->getConfig('customer/password/autocomplete_on_st
                                x-ref="region"
                                value="<?= $escaper->escapeHtmlAttr($block->getRegion()) ?>"
                                title="<?= /* @noEscape */ $regionLabel ?>"
-                               class="form-input w-full"
+                               class="form-input"
                                :required="isRegionRequired"
                         />
                     </div>
                 </div>
 
-                <div class="field field-reserved zip w-full" :class="{ 'required': isZipRequired }">
+                <div class="field field-reserved zip" :class="{ 'required': isZipRequired }">
                     <label class="label" for="zip">
                         <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('postcode') ?></span>
                     </label>
@@ -384,7 +384,7 @@ $isAutocompleteEnabled = $block->getConfig('customer/password/autocomplete_on_st
                     </div>
                 </div>
 
-                <div class="field field-reserved required country w-full">
+                <div class="field field-reserved required country">
                     <label class="label" for="country">
                         <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('country_id') ?></span>
                     </label>
