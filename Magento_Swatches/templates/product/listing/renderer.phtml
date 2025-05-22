@@ -202,7 +202,7 @@ $swatchItemNumber = $block->getNumberSwatchesPerProduct();
                         </template>
 
                         <button
-                            class="inline-block my-0.5 ml-1.5 p-0.5 text-sm hover:underline"
+                            class="ms-4 text-nowrap text-sm underline hover:no-underline"
                             x-show="!showMore && optionConfig.attributes[<?= (int) $attributeId ?>].options.length > swatchLimit"
                             @click.prevent="showMore = true"
                         >
