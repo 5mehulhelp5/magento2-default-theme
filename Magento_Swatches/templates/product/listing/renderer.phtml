@@ -56,6 +56,7 @@ $swatchItemBlock->setData('product_id', $productId);
 
                         const candidates = this.findProductIdsForPartialSelection(this.selectedValues);
 
+                        <?php /* The skuCandidates property is not set if the Magento_Inventory (MSI) modules are disabled. */ ?>
                         window.dispatchEvent(new CustomEvent('listing-configurable-selection-changed', {
                             detail: {
                                 productId: this.productId,
