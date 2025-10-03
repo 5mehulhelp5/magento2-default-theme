@@ -90,16 +90,12 @@ $jarallaxVideoUrl = $block->getViewFileUrl('Magento_PageBuilder::js/jarallax-vid
 
             if (parallaxImageElements.length > 0 || videoBackgroundsElements.length > 0) {
                 const jarallaxScript = document.createElement('script');
-                jarallaxScript.type = 'text/javascript';
-
                 jarallaxScript.addEventListener('load', () => {
                     parallaxImageElements.forEach(row => {
                         initParallaxImage(row);
                     });
 
                     const jarallaxVideoScript = document.createElement('script');
-                    jarallaxVideoScript.type = 'text/javascript';
-
                     jarallaxVideoScript.addEventListener('load', () => {
                         videoBackgroundsElements.forEach(element => {
                             initVideoBackground(element);
