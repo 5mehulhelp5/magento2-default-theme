@@ -169,9 +169,13 @@ $itemRenderer->setData('hide_details', $hideDetails);
         </div>
     </div>
 
-    <div class="<?= $escaper->escapeHtmlAttr($sliderClasses) ?>" data-track>
+    <div class="<?= $escaper->escapeHtmlAttr($sliderClasses) ?>" data-track tabindex="0" aria-live="polite">
         <?php foreach ($items as $product): ?>
-            <div id="<?= $escaper->escapeHtmlAttr($sliderName . '-' . $product->getId()) ?>" class="flex flex-col">
+            <div
+                id="<?= $escaper->escapeHtmlAttr($sliderName . '-' . $product->getId()) ?>"
+                class="flex flex-col"
+                role="tabpanel"
+            >
                 <?= /** @noEscape */ $productListItemViewModel->getItemHtmlWithRenderer(
                     $itemRenderer,
                     $product,
@@ -188,8 +192,15 @@ $itemRenderer->setData('hide_details', $hideDetails);
     <?php if ($showPager): ?>
         <div class="snap-pager" data-pager>
             <?php foreach ($items as $product): ?>
-                <a href="#<?= $escaper->escapeHtmlAttr($sliderName . '-' . $product->getId()) ?>" class="snap-marker">
-                    <span class="sr-only"><?= $escaper->escapeHtmlAttr(__('View more about %1', $product->getName())) ?></span>
+                <a
+                    href="#<?= $escaper->escapeHtmlAttr($sliderName . '-' . $product->getId()) ?>"
+                    class="snap-marker"
+                    role="tab"
+                    x-cloak
+                >
+                    <span class="sr-only">
+                        <?= $escaper->escapeHtmlAttr(__('View more about %1', $product->getName())) ?>
+                    </span>
                 </a>
             <?php endforeach; ?>
         </div>
