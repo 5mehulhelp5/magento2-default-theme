@@ -171,7 +171,7 @@ $itemRenderer->setData('hide_details', $hideDetails);
 
     <div class="<?= $escaper->escapeHtmlAttr($sliderClasses) ?>" data-track>
         <?php foreach ($items as $product): ?>
-            <div id="<?= $sliderName . '-' . $product->getId() ?>" class="flex flex-col">
+            <div id="<?= $escaper->escapeHtmlAttr($sliderName . '-' . $product->getId()) ?>" class="flex flex-col">
                 <?= /** @noEscape */ $productListItemViewModel->getItemHtmlWithRenderer(
                     $itemRenderer,
                     $product,
@@ -188,7 +188,7 @@ $itemRenderer->setData('hide_details', $hideDetails);
     <?php if ($showPager): ?>
         <div class="snap-pager" data-pager>
             <?php foreach ($items as $product): ?>
-                <a href="#<?= $sliderName . '-' . $product->getId() ?>" class="snap-marker">
+                <a href="#<?= $escaper->escapeHtmlAttr($sliderName . '-' . $product->getId()) ?>" class="snap-marker">
                     <span class="sr-only"><?= $escaper->escapeHtmlAttr(__('View more about %1', $product->getName())) ?></span>
                 </a>
             <?php endforeach; ?>
