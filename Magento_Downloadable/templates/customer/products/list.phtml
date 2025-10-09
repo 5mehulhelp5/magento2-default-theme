@@ -96,12 +96,12 @@ $heroicons = $viewModels->require(HeroiconsOutline::class);
                                     aria-label="<?= $escaper->escapeHtmlAttr(__('Start Download')) ?>"
                                     class="action download"
                                 >
-                                    <?= $heroicons->documentDownloadHtml('', 24, 24, ['aria-hidden' => true]); ?>
+                                    <?= $heroicons->documentDownloadHtml('', 24, 24, ['aria-hidden' => 'true']); ?>
                                 </a>
                                 <?php if ($block->getIsOpenInNewWindow()): ?>
                                     <?= /* @noEscape */ $secureRenderer->renderEventListenerAsTag(
                                         'onclick',
-                                        "this.target='_blank'",
+                                        "this.target='_blank'; this.rel='noopener';",
                                         'a#download_' . $item->getPurchased()->getProductId()
                                     ) ?>
                                 <?php endif; ?>
