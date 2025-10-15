@@ -41,9 +41,9 @@ $itemClasses = (string) $block->getItemClasses() ?: "flex items-center gap-2 py-
         <?= $lucideIcons->menuHtml('', 24, 24, ["aria-hidden" => "true"]) ?>
     </button>
     <dialog
-        class="size-full max-h-full ms-0 p-0 open:flex flex-col transition ease-out duration-300 open:duration-500 rounded-s-none"
+        class="size-full max-h-full ms-0 p-0 open:flex flex-col transition ease-out duration-300 motion-reduce:duration-0 rounded-s-none"
         x-show="isOpen"
-        x-htmldialog.noscroll="close"
+        x-htmldialog="close"
         closeby="any"
         x-transition:enter-start="-translate-x-full"
         x-transition:enter-end="translate-x-0"
@@ -86,7 +86,7 @@ $itemClasses = (string) $block->getItemClasses() ?: "flex items-center gap-2 py-
                                 </button>
                                 <ul
                                     id="<?= $escaper->escapeHtml($menuItem['id']) ?>-mobile-menu-panel"
-                                    class="z-10 absolute inset-0 bg-white py-0.5 overflow-y-auto overscroll-y-contain transition duration-300"
+                                    class="z-10 absolute inset-0 bg-white py-0.5 overflow-y-auto overscroll-y-contain transition motion-reduce:duration-0"
                                     x-show="isOpen"
                                     x-transition:enter-start="opacity-0 translate-x-8"
                                     x-transition:enter-end="opacity-100 translate-x-0"
