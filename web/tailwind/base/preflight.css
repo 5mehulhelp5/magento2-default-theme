@@ -14,12 +14,17 @@
         );
     }
 
+    :disabled {
+       cursor: not-allowed;
+    }
+
     :target {
         scroll-margin-block: var(--anchor-offset, 6ex);
     }
+    
 
     @media (prefers-reduced-motion: no-preference) {
-        :has(:target) {
+        :where(html):has(:target) {
             scroll-behavior: smooth;
         }
     }
@@ -35,27 +40,44 @@
 
     /* Prevent touch delay on touch devices */
     :where(
-            :any-link,
-            button,
-            input,
-            label[for],
-            select,
-            summary,
-            textarea,
-            [tabindex]:not([tabindex^="-"])
-        ) {
+        :any-link,
+        button,
+        input,
+        label[for],
+        select,
+        summary,
+        textarea,
+        [tabindex]:not([tabindex^="-"])
+    ) {
         touch-action: manipulation;
     }
 
     /* Set a default cursor for interactive elements */
     :where(
-            :any-link,
-            button,
-            label[for],
-            label:has(input:is([type="radio"], [type="checkbox"]):enabled),
-            select:has(option:enabled),
-            summary
-        ) {
+        :any-link,
+        button,
+        label[for],
+        label:has(input:is([type="radio"], [type="checkbox"]):enabled),
+        select:has(option:enabled),
+        summary
+    ) {
         cursor: pointer;
+    }
+
+    /* set common default for the HTML Dialog */
+    :where(dialog) {
+        position: fixed;
+        max-block-size: calc(100% - 2rem);
+        max-inline-size: calc(100% - 2rem);
+        background-color: var(--color-bg);
+        color: var(--color-text);
+        border-radius: 1rem;
+        margin: auto;
+        padding: 1.5rem;
+        box-shadow: var(--shadow-lg);
+
+        &::backdrop {
+            background-color: var(--backdrop, hsl(0 0 0 / 20%));
+        }
     }
 }

@@ -1,17 +1,51 @@
-@plugin "@tailwindcss/forms";
+@utility form-input-field {
+    --outline-size: 1px;
+    --outline-offset: 0px;
+}
 
-@layer utilities {
-    :is(
-        .form-input,
-        .form-email,
-        .form-select,
-        .form-multiselect,
-        .form-textarea
-    ) {
-        @apply border-gray-300 rounded-md;
+@utility form-input-control {
+    block-size: --spacing(4.5);
+    inline-size: --spacing(4.5);
+}
 
-        &:focus {
-            @apply border-primary ring-primary;
+@layer base {
+    [type="checkbox"][role="switch"] {
+        --switch-width: --spacing(9);
+        --switch-height: --spacing(5);
+        --switch-thumb-offset: calc(var(--switch-width) - var(--switch-height));
+        border-radius: calc(infinity * 1px);
+        border-width: 2px;
+        block-size: var(--switch-height);
+        inline-size: var(--switch-width);
+
+        &:not(:disabled) {
+            cursor: pointer;
+        }
+
+        &::after {
+            content: "";
+            display: block;
+            aspect-ratio: 1;
+            height: 100%;
+            border-radius: calc(infinity * 1px);
+            border-width: 1px;
+            border-color: var(--form-bg);
+            background-color: var(--form-stroke);
+            transition: background-color 150ms, border-color 150ms,
+                translate 150ms;
+        }
+
+        &:checked {
+            background-image: none;
+
+            &::after {
+                background-color: var(--form-bg);
+                translate: var(--switch-thumb-offset) 0%;
+            }
+        }
+
+        &:dir(rtl):checked {
+            translate: calc(var(--switch-thumb-offset) / -1) 0%;
         }
     }
 }
