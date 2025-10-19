@@ -9,10 +9,10 @@
 
 @utility btn {
     --btn-stroke: #0000;
-    --btn-bg: var(--color-slate-200);
-    --btn-hover-bg: var(--color-slate-300);
-    --btn-active-bg: var(--color-slate-300);
-    --btn-color: var(--color-slate-900);
+    --btn-bg: color-mix(in oklch, var(--color-primary), #0000 94%);
+    --btn-hover-bg: color-mix(in oklch, var(--color-primary), #0000 86%);
+    --btn-active-bg: color-mix(in oklch, var(--color-primary), #0000 86%);
+    --btn-color: var(--color-text);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -27,9 +27,7 @@
     font-weight: 500;
     user-select: none;
     vertical-align: middle;
-    transition-property: color, background-color, border-color, outline-color,
-        text-decoration-color, fill, stroke, --tw-gradient-from,
-        --tw-gradient-via, --tw-gradient-to;
+    transition-property: color, background-color, border-color, outline-color;
     transition-timing-function: var(--default-transition-timing-function);
     transition-duration: var(--default-transition-duration);
 
@@ -49,7 +47,6 @@
         border-color: var(--btn-disabled-stroke, var(--color-gray-200));
         background-color: var(--btn-disabled-bg, var(--color-gray-50));
         color: var(--btn-disabled-color, var(--color-gray-500));
-        cursor: not-allowed;
     }
 }
 
