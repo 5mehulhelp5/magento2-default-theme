@@ -12,7 +12,7 @@
     --btn-bg: var(--color-slate-100);
     --btn-hover-bg: var(--color-slate-200);
     --btn-active-bg: var(--color-slate-200);
-    --btn-color: var(--color-text);
+    --btn-color: var(--color-fg);
 }
 
 @utility btn {
