@@ -29,16 +29,17 @@
         }
     }
 
+    .page-layout-2columns-left {
+        .columns > .column.main {
+            grid-column-start: 2;
+        }
+    }
+
     .page-layout-2columns-right {
         --page-layout: var(--main-width) var(--sidebar-width);
 
-        .columns {
-            grid-template-columns: var(--page-layout);
-            grid-template-rows: auto 1fr;
-
-            & > .column.main {
-                order: -1;
-            }
+        .columns > .column.main {
+            order: -1;
         }
     }
 }
