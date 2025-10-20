@@ -271,9 +271,9 @@ if ($msrpPrice = iterator_to_array($product->getPriceInfo()->getPrices())[MsrpPr
 
             <div class="final-price inline-block" itemprop="offers" itemscope="" itemtype="https://schema.org/Offer">
                 <span class="price-label">
-                    <?= ($product->canConfigure() && is_int($product->getPrice())) ?
-                        $escaper->escapeHtml(__('As low as')) . ':' :
-                        '&nbsp;' ?>
+                    <?= ($product->canConfigure() && is_int($product->getPrice()))
+                        ? $escaper->escapeHtml(__('As low as')) . ':'
+                        : '' ?>
                 </span>
                 <span id="product-price-<?= (int)$product->getId() ?>"
                       class="price-wrapper">
