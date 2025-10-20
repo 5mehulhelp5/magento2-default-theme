@@ -24,8 +24,14 @@ use Magento\Framework\Escaper;
 </section>
 
 <?= $block->getChildHtml('product_options_wrapper_bottom') ?>
+
 <?= $block->getChildHtml('product.info.details'); ?>
+
 <?= $block->getChildHtml('related') ?>
+
 <?= $block->getChildHtml('upsell') ?>
-<?= $block->getChildHtml('review_list') ?>
-<?= $block->getChildHtml('review_form') ?>
+
+<section aria-label="<?= $escaper->escapeHtmlAttr(__('Product Reviews')) ?>">
+    <?= $block->getChildHtml('review_list') ?>
+    <?= $block->getChildHtml('review_form') ?>
+</section>
