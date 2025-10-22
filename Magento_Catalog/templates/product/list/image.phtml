@@ -8,11 +8,19 @@
 
 declare(strict_types=1);
 
+use Hyva\Theme\Model\ViewModelRegistry;
+use Hyva\Theme\ViewModel\BlockJsDependencies;
+use Hyva\Theme\ViewModel\HyvaCsp;
 use Magento\Catalog\Block\Product\Image;
 use Magento\Framework\Escaper;
 
 /** @var Image $block */
 /** @var Escaper $escaper */
+/** @var HyvaCsp $hyvaCsp */
+/** @var ViewModelRegistry $viewModels */
+
+$pageJsRegistry = $viewModels->require(BlockJsDependencies::class);
+$pageJsRegistry->setBlockTemplateDependency($block, 'Magento_Catalog::product/list/js/image.phtml');
 
 $hasLoadingAttribute = ($block->getCustomAttributes() ?: [])['loading'] ?? false;
 
@@ -26,8 +34,8 @@ $hasLoadingAttribute = ($block->getCustomAttributes() ?: [])['loading'] ?? false
     <?php if (!$hasLoadingAttribute): ?>
         loading="lazy"
     <?php endif; ?>
-    x-data=""
-    @update-gallery-<?= (int)$block->getProductId() ?>.window="$root.src = $event.detail"
+    x-data="initProductItemImage"
+    @update-gallery-<?= (int)$block->getProductId() ?>.window="updateImage"
     <?php foreach ($block->getCustomAttributes() as $name => $value): ?>
         <?= $escaper->escapeHtmlAttr($name) ?>="<?= $escaper->escapeHtmlAttr($value) ?>"
     <?php endforeach; ?>
