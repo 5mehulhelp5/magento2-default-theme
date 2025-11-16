@@ -169,7 +169,6 @@ $viewModels->require(BlockJsDependencies::class)->setBlockTemplateDependency($bl
                 <a
                     href="<?= $escaper->escapeUrl($product->getProductUrl()) ?>"
                     class="w-auto btn btn-primary justify-center text-sm <?= $viewIsGrid ? 'mr-auto' : 'mr-auto md:mr-0' ?>"
-                    title="<?= $escaper->escapeHtmlAttr(__('Configure %1 on the product page', $productName)) ?>"
                     aria-label="<?= $escaper->escapeHtmlAttr(__('Configure %1 on the product page', $productName)) ?>"
                 >
                     <?= $lucideIcons->pencilHtml('', 24, 24, ['aria-hidden' => 'true']) ?>
@@ -180,7 +179,6 @@ $viewModels->require(BlockJsDependencies::class)->setBlockTemplateDependency($bl
                 <?php else: ?>
                 <button
                     class="w-auto btn btn-primary justify-center text-sm <?= $viewIsGrid ? 'mr-auto' : 'mr-auto md:mr-0' ?>"
-                    title="<?= $escaper->escapeHtmlAttr(__('Add to Cart') . ' ' . $productName) ?>"
                     aria-label="<?= $escaper->escapeHtmlAttr(__('Add to Cart') . ' ' . $productName) ?>"
                     data-addto="cart"
                 >
