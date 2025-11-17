@@ -169,9 +169,6 @@ products(filter: { sku: { in: $skus } }) {
             renderRecentlyViewedProducts(products) {
                 this.products = products;
                 this.loading = false;
-                if (config.isSlider) {
-                    this.$nextTick(() => this.calcPageSize());
-                }
             },
             addToWishlist() {
                 const productId = this.product.id;
