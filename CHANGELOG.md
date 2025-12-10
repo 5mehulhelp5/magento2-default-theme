@@ -24,7 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
--   **Fixed Missing qoutes in Magento_Customer/templates/form/newsletter.phtml**  
+-   **Fixed Missing quotes in Magento_Customer/templates/form/newsletter.phtml**  
     For more information, please refer to [issue #1256](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1256).
 
     Many thanks to Joshua van Gelder (Mooore) for the contribution!
