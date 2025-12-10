@@ -6,13 +6,54 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-[Unreleased]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme-csp/-/compare/1.4.1...main
+[Unreleased]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.4.2...main
 
-## [1.4.1 CSP] - 2025-11-17
+## [1.4.2] - 2025-12-10
 
-[1.4.1 CSP]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme-csp/-/compare/1.4.0...1.4.1
+[1.4.2]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.4.1...1.4.2
 
-Same as default theme
+### Added
+
+-   **Add new CSS Component input-group**  
+    This CSS component makes it easier to bundle form fields together (e.g. a search field).
+
+    For more information, please refer to [issue #1250](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1250).
+
+-   **Added support for closing menus cart and customer menu**  
+    For more information, please refer to [merge request #1404](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1404).
+
+### Changed
+
+-   **Fixed Missing qoutes in Magento_Customer/templates/form/newsletter.phtml**  
+    For more information, please refer to [issue #1256](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1256).
+
+    Many thanks to Joshua van Gelder (Mooore) for the contribution!
+
+-   **Fix missing setFocusTo in CPS version of Theme**  
+    For more information, please refer to [issue #1249](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1249).
+
+-   **Fix slider not defined error, when the pager is not enabled**  
+    For more information, please refer to [issue #1247](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1247).
+
+-   **Fix form switch in RTL**  
+    For more information, please refer to [issue #1258](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1258).
+
+    Many thanks to Denis Belevtsov (StudioRaz) for the contribution!
+
+-   **Fix tw3 class with tw4 class for the gallery fullscreen**  
+    For more information, please refer to [merge request #1402](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1402).
+
+-   **Fix PLP gallery only updates the last item**  
+    For more information, please refer to [merge request #1401](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1401).
+
+-   **Fix customer login redirect to logout success page**  
+    For more information, please refer to [issue #1158](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1158).
+
+    Many thanks to Olexandr Khokhlov (Perspective Magento Team) for the contribution!
+
+### Removed
+
+-   Nothing removed
 
 ## [1.4.1] - 2025-11-17
 
@@ -64,12 +105,6 @@ Same as default theme
 
 -   **Remove Extra product name in minicart for the 1.4**  
     For more information, please refer to [merge request #1384](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1384).
-
-## [1.4.0 CSP] - 2025-11-10
-
-[1.4.0 CSP]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme-csp/-/compare/1.3.20...1.4.0
-
-Same as default theme
 
 ## [1.4.0] - 2025-11-10
 
@@ -180,12 +215,6 @@ Same as default theme
 -   **Removed dependency on the reset-theme**
     For more information, please refer to the [upgrade docs](./upgrading-to-1-4-0.md).
 
-## [1.3.20 CSP] - 2025-11-04
-
-[1.3.20 CSP]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme-csp/-/compare/1.3.19...1.3.20
-
-Same as default theme
-
 ## [1.3.20] - 2025-11-04
 
 [1.3.20]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.3.19...1.3.20
@@ -202,12 +231,6 @@ Same as default theme
 
 -   Nothing removed
 
-## [1.3.19 CSP] - 2025-11-04
-
-[1.3.19 CSP]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme-csp/-/compare/1.3.18...1.3.19
-
-Same as default theme
-
 ## [1.3.19] - 2025-11-04
 
 [1.3.19]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.3.18...1.3.19
@@ -223,12 +246,6 @@ Same as default theme
 ### Removed
 
 -   Nothing removed
-
-## [1.3.18 CSP] - 2025-11-03
-
-[1.3.18 CSP]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme-csp/-/compare/1.3.17...1.3.18
-
-Same as default theme
 
 ## [1.3.18] - 2025-11-03
 
@@ -264,53 +281,11 @@ Same as default theme
 
 -   Nothing removed
 
-## [1.3.17 CSP] - 2025-09-02
-
-[1.3.17 CSP]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme-csp/-/compare/1.3.16...1.3.17
-
-### Added
-
--   Nothing added
-
-### Changed
-
--   **Wrong old price calculation on the product detail page**  
-  This fixes an older but very critical issue for the price rending in the CSP theme, where the calculation did not work, do one price value was being rendered as a string.
-
-    For more information, please refer to [issue #17](https://gitlab.hyva.io/hyva-themes/magento2-default-theme-csp/-/issues/17).
-
-### Removed
-
--   Nothing removed
-
 ## [1.3.17] - 2025-09-02
 
 [1.3.17]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.3.16...1.3.17
 
 _This release updates the Theme Module dependencies. No functional changes are included._
-
-## [1.3.16 CSP] - 2025-08-19
-
-[1.3.16 CSP]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme-csp/-/compare/1.3.15...1.3.16
-
-### Added
-
--   Nothing added
-
-### Changed
-
--   **Fix CSP Compatibility Tweaks**  
-    The previous release introduced several new CSP compatibility issues and revealed additional related problems.
-    This merge request addresses and resolves all identified CSP issues.
-
-    For more information, please refer to [merge request #29](https://gitlab.hyva.io/hyva-themes/magento2-default-theme-csp/-/merge_requests/29).
-
--   **Fix CSP issues on `authorization.phtml` for customer logout**  
-    For more information, please refer to [issue #12](https://gitlab.hyva.io/hyva-themes/magento2-default-theme-csp/-/issues/12).
-
-### Removed
-
--   Nothing removed
 
 ## [1.3.16] - 2025-08-19
 
@@ -369,20 +344,11 @@ _This release updates the Theme Module dependencies. No functional changes are i
 
     Many thanks to Valeriia Prokhina (Perspective Magento Team) for the contribution!
 
--   **Fix CLS in customer login page**  
-    For more information, please refer to [CSP issue #16](https://gitlab.hyva.io/hyva-themes/magento2-default-theme-csp/-/issues/16)
-
     Many thanks to Christoph Hendreich (In Session) for the contribution!
 
 ### Removed
 
 -   Nothing removed
-
-## [1.3.15 CSP] - 2025-07-03
-
-[1.3.15 CSP]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme-csp/-/compare/1.3.14...1.3.15
-
-Same as the 1.3.5 default-theme release.
 
 ## [1.3.15] - 2025-07-03
 
@@ -468,26 +434,6 @@ Same as the 1.3.5 default-theme release.
 
     Many thanks to Hitesh Koshti (Evrig) for the contribution!  
 
-## [1.3.14 CSP] - 2025-05-26
-
-[1.3.14 CSP]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme-csp/-/compare/1.3.13...1.3.14
-
-### Added
-
--   Nothing added
-
-### Changed
-
--   **Replace property reference with function in Gift Message**
-    For more information, please refer to [merge request #20](https://gitlab.hyva.io/hyva-themes/magento2-default-theme-csp/-/merge_requests/20).
-
--   **In the module hyva.createBooleanObject() the name is no longer a method**
-    For more information, please refer to [issue #9](https://gitlab.hyva.io/hyva-themes/magento2-default-theme-csp/-/issues/9).
-
-### Removed
-
--   Nothing removed
-
 ## [1.3.14] - 2025-05-26
 
 [1.3.14]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.3.13...1.3.14
@@ -545,9 +491,9 @@ Same as the 1.3.5 default-theme release.
 
     Many thanks to Thomas Hauschild (e3n) for the contribution!
 
-## [1.3.13 CSP] - 2025-04-22
+## [1.3.13] - 2025-04-22
 
-[1.3.13 CSP]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme-csp/-/compare/1.3.12...1.3.13
+[1.3.13]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.3.12...1.3.13
 
 ### Added
 
@@ -587,13 +533,6 @@ Same as the 1.3.5 default-theme release.
 -   **Fix missing list semantics**
     For more information, please refer to [issue #1085](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1085).
 
--   **Fix missing refactoring for CSP compatibility**
-    For more information, please refer to [issue #10](https://gitlab.hyva.io/hyva-themes/magento2-default-theme-csp/-/issues/10).
-
--   **Move generic inline scripts to global sections to reduce the number of scripts on one page**
-    With CSP on one page where these are loaded more then once this will add up to the sha256 headers while not adding anything anymore because they're generic now.
-    For more information, please refer to [issue #5](https://gitlab.hyva.io/hyva-themes/magento2-default-theme-csp/-/issues/5).
-
 ### Removed
 
 -   **Cleanup form styles**
@@ -610,9 +549,9 @@ Same as the 1.3.5 default-theme release.
 
     Thanks to Chirag Matholiya (Evrig) for contributing.
 
-## [1.3.12 CSP] - 2025-03-17
+## [1.3.12] - 2025-03-17
 
-[1.3.12 CSP]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme-csp/-/compare/1.3.11...1.3.12
+[1.3.12]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.3.11...1.3.12
 
 ### Added
 
@@ -622,29 +561,6 @@ Same as the 1.3.5 default-theme release.
 
 -   **Fix PageBuilder slider renders empty slide if a lazy-loading background image is configured**
     For more information, please refer to the [default-theme issue #1145](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1145).
-
--   **Fix missing data attribute for configurable dropdown swatch attributes**
-    For more information, please refer to [issue #1](https://gitlab.hyva.io/hyva-themes/magento2-default-theme-csp/-/issues/1).
-
-### Removed
-
--   Nothing removed
-
-## [1.3.11 CSP] - 2025-03-12
-
-[1.3.11 CSP]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme-csp/-/compare/5384f969030b1fbdd355a79e8872440b0af22f9c...1.3.11
-
-### Added
-
--   Nothing added
-
-### Changed
-
--   **Implement Alpine CSP compatibility**
-    The changes are too many to list individually. Please refer to the [Hyvä developer CSP documentation](https://docs.hyva.io/hyva-themes/writing-code/csp/index.html) for details.
-
--   **Make theme work without `unsafe-inline` content security policy**
-    The changes are too many to list individually. Please refer to the [Hyvä developer CSP documentation](https://docs.hyva.io/hyva-themes/writing-code/csp/index.html) for details.
 
 ### Removed
 
