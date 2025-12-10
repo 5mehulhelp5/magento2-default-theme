@@ -29,7 +29,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
     Many thanks to Joshua van Gelder (Mooore) for the contribution!
 
--   **Fix missing setFocusTo in CPS version of Theme**  
+-   **Fix missing setFocusTo in CSP version of Theme**  
     For more information, please refer to [issue #1249](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1249).
 
 -   **Fix slider not defined error, when the pager is not enabled**  
