@@ -49,7 +49,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 -   **Fix customer login redirect to logout success page**  
     For more information, please refer to [issue #1158](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1158).
 
-    Many thanks to Olexandr Khokhlov (Perspective Magento Team) for the contribution!
+    Many thanks to Olexandr Khokhlov (Perspective) for the contribution!
 
 -   **Fix Cart/Minicart Missing Tax Styling & Data-label**  
     For more information, please refer to [issue #1251](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1251).
@@ -124,7 +124,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 -   **Add support for 'Swatches per Product' config setting**  
     For more information, please refer to [issue #1211](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1211)
 
-    Many thanks to Andrei Pavlikov (Perspective Magento Team) for the contribution!
+    Many thanks to Andrei Pavlikov (Perspective) for the contribution!
 
 -   **Add AlpineJs based HTML Dialog to the Header Mobile Menu and Minicart**  
     For more information, please refer to [merge request #1358](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1358)
@@ -213,7 +213,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 -   **Removed the scroll to review function summary short**  
     For more information, please refer to [issue #814](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/814)
 
-    Many thanks to Ivan Tarkovych (Perspective Magento Team) for the contribution!
+    Many thanks to Ivan Tarkovych (Perspective) for the contribution!
 
 -   **Removed dependency on the reset-theme**
     For more information, please refer to the [upgrade docs](./upgrading-to-1-4-0.md).
@@ -345,7 +345,7 @@ _This release updates the Theme Module dependencies. No functional changes are i
 -   **Fix Correct `for` attribute in `<label>` for customizable options**  
     For more information, please refer to [issue #1132](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1132)
 
-    Many thanks to Valeriia Prokhina (Perspective Magento Team) for the contribution!
+    Many thanks to Valeriia Prokhina (Perspective) for the contribution!
 
     Many thanks to Christoph Hendreich (In Session) for the contribution!
 
@@ -381,7 +381,7 @@ _This release updates the Theme Module dependencies. No functional changes are i
 -   **Add support for "Only X left" threshold**  
     For more information, please refer to [issue #1033](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1033)
 
-    Many thanks to Oleksii Rozhnenko (Perspective Magento Team) for the contribution!
+    Many thanks to Oleksii Rozhnenko (Perspective) for the contribution!
 
 ### Changed
 
@@ -700,7 +700,7 @@ _This release updates the Theme Module dependencies. No functional changes are i
 
     For more information, please refer to [issue #692](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/692).
 
-    Many thanks to Andrei Pavlikov (Perspective Magento Team) for the contribution!
+    Many thanks to Andrei Pavlikov (Perspective) for the contribution!
 
 -   **Fix search and account menu not closing when opening the mini cart**
 
@@ -802,25 +802,25 @@ _This release updates the Theme Module dependencies. No functional changes are i
 
     For more information, please refer to [issue #901](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/901).
 
-    Many thanks to Andrei Pavlikov (Perspective Magento Team) for the contribution!
+    Many thanks to Andrei Pavlikov (Perspective) for the contribution!
 
 -   **Remove extra spacing from Fullscreen Gallery thumbnails when it has slider buttons on mobile**
 
     For more information, please refer to [issue #1039](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1039).
 
-    Many thanks to Viktor Yakaba (Perspective Magento Team) for the contribution!
+    Many thanks to Viktor Yakaba (Perspective) for the contribution!
 
 -   **Add all products to configurable dropdown and disable out-of-stock items**
 
     For more information, please refer to [issue #919](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/919).
 
-    Many thanks to Ivan Tarkovych (Perspective Magento Team) for the contribution!
+    Many thanks to Ivan Tarkovych (Perspective) for the contribution!
 
 -   **Properly hide products in mini-cart with "Not Visible Individually" property**
 
     For more information, please refer to [merge request #1161](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1161).
 
-    Many thanks to Oleksii Rozhnenko (Perspective Magento Team) for the contribution!
+    Many thanks to Oleksii Rozhnenko (Perspective) for the contribution!
 
 -   **Fix date picker focus trap and add keyboard handling**
 
@@ -1149,7 +1149,7 @@ _This release updates the Theme Module dependencies. No functional changes are i
 -   **Add the number of items on the wishlist beside the menu link**  
     For details, please refer to [issue #832](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/832).
 
-    Many thanks to Vita Samohina (Perspective Magento Team) for the contribution!
+    Many thanks to Vita Samohina (Perspective) for the contribution!
 
 -   **Add missing missing focus and hover styles to header icons**  
     For details, please refer to [merge request #1016](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1016).
@@ -1342,7 +1342,7 @@ _This release updates the Theme Module dependencies. No functional changes are i
 
     For details, please refer to [issue #835](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/835).
 
-    Many thanks to Vita Samohina (Perspective Magento Team) for the contribution!
+    Many thanks to Vita Samohina (Perspective) for the contribution!
 
 -   **Add missing aria-label on the cookie notices section**
 
@@ -1364,7 +1364,7 @@ _This release updates the Theme Module dependencies. No functional changes are i
 
     For details, please refer to [merge request #962](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/962).
 
-    Many thanks to Ivan Martsii (Perspective Magento Team) for the contribution!
+    Many thanks to Ivan Martsii (Perspective) for the contribution!
 
 -   ***Fix textarea in share wishlist causes overflow on mobile**
 
@@ -1474,7 +1474,7 @@ _This release updates the Theme Module dependencies. No functional changes are i
 
     For more information, please refer to [issue #640](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/640).
 
-    Many thanks to Vita Samohina (Perspective Magento Team) for the contribution!
+    Many thanks to Vita Samohina (Perspective) for the contribution!
 
 -   **Improve A11Y for PDP info attributes**
 
@@ -1494,7 +1494,7 @@ _This release updates the Theme Module dependencies. No functional changes are i
 
     For more information, please refer to [issue #642](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/642).
 
-    Many thanks to Ivan Tarkovych (Perspective Magento Team) for the contribution!
+    Many thanks to Ivan Tarkovych (Perspective) for the contribution!
 
 -   **Fix issue with catalog price display both incl + excl tax and configurable products**
 
@@ -1667,13 +1667,13 @@ _This release updates the Theme Module dependencies. No functional changes are i
 
     For more information, please refer to [issue #836](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/836).
 
-    Many thanks to Viktor Yakaba (Perspective Magento Team) for the contribution!
+    Many thanks to Viktor Yakaba (Perspective) for the contribution!
 
 -   **Fix: layered navigation on 1column page layouts hidden**
 
     For more information, please refer to [issue #678](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/678).
 
-    Many thanks to Ivan Matsii (Perspective Magento Team) for the contribution!
+    Many thanks to Ivan Matsii (Perspective) for the contribution!
 
 -   **Fix: keyboard navigation on desktop menu ESC focusses mini cart button**
 
@@ -2099,7 +2099,7 @@ Acronyms:
 
     For more information, please refer to [issue #678](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/678).
 
-    Many thanks to Ivan Matsii (Perspective Magento Team) for the contribution!
+    Many thanks to Ivan Matsii (Perspective) for the contribution!
 
 ### Removed
 
