@@ -5,8 +5,8 @@
   "type": "module",
   "dependencies": {
     "@hyva-themes/hyva-modules": "^1.2.4",
-    "@tailwindcss/cli": "^4.1.12",
-    "tailwindcss": "^4.1.15"
+    "@tailwindcss/cli": "^4.1.17",
+    "tailwindcss": "^4.1.17"
   },
   "scripts": {
     "start": "npm run watch",
