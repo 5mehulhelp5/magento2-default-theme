@@ -7,20 +7,20 @@
 
 use Hyva\Theme\Model\ViewModelRegistry;
 use Hyva\Theme\ViewModel\HeroiconsOutline;
+use Hyva\Theme\ViewModel\Customer\CustomerAddress;
 use Magento\Customer\Block\Address\Grid;
-use Magento\Customer\Helper\Address as AddressHelper;
 use Magento\Framework\Escaper;
 
 /** @var Grid $block */
 /** @var Escaper $escaper */
 /** @var ViewModelRegistry $viewModels */
+/** @var CustomerAddress $customerAddress */
 
 /** @var HeroiconsOutline $heroicons */
 $heroicons = $viewModels->require(HeroiconsOutline::class);
 
-$addressHelper = $this->helper(AddressHelper::class);
-$showCompany = $addressHelper->isAttributeVisible('company');
-$gridColsClass = $showCompany ? 'grid-cols-3 lg:grid-cols-6' : 'grid-cols-2 lg:grid-cols-5';
+$customerAddress = $viewModels->require(CustomerAddress::class);
+$showCompany = $customerAddress->isAttributeVisible('company');
 ?>
 
 <div class="block block-addresses-list">
@@ -29,7 +29,7 @@ $gridColsClass = $showCompany ? 'grid-cols-3 lg:grid-cols-6' : 'grid-cols-2 lg:g
     </div>
     <div class="block-content" x-data="initAddresses()">
         <?php if ($additionalAddresses = $block->getAdditionalAddresses()): ?>
-            <div class="card grid my-6 <?= $escaper->escapeHtmlAttr($gridColsClass); ?>">
+            <div class="card grid my-6 <?= $escaper->escapeHtmlAttr($showCompany ? 'grid-cols-3 lg:grid-cols-6' : 'grid-cols-2 lg:grid-cols-5'); ?>">
                 <?php if ($showCompany): ?>
                 <div class="text-sm p-2">
                     <?= $escaper->escapeHtml(__('Company')) ?>
