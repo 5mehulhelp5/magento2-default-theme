@@ -54,6 +54,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
     Many thanks to Finn Reinhardt (Basecom) for the contribution!
 
+-   **Optimize Cart item actions to 1 script, same as seen in the CSP theme**  
+    For more information, please refer to [issue #1291](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1291).
+
+-   **Make the View Transition from the Product List to the Gallery optional and configurable**  
+    For more information, please refer to [issue ##1286](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/#1286).
+
 ### Removed
 
 -   Nothing Removed
