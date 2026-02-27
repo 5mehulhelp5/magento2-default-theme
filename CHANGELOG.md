@@ -91,6 +91,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
     For more information, please refer to [issue #1293](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1293).
 
+-   **Fix cart drawer always toggling instead of using isOpen state**  
+    For more information, please refer to [merge request #1463](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1463).
+
+    Many thanks to Finn Reinhardt (Basecom) for the contribution!
+
 ### Removed
 
 -   Nothing Removed
