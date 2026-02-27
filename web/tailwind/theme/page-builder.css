@@ -210,6 +210,8 @@ div {
 
 /* Banner and Slider */
 :is([data-content-type="banner"], [data-content-type="slide"]) {
+    --pagebuilder-overlay-mx: 0;
+
     .pagebuilder-overlay {
         max-inline-size: var(--container-lg);
         margin-inline: var(--pagebuilder-overlay-mx);
