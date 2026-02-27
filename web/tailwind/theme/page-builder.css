@@ -110,12 +110,12 @@ body:where(:not([class*="-full-width"])) {
 
 /* Text */
 [data-content-type="text"] {
-    @apply break-words;
+    overflow-wrap: break-word;
 }
 
 /* Heading */
 [data-content-type="heading"] {
-    @apply break-words;
+    overflow-wrap: break-word;
 }
 
 /* Buttons/Button Item */
@@ -161,7 +161,7 @@ div {
 
 /* HTML Code */
 [data-content-type="html"] {
-    @apply break-words;
+    overflow-wrap: break-word;
 }
 
 /**
@@ -184,7 +184,7 @@ div {
     }
 
     figcaption {
-        @apply break-words;
+        overflow-wrap: break-word;
     }
 }
 
@@ -222,7 +222,7 @@ div {
     }
 
     .pagebuilder-banner-wrapper {
-        @apply break-words;
+        overflow-wrap: break-word;
         background-clip: padding-box;
         border-radius: inherit;
         background-attachment: scroll !important;
