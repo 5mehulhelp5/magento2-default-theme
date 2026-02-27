@@ -85,6 +85,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 -   **Optimize Product Selection Lookup Performance**  
     For more information, please refer to [issue #1292](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1292).
 
+-   **Use System Preset for Scrollbar Color**
+    The `--scrollthumb-color` CSS variable is now unset by default, allowing the scrollbar thumb to inherit the operating system's native style.
+    To apply a custom scrollbar color, set this variable to your desired value.
+
+    For more information, please refer to [issue #1293](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1293).
+
 ### Removed
 
 -   Nothing Removed
