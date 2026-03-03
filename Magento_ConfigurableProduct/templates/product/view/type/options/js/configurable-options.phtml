@@ -48,7 +48,12 @@ $currentProduct = $viewModels->require(CurrentProduct::class);
                             this.changeOption(attributeId, value + '');
                         }
                     }
-                    this.preselectQuerystringItems();
+                    <?php if ($currentProduct->exists()): ?>
+                    if (this.productId === '<?= (int) $currentProduct->get()->getEntityId() ?>') {
+                        this.preselectQuerystringItems();
+                        this.preselectLocationHashItems();
+                    }
+                    <?php endif; ?>
                 });
             },
             productIndex: 0,
@@ -258,6 +263,7 @@ $currentProduct = $viewModels->require(CurrentProduct::class);
                 }, []);
             },
             changeOption(attributeId, value) {
+                console.log('changeOption was called with attributeId ', attributeId, ' and value ', value);
                 if (value === '') {
                     this.selectedValues = this.removeAttrFromSelection(this.selectedValues, attributeId)
                 } else if (value && this.getAllowedAttributeOptions(attributeId).find(option => option.id === value)) {
@@ -354,9 +360,16 @@ $currentProduct = $viewModels->require(CurrentProduct::class);
                 const urlQueryParams = new URLSearchParams(window.location.search.replace('?',''));
                 this.preselectItemsBasedOnLocation(attribute => urlQueryParams.get(attribute.code));
             },
+            preselectLocationHashItems() {
+                console.log('was called')
+                // pre-select option like #144=167
+                const urlHashParams = new URLSearchParams(window.location.hash.replace('#',''));
+                this.preselectItemsBasedOnLocation(attribute => urlHashParams.get(attribute.id));
+            },
             preselectItemsBasedOnLocation(getLocationValue) {
                 Object.values(this.optionConfig.attributes).map(attribute => {
                     const v = getLocationValue(attribute);
+                    console.log('v value ', v);
                     v && this.changeOption(attribute.id, v)
                 });
             }
