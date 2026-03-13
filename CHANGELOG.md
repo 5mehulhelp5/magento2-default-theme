@@ -27,6 +27,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 -   **Fix issue with related product for configured product in wishlist**  
     For more information, please refer to [issue #1169](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1169).
 
+    Many thanks to Nata Bratchykova (Perspective) for the contribution!
+
 ### Removed
 
 -   Nothing Removed
