@@ -15,17 +15,16 @@
     }
 
     .card-interactive {
-        @variant hover {
-            @apply card-interactive-active;
+        @media (hover: hover) {
+            &:hover {
+                --card-stroke: #0000;
+                box-shadow: var(--shadow-lg);
+            }
         }
 
-        @variant focus-within {
-            @apply card-interactive-active;
+        &:focus-within {
+            --card-stroke: #0000;
+            box-shadow: var(--shadow-lg);
         }
     }
-}
-
-@utility card-interactive-active {
-    --card-stroke: #0000;
-    box-shadow: var(--shadow-lg);
 }
