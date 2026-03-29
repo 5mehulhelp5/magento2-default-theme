@@ -51,6 +51,7 @@ build:
   parallel:
     matrix:
       - CI_IMAGE_TAG: ['2.4.8-p4']
+        HYVA_THEME_REF: ['main']
 
 test:integration:
   extends: .test:integration
@@ -59,6 +60,7 @@ test:integration:
       parallel:
         matrix:
           - CI_IMAGE_TAG: ['2.4.8-p4']
+            HYVA_THEME_REF: ['main']
     - job: static:lint
       optional: true
     - job: static:phpcs
@@ -70,6 +72,7 @@ test:integration:
   parallel:
     matrix:
       - CI_IMAGE_TAG: ['2.4.8-p4']
+        HYVA_THEME_REF: ['main']
 
 test:playwright:
   extends: .test:playwright
@@ -78,6 +81,7 @@ test:playwright:
       parallel:
         matrix:
           - CI_IMAGE_TAG: ['2.4.8-p4']
+            HYVA_THEME_REF: ['main']
     - job: static:lint
       optional: true
     - job: static:phpcs
@@ -89,3 +93,5 @@ test:playwright:
   parallel:
     matrix:
       - CI_IMAGE_TAG: ['2.4.8-p4']
+        HYVA_THEME_REF: 'main'
+        HYVA_PLAYWRIGHT_REF: 'main'
