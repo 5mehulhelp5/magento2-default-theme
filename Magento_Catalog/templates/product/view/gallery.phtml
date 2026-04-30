@@ -176,7 +176,7 @@ $captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-black/50 te
                 >
                     <button
                         type="button"
-                        class="group stack w-full p-0 -outline-offset-2"
+                        class="group grid *:[grid-area:1/1] w-full p-0 -outline-offset-2"
                         data-media-type="<?= $escaper->escapeHtmlAttr($img->getData('media_type')) ?>"
                         data-img-src="<?= $escaper->escapeUrl($media->getImageUrl($img->getData('large_image_url'))) ?>"
                         data-video-src="<?= $escaper->escapeUrl($img->getData('video_url')) ?>"
@@ -214,7 +214,7 @@ $captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-black/50 te
                 >
                     <button
                         type="button"
-                        class="group stack w-full p-0 -outline-offset-1"
+                        class="group grid *:[grid-area:1/1] w-full p-0 -outline-offset-1"
                         :data-img-src="image.full"
                         :data-video-src="image.videoUrl"
                         :data-media-type="image.type"
