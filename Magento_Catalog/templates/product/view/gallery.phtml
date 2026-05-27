@@ -57,15 +57,14 @@ $mediumWidth = (int) $block->getImageAttribute('product_page_image_medium', 'wid
 $mediumHeight = (int) $block->getImageAttribute('product_page_image_medium', 'height', 700);
 
 // Config
-$videoLoop = $storeConfig->getStoreConfig('catalog/product_video/video_auto_restart') ?? false;
-$appendOnReceive = !$usePlaceholder && $block->getVar('gallery_switch_strategy', 'Magento_ConfigurableProduct') === 'append';
-$useLoop = $block->getVar('gallery/loop', 'Magento_Catalog') ?? true;
-$showCaption = $block->getVar('gallery/caption', 'Magento_Catalog') ?? true;
+$videoLoop = (bool) $storeConfig->getStoreConfig('catalog/product_video/video_auto_restart') ?? false;
+$replaceOnReceive = $usePlaceholder || $block->getVar('gallery_switch_strategy', 'Magento_ConfigurableProduct') !== 'append';
+$useLoop = (bool) $block->getVar('gallery/loop', 'Magento_Catalog') ?? true;
+$showCaption = (bool) $block->getVar('gallery/caption', 'Magento_Catalog') ?? true;
 $pagerStyle = $block->getVar('gallery/pager', 'Magento_Catalog') ?: 'thumbs';
 $pagerDir = $block->getVar('gallery/pagerdir', 'Magento_Catalog') ?: 'vertical';
 $navStyle = $block->getVar('gallery/nav', 'Magento_Catalog') ?: 'end';
-$maxThumbs = (int) $block->getVar('gallery/maxthumbs', 'Magento_Catalog') ?: (round($mediumWidth / $smallWidth) / 2);
-$overflowImgUrl = ($images[(int) $maxThumbs] ?? null)?->getData('small_image_url') ?? '';
+$maxThumbs = (int) ($block->getVar('gallery/maxthumbs', 'Magento_Catalog') ?: round($mediumWidth / $smallWidth / 2));
 
 // CSS
 $cssClasses = implode(' ', array_filter([
@@ -77,7 +76,8 @@ $cssVars = implode('; ', [
     "--gallery-ratio:{$mediumWidth}/{$mediumHeight}",
     "--thumb-ratio:{$smallWidth}/{$smallHeight}",
 ]);
-$btnCssClasses = 'btn btn-secondary p-1.5 rounded-full shadow-sm bg-white/80 text-fg border-transparent disabled:border-transparent pointer-events-auto';
+$btnCssClasses = 'btn btn-secondary border-transparent p-1 rounded-full shadow-sm pointer-events-auto';
+$btnIconSize = 28;
 
 $trackCssClasses = implode(' ', array_filter([
     'flex overflow-x-auto overflow-y-clip overscroll-contain snap-both snap-mandatory',
@@ -104,7 +104,7 @@ $pagerMarkerCssClasses = 'snap-marker stack overflow-hidden '
         : 'lg:size-auto lg:rounded-md lg:p-px lg:data-[overflow]:hidden lg:aria-current:bg-primary/10 lg:aria-current:border-primary lg:aria-current:inset-ring lg:aria-current:ring-primary');
 
 $navVertical = $pagerDir === 'vertical' && $navStyle !== 'center';
-$navArrowCssClasses = $navVertical ? ' lg:rotate-90' : 'rtl:rotate-180';
+$navArrowCssClasses = $navVertical ? 'lg:rotate-90' : 'rtl:rotate-180';
 $navCssClasses = implode(' ', array_filter([
     'z-10 absolute flex gap-2',
     $navVertical ? 'lg:flex-col lg:justify-between' : '',
@@ -113,7 +113,7 @@ $navCssClasses = implode(' ', array_filter([
     $navStyle === 'center' ? 'top-1/2 -translate-y-1/2 inset-x-2 justify-between pointer-events-none' : '',
 ]));
 
-$captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-black/50 text-white max-w-2/3 text-pretty'
+$captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-gray-200/60 text-fg max-w-2/3 text-pretty'
     . ($navStyle === 'start' ? ' right-2 rtl:right-auto rtl:left-2' : ' left-2 rtl:left-auto rtl:right-2');
 ?>
 
@@ -149,7 +149,7 @@ $captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-black/50 te
                     hidden
                     x-show="showArrows"
                 >
-                    <?= $lucideIcons->chevronLeftHtml($navArrowCssClasses, 24, 24, ['aria-hidden' => 'true']); ?>
+                    <?= $lucideIcons->chevronLeftHtml($navArrowCssClasses, $btnIconSize, $btnIconSize, ['aria-hidden' => 'true']); ?>
                 </button>
 
                 <button
@@ -160,7 +160,7 @@ $captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-black/50 te
                     hidden
                     x-show="showArrows"
                 >
-                    <?= $lucideIcons->chevronRightHtml($navArrowCssClasses, 24, 24, ['aria-hidden' => 'true']); ?>
+                    <?= $lucideIcons->chevronRightHtml($navArrowCssClasses, $btnIconSize, $btnIconSize, ['aria-hidden' => 'true']); ?>
                 </button>
             </div>
         <?php endif; ?>
@@ -170,9 +170,11 @@ $captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-black/50 te
             data-track
             class="<?= $escaper->escapeHtmlAttr($trackCssClasses) ?>"
             tabindex="0"
+            @keydown.enter="openLightbox"
+            @keydown.space.prevent="openLightbox"
         >
             <?php foreach ($images as $i => $img): ?>
-                <?php $caption = ($img->getData('video_title') ?? $img->getData('label')) ?? $productName; ?>
+                <?php $caption = ($img->getData('video_title') ?? $img->getData('label')); ?>
                 <div
                     id="<?= $escaper->escapeHtmlAttr('gallery-slide-' . $i) ?>"
                     x-show="showInitImages"
@@ -190,11 +192,11 @@ $captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-black/50 te
                     >
                         <img
                             src="<?= $escaper->escapeUrl($img->getData('medium_image_url')) ?>"
-                            alt="<?= $escaper->escapeHtmlAttr($showCaption ? '' : $caption) ?>"
+                            alt="<?= $escaper->escapeHtmlAttr($showCaption ? '' : $caption ?? $productName) ?>"
                             width="<?= $escaper->escapeHtmlAttr($mediumWidth) ?>"
                             height="<?= $escaper->escapeHtmlAttr($mediumHeight) ?>"
                             loading="<?= $i === 0 ? 'eager' : 'lazy' ?>"
-                            fetchpriority="<?= $i === 0 ? 'high' : 'lazy' ?>"
+                            fetchpriority="<?= $i === 0 ? 'high' : 'auto' ?>"
                             <?php if ($i === 0): ?>
                                 itemprop="image"
                             <?php endif; ?>
@@ -324,8 +326,7 @@ $captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-black/50 te
                     type="button"
                     x-show="hasOverflow"
                     x-cloak
-                    @click="openLightbox"
-                    data-lightbox-all
+                    @click="openOverflowLightbox"
                     class="<?= $escaper->escapeHtmlAttr($pagerMarkerCssClasses) ?> hidden lg:stack shrink-0"
                     style="<?= $escaper->escapeHtmlAttr("width: {$smallWidth}px;height:{$smallHeight}px") ?>"
                 >
@@ -363,7 +364,7 @@ $captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-black/50 te
             class="absolute right-2 top-2 <?= $escaper->escapeHtmlAttr($btnCssClasses) ?>"
             @click="closeLightbox"
         >
-            <?= $lucideIcons->xHtml('', 24, 24, ['aria-hidden' => 'true']); ?>
+            <?= $lucideIcons->xHtml('', $btnIconSize, $btnIconSize, ['aria-hidden' => 'true']); ?>
         </button>
         <img
             x-show="lightboxIsNotVideo"
@@ -380,7 +381,7 @@ $captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-black/50 te
             referrerpolicy="strict-origin-when-cross-origin"
             allowfullscreen
         ></iframe>
-        <?php if ($navStyle && $navStyle !== 'none'): ?>
+        <?php if ($navStyle !== 'none'): ?>
             <div class="z-10 absolute flex gap-2 bottom-2 right-2 rtl:right-auto rtl:left-2
                 xl:bottom-auto xl:top-1/2 xl:-translate-y-1/2 xl:inset-x-0 xl:justify-between pointer-events-none">
                 <button
@@ -388,18 +389,20 @@ $captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-black/50 te
                     class="<?= $escaper->escapeHtmlAttr($btnCssClasses) ?>"
                     aria-label="<?= $escaper->escapeHtmlAttr(__('Previous image')) ?>"
                     @click="navigateLightboxPrev"
+                    :disabled="lightboxAtStart"
                     x-show="showArrows"
                 >
-                    <?= $lucideIcons->chevronLeftHtml('rtl:rotate-180', 24, 24, ['aria-hidden' => 'true']); ?>
+                    <?= $lucideIcons->chevronLeftHtml('rtl:rotate-180', $btnIconSize, $btnIconSize, ['aria-hidden' => 'true']); ?>
                 </button>
                 <button
                     type="button"
                     class="<?= $escaper->escapeHtmlAttr($btnCssClasses) ?>"
                     aria-label="<?= $escaper->escapeHtmlAttr(__('Next image')) ?>"
                     @click="navigateLightboxNext"
+                    :disabled="lightboxAtEnd"
                     x-show="showArrows"
                 >
-                    <?= $lucideIcons->chevronRightHtml('rtl:rotate-180', 24, 24, ['aria-hidden' => 'true']); ?>
+                    <?= $lucideIcons->chevronRightHtml('rtl:rotate-180', $btnIconSize, $btnIconSize, ['aria-hidden' => 'true']); ?>
                 </button>
             </div>
         <?php endif; ?>
@@ -409,31 +412,33 @@ $captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-black/50 te
 <script>
     function initGallery() {
         return {
-            showInitImages: true,
-            showArrows: true,
             initImages: <?= /* @noEscape */ $block->getGalleryImagesJson() ?>,
             newImages: [],
-            imageCount: <?= $escaper->escapeJs($imageCount) ?>,
-            maxImageCount: 0,
-            maxDisplay: <?= $escaper->escapeJs($maxThumbs) ?>,
-            initOverflowSrc: '<?= $escaper->escapeJs($overflowImgUrl) ?>',
-            overflowSrc: '<?= $escaper->escapeJs($overflowImgUrl) ?>',
-            lightbox: { open: false, src: '', caption: '', isVideo: false, index: -1 },
             sliderItems: {},
-            videoLoop: '<?= $escaper->escapeJs($videoLoop) ?>',
-            appendOnReceive: <?= $escaper->escapeJs($appendOnReceive ? 'true' : 'false') ?>,
+            useLoop: <?= $escaper->escapeJs($useLoop ? 'true' : 'false') ?>,
+            replaceOnReceive: <?= $escaper->escapeJs($replaceOnReceive ? 'true' : 'false') ?>,
+            showInitImages: true,
+            showArrows: true,
+            maxDisplay: <?= $escaper->escapeJs($maxThumbs) ?>,
+            maxImageCount: 0,
+            initOverflowSrc: '',
+            overflowSrc: '',
+            lightbox: { open: false, src: '', caption: '', isVideo: false, index: -1 },
+            videoLoop: <?= $escaper->escapeJs($videoLoop ? 'true' : 'false') ?>,
             init() {
                 this.maxImageCount = this.initImages.length - this.maxDisplay;
+                this.initOverflowSrc = this.initImages[this.maxDisplay]?.img || '';
+                this.overflowSrc = this.initOverflowSrc;
             },
             updateGallery(images = []) {
                 const existing = new Set(this.initImages.map(i => i.img));
                 this.newImages = images.filter(img => !existing.has(img.img));
-                if (!this.appendOnReceive) {
+                if (this.replaceOnReceive) {
                     this.showInitImages = !this.newImages.length;
                     this.showArrows = this.showInitImages || this.newImages.length > 1;
                 }
-
-                this.maxImageCount = (this.initImages.length + this.newImages.length) - this.maxDisplay;
+                const visibleInitCount = this.showInitImages ? this.initImages.length : 0;
+                this.maxImageCount = visibleInitCount + this.newImages.length - this.maxDisplay;
                 this.$nextTick(() => {
                     this.sliderItems = {};
                     const track = this.$root.querySelector('[data-track]');
@@ -451,7 +456,7 @@ $captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-black/50 te
                     });
                 });
 
-                const overflowIdx = this.maxDisplay - this.imageCount;
+                const overflowIdx = this.maxDisplay - visibleInitCount;
                 this.overflowSrc = (overflowIdx >= 0 && this.newImages[overflowIdx]?.img) || this.initOverflowSrc;
             },
             setDynSlideId() {
@@ -459,16 +464,17 @@ $captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-black/50 te
             },
             showDynMarker() {
                 const index = (this.i ?? 0) + 1;
-                return (index + this.imageCount) > this.maxDisplay;
+                const visibleInitCount = this.showInitImages ? this.initImages.length : 0;
+                return (index + visibleInitCount) > this.maxDisplay;
             },
             imgCaption() {
-                return this.image?.caption || '<?= $escaper->escapeJs($productName) ?>';
+                return this.image?.caption || '';
             },
             isVideoSlide() {
                 return this.image?.type !== 'image';
             },
             showPager() {
-                const count = (this.showInitImages ? this.imageCount : 0) + this.newImages.length;
+                const count = (this.showInitImages ? this.initImages.length : 0) + this.newImages.length;
                 return count > 1;
             },
             hasOverflow() {
@@ -476,7 +482,8 @@ $captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-black/50 te
             },
             getLightboxItems() {
                 if (!this.sliderItems.lightbox) {
-                    this.sliderItems.lightbox = Array.from(this.$root.querySelectorAll('[data-track] [data-img-src]'));
+                    const all = Array.from(this.$root.querySelectorAll('[data-track] [data-img-src]'));
+                    this.sliderItems.lightbox = this.showInitImages ? all : all.slice(this.initImages.length);
                 }
                 return this.sliderItems.lightbox;
             },
@@ -509,32 +516,41 @@ $captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-black/50 te
             lightboxIsNotVideo() {
                 return !this.lightbox.isVideo;
             },
-            openLightbox(event) {
-                const btn = event.currentTarget;
+            showLightbox(idx) {
                 const items = this.getLightboxItems();
-                const isOverflow = 'lightboxAll' in btn.dataset;
-                let idx = isOverflow ? this.maxDisplay : items.indexOf(btn);
-                if (!isOverflow && idx === -1) {
-                    idx = items.findIndex(el => el.dataset.imgSrc === btn.dataset.imgSrc)
-                }
                 const target = items[idx];
                 if (!target) return;
-
                 this.lightbox.index = idx;
                 this.setLightboxFrom(target.dataset);
                 this.lightbox.open = true;
             },
+            openLightbox() {
+                const items = this.getLightboxItems();
+                const idx = items.findIndex(el => !el.closest('[inert]'));
+                if (idx === -1) return;
+                this.showLightbox(idx);
+            },
+            openOverflowLightbox() {
+                this.showLightbox(this.maxDisplay);
+            },
             navigateLightbox(dir) {
                 const items = this.getLightboxItems();
                 if (!items.length) return;
-                this.lightbox.index = (this.lightbox.index + dir + items.length) % items.length;
-                this.setLightboxFrom(items[this.lightbox.index].dataset);
+                const next = this.lightbox.index + dir;
+                if (!this.useLoop && (next < 0 || next >= items.length)) return;
+                this.showLightbox((next + items.length) % items.length);
             },
             navigateLightboxPrev() {
                 this.navigateLightbox(-1);
             },
             navigateLightboxNext() {
                 this.navigateLightbox(1);
+            },
+            lightboxAtStart() {
+                return !this.useLoop && this.lightbox.index === 0;
+            },
+            lightboxAtEnd() {
+                return !this.useLoop && this.lightbox.index === this.getLightboxItems().length - 1;
             },
             closeLightbox() {
                 this.lightbox = { open: false, src: '', caption: '', isVideo: false, index: -1 };
