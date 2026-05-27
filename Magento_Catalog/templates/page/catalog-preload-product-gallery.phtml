@@ -8,7 +8,6 @@
 declare(strict_types=1);
 
 use Hyva\Theme\Model\ViewModelRegistry;
-use Hyva\Theme\ViewModel\Media;
 use Hyva\Theme\ViewModel\Product\Placeholder;
 use Magento\Catalog\Block\Product\View\Gallery;
 use Magento\Framework\Escaper;
@@ -16,9 +15,6 @@ use Magento\Framework\Escaper;
 /** @var Gallery $block */
 /** @var Escaper $escaper */
 /** @var ViewModelRegistry $viewModels */
-
-/** @var Media $media */
-$media = $viewModels->require(Media::class);
 
 /** @var Placeholder $placeholder */
 $placeholder = $viewModels->require(Placeholder::class);
@@ -30,11 +26,9 @@ if (!empty($images) && empty($mainImage)) {
     $mainImage = reset($images);
 }
 
-$mainImageData = $mainImage
+$mainImageSrc = $mainImage
     ? $mainImage->getData('medium_image_url')
     : $placeholder->getPlaceholderUrl('image');
-
-$mainImageSrc = $media->getImageUrl($mainImageData);
 ?>
 
 <link rel="preload" href="<?= $escaper->escapeUrl($mainImageSrc) ?>" as="image">

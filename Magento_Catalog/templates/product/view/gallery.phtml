@@ -8,7 +8,6 @@
 declare(strict_types=1);
 
 use Hyva\Theme\Model\ViewModelRegistry;
-use Hyva\Theme\ViewModel\Media;
 use Hyva\Theme\ViewModel\Product\Placeholder;
 use Hyva\Theme\ViewModel\StoreConfig;
 use Hyva\Theme\ViewModel\LucideIcons;
@@ -20,9 +19,6 @@ use Magento\Framework\Escaper;
 /** @var Gallery $block */
 /** @var ViewModelRegistry $viewModels */
 /** @var HyvaCsp $hyvaCsp */
-
-/** @var Media $media */
-$media = $viewModels->require(Media::class);
 
 /** @var Placeholder $placeholder */
 $placeholder = $viewModels->require(Placeholder::class);
@@ -176,21 +172,19 @@ $captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-black/50 te
                         type="button"
                         class="group grid *:[grid-area:1/1] w-full p-0 -outline-offset-2"
                         data-media-type="<?= $escaper->escapeHtmlAttr($img->getData('media_type')) ?>"
-                        data-img-src="<?= $escaper->escapeUrl($media->getImageUrl($img->getData('large_image_url'))) ?>"
+                        data-img-src="<?= $escaper->escapeUrl($img->getData('large_image_url')) ?>"
                         data-video-src="<?= $escaper->escapeUrl($img->getData('video_url')) ?>"
                         data-caption="<?= $escaper->escapeHtmlAttr($caption) ?>"
                         @click="openLightbox"
                     >
-                        <?= /* @noEscape */ $media->getPictureHtml(
-                            $img->getData('medium_image_url'),
-                            $mediumWidth,
-                            $mediumHeight,
-                            [
-                                'alt'     => $showCaption ? '' : $caption,
-                                'loading' => $i === 0 ? 'eager' : 'lazy',
-                                'class'   => 'aspect-(--gallery-ratio) object-scale-down',
-                            ]
-                        ) ?>
+                        <img
+                            src="<?= $escaper->escapeUrl($img->getData('medium_image_url')) ?>"
+                            alt="<?= $escaper->escapeHtmlAttr($showCaption ? '' : $caption) ?>"
+                            width="<?= $escaper->escapeHtmlAttr($mediumWidth) ?>"
+                            height="<?= $escaper->escapeHtmlAttr($mediumHeight) ?>"
+                            loading="<?= $i === 0 ? 'eager' : 'lazy' ?>"
+                            class="aspect-(--gallery-ratio) object-scale-down"
+                        >
                         <?php if ($img->getData('video_url')): ?>
                             <span class="flex justify-center items-center pointer-events-none transition-transform group-hover:scale-125">
                                 <?= $lucideIcons->playHtml('rounded p-2 bg-black/30 text-white', 48, 48, ['aria-hidden' => 'true']); ?>
@@ -267,16 +261,14 @@ $captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-black/50 te
                         x-show="showInitialImages"
                     >
                         <?php if ($pagerStyle !== 'dots'): ?>
-                            <?= /* @noEscape */ $media->getPictureHtml(
-                                $img->getData('small_image_url'),
-                                $smallWidth,
-                                $smallHeight,
-                                [
-                                    'alt'     => '',
-                                    'loading' => 'lazy',
-                                    'class'   => 'hidden lg:block lg:rounded-sm lg:aspect-(--thumb-ratio) object-cover',
-                                ]
-                            ) ?>
+                            <img
+                                src="<?= $escaper->escapeUrl($img->getData('small_image_url')) ?>"
+                                alt=""
+                                width="<?= $escaper->escapeHtmlAttr($smallWidth) ?>"
+                                height="<?= $escaper->escapeHtmlAttr($smallHeight) ?>"
+                                loading="lazy"
+                                class="hidden lg:block lg:rounded-sm lg:aspect-(--thumb-ratio) object-cover"
+                            >
                             <?php if ($img->getData('video_url')): ?>
                                 <span class="hidden absolute inset-px lg:flex justify-center items-center">
                                     <?= $lucideIcons->playHtml('rounded p-1 bg-black/30 text-white', 36, 36, ['aria-hidden' => 'true']); ?>
