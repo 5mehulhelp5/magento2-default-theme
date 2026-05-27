@@ -101,7 +101,7 @@ $pagerCssClasses = implode(' ', array_filter([
 $pagerMarkerCssClasses = 'snap-marker stack overflow-hidden '
     . ($pagerStyle === 'dots'
         ? 'lg:size-4'
-        : 'lg:size-auto lg:rounded-md lg:p-px lg:data-[overflow]:hidden lg:aria-current:bg-primary/10 lg:aria-current:border-primary lg:aria-current:inset-ring lg:aria-current:ring-primary');
+        : 'lg:size-auto lg:rounded-md lg:p-px lg:data-[overflow]:hidden lg:aria-current:bg-transparent lg:aria-current:inset-ring lg:aria-current:ring-primary');
 
 $navVertical = $pagerDir === 'vertical' && $navStyle !== 'center';
 $navArrowCssClasses = $navVertical ? 'lg:rotate-90' : 'rtl:rotate-180';
@@ -195,16 +195,16 @@ $captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-gray-200/60
                             alt="<?= $escaper->escapeHtmlAttr($showCaption ? '' : $caption ?? $productName) ?>"
                             width="<?= $escaper->escapeHtmlAttr($mediumWidth) ?>"
                             height="<?= $escaper->escapeHtmlAttr($mediumHeight) ?>"
-                            loading="<?= $i === 0 ? 'eager' : 'lazy' ?>"
-                            fetchpriority="<?= $i === 0 ? 'high' : 'auto' ?>"
+                            loading="<?= $escaper->escapeHtmlAttr($i === 0 ? 'eager' : 'lazy') ?>"
                             <?php if ($i === 0): ?>
+                                fetchpriority="high"
                                 itemprop="image"
                             <?php endif; ?>
                             class="aspect-(--gallery-ratio) object-scale-down"
                         >
                         <?php if ($img->getData('video_url')): ?>
                             <span class="flex justify-center items-center pointer-events-none transition-transform group-hover:scale-125 text-white">
-                                <?= $lucideIcons->playHtml('rounded p-2 bg-black/30', 48, 48, ['aria-hidden' => 'true']); ?>
+                                <?= $lucideIcons->playHtml('rounded-lg p-2 bg-black/30', 68, 68, ['aria-hidden' => 'true']); ?>
                             </span>
                         <?php endif; ?>
                         <?php if ($showCaption && $caption): ?>
@@ -223,7 +223,7 @@ $captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-gray-200/60
                 >
                     <button
                         type="button"
-                        class="group stack w-full p-0 -outline-offset-1"
+                        class="group stack w-full p-0 -outline-offset-2"
                         :data-img-src="image.full"
                         :data-video-src="image.videoUrl"
                         :data-media-type="image.type"
@@ -242,7 +242,7 @@ $captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-gray-200/60
                             x-show="isVideoSlide"
                             x-cloak
                         >
-                            <?= $lucideIcons->playHtml('rounded p-2 bg-black/30', 48, 48, ['aria-hidden' => 'true']); ?>
+                            <?= $lucideIcons->playHtml('rounded-lg p-2 bg-black/30', 68, 68, ['aria-hidden' => 'true']); ?>
                         </span>
                         <?php if ($showCaption): ?>
                             <span
@@ -288,8 +288,8 @@ $captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-gray-200/60
                                 class="hidden lg:block lg:rounded-sm lg:aspect-(--thumb-ratio) object-cover"
                             >
                             <?php if ($img->getData('video_url')): ?>
-                                <span class="hidden lg:flex justify-center items-center bg-black/40 text-white rounded-sm">
-                                    <?= $lucideIcons->playHtml('', 36, 36, ['aria-hidden' => 'true']); ?>
+                                <span class="hidden lg:flex justify-center items-center bg-black/30 text-white rounded-sm">
+                                    <?= $lucideIcons->playHtml('', 28, 28, ['aria-hidden' => 'true']); ?>
                                 </span>
                             <?php endif; ?>
                         <?php endif; ?>
@@ -312,10 +312,10 @@ $captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-gray-200/60
                                 class="hidden lg:block lg:rounded-sm lg:aspect-(--thumb-ratio) object-cover"
                             >
                             <span
-                                class="hidden lg:flex justify-center items-center bg-black/40 text-white rounded-sm"
+                                class="hidden lg:flex justify-center items-center bg-black/30 text-white rounded-sm"
                                 x-show="isVideoSlide"
                             >
-                                <?= $lucideIcons->playHtml('', 36, 36, ['aria-hidden' => 'true']); ?>
+                                <?= $lucideIcons->playHtml('', 28, 28, ['aria-hidden' => 'true']); ?>
                             </span>
                         <?php endif; ?>
                     </button>
@@ -329,6 +329,7 @@ $captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-gray-200/60
                     @click="openOverflowLightbox"
                     class="<?= $escaper->escapeHtmlAttr($pagerMarkerCssClasses) ?> hidden lg:stack shrink-0"
                     style="<?= $escaper->escapeHtmlAttr("width: {$smallWidth}px;height:{$smallHeight}px") ?>"
+                    tabindex="-1"
                 >
                     <img
                         :src="overflowSrc"
@@ -338,7 +339,7 @@ $captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-gray-200/60
                         height="<?= $escaper->escapeHtmlAttr($smallHeight) ?>"
                         class="aspect-(--thumb-ratio) object-cover rounded-sm"
                     >
-                    <span class="flex items-center justify-center bg-black/40 text-white font-semibold lg:rounded-sm">
+                    <span class="flex items-center justify-center bg-black/30 text-white font-semibold lg:rounded-sm">
                         <span>+</span>
                         <span x-text="maxImageCount"><?= $escaper->escapeHtml(max(0, $imageCount - $maxThumbs)) ?></span>
                     </span>
