@@ -183,6 +183,7 @@ $captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-black/50 te
                             width="<?= $escaper->escapeHtmlAttr($mediumWidth) ?>"
                             height="<?= $escaper->escapeHtmlAttr($mediumHeight) ?>"
                             loading="<?= $i === 0 ? 'eager' : 'lazy' ?>"
+                            fetchpriority="<?= $i === 0 ? 'high' : 'lazy' ?>"
                             class="aspect-(--gallery-ratio) object-scale-down"
                         >
                         <?php if ($img->getData('video_url')): ?>
