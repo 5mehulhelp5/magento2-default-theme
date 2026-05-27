@@ -97,7 +97,9 @@ $pagerCssClasses = implode(' ', array_filter([
 ]));
 
 $pagerMarkerCssClasses = 'snap-marker relative overflow-hidden '
-    . ($pagerStyle === 'dots' ? 'lg:size-4' : 'lg:size-auto lg:rounded-md lg:p-px lg:data-[overflow]:hidden');
+    . ($pagerStyle === 'dots'
+        ? 'lg:size-4'
+        : 'lg:size-auto lg:rounded-md lg:p-px lg:data-[overflow]:hidden lg:aria-current:bg-transparent lg:aria-current:border-primary lg:aria-current:inset-ring lg:aria-current:ring-primary');
 
 $navCssClasses = implode(' ', array_filter([
     'z-10 absolute flex gap-2',
