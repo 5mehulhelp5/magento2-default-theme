@@ -79,8 +79,8 @@
                 <height>700</height>
             </image>
             <image id="product_page_image_small" type="thumbnail">
-                <width>90</width>
-                <height>90</height>
+                <width>80</width>
+                <height>80</height>
             </image>
             <image id="product_swatch_image_large" type="image"/>
             <image id="product_swatch_image_medium" type="image">
@@ -100,8 +100,8 @@
                 <height>700</height>
             </image>
             <image id="product_page_more_views" type="thumbnail">
-                <width>90</width>
-                <height>90</height>
+                <width>80</width>
+                <height>80</height>
             </image>
             <image id="product_stock_alert_email_product_image" type="small_image">
                 <width>76</width>
@@ -203,6 +203,15 @@
         </var>
 
         <var name="product_image_white_borders">1</var>
+
+        <var name="gallery">
+            <var name="loop">1</var>            <!-- Enable infinite loop -->
+            <var name="caption">1</var>         <!-- Show image caption -->
+            <var name="pager">thumbs</var>      <!-- Pager style: thumbs or dots -->
+            <var name="pagerdir">vertical</var> <!-- Pager direction: vertical or horizontal -->
+            <var name="nav">end</var>           <!-- Nav arrow position: end, start or center -->
+            <var name="maxthumbs">0</var>       <!-- Max thumbnails shown, 0 falls back to auto calculation -->
+        </var>
     </vars>
     <vars module="Magento_Bundle">
         <var name="product_summary_image_size">58</var>         <!-- New Product image size used for summary block-->
