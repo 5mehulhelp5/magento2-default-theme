@@ -41,13 +41,24 @@ $swatchConfig = json_decode($jsonSwatchConfig, true);
 <?php if ($product->isSaleable() && count($attributes)): ?>
     <script>
         function initConfigurableSwatchProductOptions() {
+            const { productId, swatchOptions } = this.$root.dataset;
+            const configEl = this.$root.querySelector('script[type="application/json"]');
+            const configurableOptionsComponent = initConfigurableOptions(productId, JSON.parse(configEl.textContent));
+            const swatchOptionsComponent = initSwatchOptions(JSON.parse(swatchOptions));
+
             return Object.assign(
-                initConfigurableOptions('<?= (int) $productId ?>', <?= /* @noEscape */ $jsonConfig ?>),
-                initSwatchOptions(<?= /* @noEscape */ $jsonSwatchConfig ?>),
+                configurableOptionsComponent,
+                swatchOptionsComponent,
                 {
+                    selectedOptions: {},
                     reflectOption(event) {
-                        this.changeOption(event.target.dataset.attributeId, event.target.value);
-                    }
+                        const attributeId = event.target.dataset.attributeId;
+                        const label = event.target.dataset.optionLabel
+                            || event.target.options?.[event.target.selectedIndex]?.text
+                            || '';
+                        this.selectedOptions[attributeId] = label;
+                        this.changeOption(attributeId, event.target.value);
+                    },
                 }
             );
         }
@@ -60,38 +71,38 @@ $swatchConfig = json_decode($jsonSwatchConfig, true);
 
     <div
         x-data="initConfigurableSwatchProductOptions"
+        data-product-id="<?= (int) $productId ?>"
+        data-swatch-options="<?= $escaper->escapeHtmlAttr($block->getJsonSwatchConfig()) ?>"
         class="mb-2 relative"
     >
-        <h2 class="mb-4 text-xl font-medium text-gray-900 title-font">
-            <?= $escaper->escapeHtml(__('Product Options:')) ?>
-        </h2>
+        <script type="application/json"><?= /* @noEscape */ str_replace('</script>', '<\/script>', $jsonConfig) ?></script>
+
         <?php foreach ($attributes as $attribute): ?>
             <?php
             $attributeId = $attribute->getAttributeId();
             $productAttribute = $attribute->getProductAttribute();
-
-            $isSwatch = $swatchRendererViewModel->isSwatchAttribute($productAttribute);
             $productOptions = $attribute->getOptions();
             $attributeSwatchConfig = $swatchConfig[$attributeId] ?? [];
             ?>
-            <?php if ($isSwatch): ?>
-                <fieldset class="mt-4">
-                    <div class="grid sm:grid-cols-2 gap-2 items-center">
-                        <legend class="mb-0 text-base font-medium"><?= $escaper->escapeHtml($productAttribute->getStoreLabel()) ?></legend>
-                        <div class="flex flex-wrap gap-2">
-                            <?php foreach ($productOptions ?? [] as $option): ?>
-                                <?= /* @noEscape */ $swatchItemBlock
-                                    ->setData('option', $option)
-                                    ->setData('swatch_data', $attributeSwatchConfig[$option['value_index']] ?? null)
-                                    ->setData('attribute_id', $attributeId)
-                                    ->toHtml(); ?>
-                            <?php endforeach; ?>
-                        </div>
+            <?php if ($swatchRendererViewModel->isSwatchAttribute($productAttribute)): ?>
+                <fieldset class="mt-0 mb-4">
+                    <legend class="mb-1 text-base font-normal">
+                        <?= $escaper->escapeHtml($productAttribute->getStoreLabel()) ?>:
+                        <span class="font-medium" x-text="selectedOptions[<?= (int) $attributeId ?>]"></span>
+                    </legend>
+                    <div class="flex flex-wrap gap-2">
+                        <?php foreach ($productOptions ?? [] as $option): ?>
+                            <?= /* @noEscape */ $swatchItemBlock
+                                ->setData('option', $option)
+                                ->setData('swatch_data', $attributeSwatchConfig[$option['value_index']] ?? null)
+                                ->setData('attribute_id', $attributeId)
+                                ->toHtml(); ?>
+                        <?php endforeach; ?>
                     </div>
                 </fieldset>
             <?php else: ?>
-                <div role="group" class="grid sm:grid-cols-2 gap-2 items-center mt-4">
-                    <label class="mb-0 text-base font-medium" for="attribute<?= $escaper->escapeHtmlAttr($attributeId) ?>">
+                <div role="group" class="mb-4">
+                    <label class="mb-1 text-base font-medium" for="attribute<?= $escaper->escapeHtmlAttr($attributeId) ?>">
                         <?= $escaper->escapeHtml($productAttribute->getStoreLabel()) ?>
                     </label>
                     <select

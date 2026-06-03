@@ -42,18 +42,22 @@ $swatchConfig = json_decode($jsonSwatchConfig, true);
 ?>
 <?php if ($product->isSaleable() && count($attributes)): ?>
     <script>
-        function initConfigurableSwatchOptions_<?= (int) $productId ?>() {
+        function initConfigurableSwatchOptions() {
+            const { productId, swatchOptions, mediaCallback } = this.$root.dataset;
+            const configEl = this.$root.querySelector('script[type="application/json"]');
+            const configurableOptionsComponent = initConfigurableOptions(productId, JSON.parse(configEl.textContent));
+            const swatchOptionsComponent = initSwatchOptions(JSON.parse(swatchOptions));
+
             return Object.assign(
-                initConfigurableOptions('<?= (int) $productId ?>', <?= /* @noEscape */ $jsonConfig ?>),
-                initSwatchOptions(<?= /* @noEscape */ $jsonSwatchConfig ?>),
+                configurableOptionsComponent,
+                swatchOptionsComponent,
                 {
-                    mediaCallback: '<?= $escaper->escapeJs($escaper->escapeUrl($block->getMediaCallback())) ?>',
                     reflectOption(event) {
                         this.changeOption(event.target.dataset.attributeId, event.target.value);
                     },
                     updateGallery() {
                         if (!this.productIndex) return;
-                        fetch(`${this.mediaCallback}?product_id=${this.productIndex}&isAjax=true`, {
+                        fetch(`${mediaCallback}?product_id=${this.productIndex}&isAjax=true`, {
                             method: 'GET',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -77,16 +81,21 @@ $swatchConfig = json_decode($jsonSwatchConfig, true);
         }
 
         window.addEventListener('alpine:init', () => {
-            Alpine.data('initConfigurableSwatchOptions_<?= (int) $productId ?>', initConfigurableSwatchOptions_<?= (int) $productId ?>)
+            Alpine.data('initConfigurableSwatchOptions', initConfigurableSwatchOptions)
         }, { once: true });
     </script>
     <?php $hyvaCsp->registerInlineScript() ?>
 
     <div
-        x-data="initConfigurableSwatchOptions_<?= (int) $productId ?>"
+        x-data="initConfigurableSwatchOptions"
         x-defer="intersect"
+        data-product-id="<?= (int) $productId ?>"
+        data-swatch-options="<?= $escaper->escapeHtmlAttr($block->getJsonSwatchConfig()) ?>"
+        data-media-callback="<?= $escaper->escapeUrl($block->getMediaCallback()) ?>"
         class="mb-2 relative"
     >
+        <script type="application/json"><?= /* @noEscape */ str_replace('</script>', '<\/script>', $jsonConfig) ?></script>
+
         <?php foreach ($attributes as $attribute): ?>
             <?php
             $attributeId = $attribute->getAttributeId();
