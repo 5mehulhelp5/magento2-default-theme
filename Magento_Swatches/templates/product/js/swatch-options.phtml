@@ -140,6 +140,9 @@ use Magento\Framework\View\Element\Template;
             getTooltipLabel() {
                 return this.activeTooltipItem ? this.activeTooltipItem.label : '';
             },
+            optionIsDisabled() {
+                return !this.optionIsActive(this.$el.dataset.attributeId, this.$el.value);
+            },
             showTooltip(event) {
                 this.activeTooltipItem = JSON.parse(event.currentTarget.dataset.tooltip);
                 this.tooltipPositionElement = event.currentTarget;
