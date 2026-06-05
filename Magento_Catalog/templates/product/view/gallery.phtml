@@ -98,10 +98,10 @@ $pagerCssClasses = implode(' ', array_filter([
     $pagerStyle === 'dots' ? '' : 'lg:gap-2'
 ]));
 
-$pagerMarkerCssClasses = 'snap-marker stack overflow-hidden '
+$pagerMarkerCssClasses = 'snap-marker stack overflow-hidden inset-ring-primary '
     . ($pagerStyle === 'dots'
         ? 'lg:size-4'
-        : 'lg:size-auto lg:rounded-md lg:p-px lg:data-[overflow]:hidden lg:aria-current:bg-transparent lg:aria-current:inset-ring lg:aria-current:ring-primary');
+        : 'lg:size-auto lg:rounded-md lg:p-px lg:data-[overflow]:hidden lg:aria-current:bg-transparent lg:aria-current:inset-ring');
 
 $navVertical = $pagerDir === 'vertical' && $navStyle !== 'center';
 $navArrowCssClasses = $navVertical ? 'lg:rotate-90' : 'rtl:rotate-180';
