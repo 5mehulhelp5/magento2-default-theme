@@ -190,6 +190,15 @@
                 <width>240</width>
                 <height>300</height>
             </image>
+            <!-- Width and height define the bounding box. Images scale to fit while preserving the original aspect ratio. -->
+            <image id="swatch_image" type="swatch_image">
+                <width>30</width>
+                <height>30</height>
+            </image>
+            <image id="swatch_thumb" type="swatch_thumb">
+                <width>90</width>
+                <height>90</height>
+            </image>
         </images>
     </media>
     <vars module="Magento_Catalog">
