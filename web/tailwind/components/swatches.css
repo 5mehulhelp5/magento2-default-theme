@@ -51,9 +51,4 @@
             }
         }
     }
-
-    /* Deprecated, avoid using for upgradabilty */
-    .swatch-attribute-options {
-        @apply flex flex-row flex-wrap;
-    }
 }
