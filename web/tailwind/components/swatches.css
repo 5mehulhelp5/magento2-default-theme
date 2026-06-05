@@ -1,5 +1,5 @@
 @layer components {
-    .form-swatch {
+    .swatch-option {
         --swatch-size: --spacing(9);
         display: grid;
         place-items: center;
@@ -24,8 +24,10 @@
         &[data-swatch-type="visual"] {
             --swatch-radius: 50%;
             --swatch-px: 3px;
-            aspect-ratio: 1;
-            inline-size: var(--swatch-size);
+        }
+
+        &:hover {
+            border-color: var(--form-active-color);
         }
 
         &:has(:checked) {
@@ -40,9 +42,18 @@
         }
 
         &:has(:disabled) {
-            border-color: color-mix(in srgb, var(--form-stroke), #0000);
+            border-color: color-mix(in srgb, var(--form-stroke) 80%, #0000);
             border-style: dashed;
             cursor: not-allowed;
+
+            > :is(span, img) {
+                opacity: 80%;
+            }
         }
+    }
+
+    /* Deprecated, avoid using for upgradabilty */
+    .swatch-attribute-options {
+        @apply flex flex-row flex-wrap;
     }
 }
