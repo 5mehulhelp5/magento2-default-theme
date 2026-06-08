@@ -429,35 +429,38 @@ $captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-gray-200/60
                 this.maxImageCount = this.initImages.length - this.maxDisplay;
                 this.initOverflowSrc = this.initImages[this.maxDisplay]?.img || '';
                 this.overflowSrc = this.initOverflowSrc;
+
+                this.$watch('newImages', () => {
+                    this.updateActiveItem();
+                });
             },
             updateGallery(images = []) {
                 const existing = new Set(this.initImages.map(i => i.img));
                 this.newImages = images.filter(img => !existing.has(img.img));
+                this.sliderItems = {};
                 if (this.replaceOnReceive) {
                     this.showInitImages = !this.newImages.length;
                     this.showArrows = this.showInitImages || this.newImages.length > 1;
                 }
                 const visibleInitCount = this.showInitImages ? this.initImages.length : 0;
                 this.maxImageCount = visibleInitCount + this.newImages.length - this.maxDisplay;
-                this.$nextTick(() => {
-                    this.sliderItems = {};
-                    const track = this.$root.querySelector('[data-track]');
-                    if (!track) return;
-                    const slide = this.newImages.length
-                        ? document.getElementById('gallery-slide-dyn-0')
-                        : track.firstElementChild;
-                    if (!slide) return;
-                    const trackRect = track.getBoundingClientRect();
-                    const slideRect = slide.getBoundingClientRect();
-                    track.scrollTo({
-                        left: slideRect.left - trackRect.left + track.scrollLeft,
-                        top: slideRect.top - trackRect.top + track.scrollTop,
-                        behavior: 'instant',
-                    });
-                });
-
                 const overflowIdx = this.maxDisplay - visibleInitCount;
                 this.overflowSrc = (overflowIdx >= 0 && this.newImages[overflowIdx]?.img) || this.initOverflowSrc;
+            },
+            updateActiveItem() {
+                const track = this.$root.querySelector('[data-track]');
+                if (!track) return;
+                const slide = this.newImages.length > 0
+                    ? document.getElementById('gallery-slide-dyn-0')
+                    : track.firstElementChild;
+                if (!slide) return;
+                const trackRect = track.getBoundingClientRect();
+                const slideRect = slide.getBoundingClientRect();
+                track.scrollTo({
+                    left: slideRect.left - trackRect.left + track.scrollLeft,
+                    top: slideRect.top - trackRect.top + track.scrollTop,
+                    behavior: 'instant',
+                });
             },
             setDynSlideId() {
                 return 'gallery-slide-dyn-' + this.i;
