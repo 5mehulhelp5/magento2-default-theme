@@ -52,7 +52,8 @@ $swatchConfig = json_decode($jsonSwatchConfig, true);
                 configurableOptionsComponent,
                 swatchOptionsComponent,
                 {
-                    initOptions() {
+                    init() {
+                        this.baseInit();
                         this.preselectQuerystringItems();
                         this.applyCheckedState();
                     },
@@ -89,7 +90,6 @@ $swatchConfig = json_decode($jsonSwatchConfig, true);
 
     <div
         x-data="initConfigurableSwatchOptions"
-        x-bind="initOptions"
         x-defer="intersect"
         data-product-id="<?= (int) $productId ?>"
         data-media-callback="<?= $escaper->escapeUrl($block->getMediaCallback()) ?>"

@@ -42,6 +42,9 @@ $currentProduct = $viewModels->require(CurrentProduct::class);
             selectedValues: [],
             selectedOptions: {},
             init() {
+                this.baseInit();
+            },
+            baseInit() {
                 this.buildLookupMap();
                 this.findAllowedAttributeOptions();
                 this.$nextTick(() => {
