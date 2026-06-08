@@ -51,4 +51,11 @@
             }
         }
     }
+
+    /* Deprecated, avoid using for upgradabilty */
+    .swatch-attribute-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: --spacing(2);
+    }
 }
