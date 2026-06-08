@@ -56,6 +56,21 @@ $swatchConfig = json_decode($jsonSwatchConfig, true);
                         this.baseInit();
                         this.preselectQuerystringItems();
                         this.applyCheckedState();
+                        this.applySelectionToLinks();
+                    },
+                    applySelectionToLinks() {
+                        const form = this.$root.closest('form');
+                        if (!form) return;
+                        form.querySelectorAll('a.product-item-link, a.product-item-photo').forEach(link => {
+                            try {
+                                const url = new URL(link.href);
+                                Object.values(this.optionConfig.attributes).forEach(attr => {
+                                    const val = this.selectedValues[attr.id];
+                                    if (val) url.searchParams.set(attr.code, val);
+                                });
+                                link.href = url.toString();
+                            } catch (e) {}
+                        });
                     },
                     updateGallery() {
                         if (!this.productIndex) return;
