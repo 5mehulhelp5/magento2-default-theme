@@ -41,25 +41,14 @@ $swatchConfig = json_decode($jsonSwatchConfig, true);
 <?php if ($product->isSaleable() && count($attributes)): ?>
     <script>
         function initConfigurableSwatchProductOptions() {
-            const { productId, swatchOptions } = this.$root.dataset;
+            const { productId } = this.$root.dataset;
             const configEl = this.$root.querySelector('script[type="application/json"]');
             const configurableOptionsComponent = initConfigurableOptions(productId, JSON.parse(configEl.textContent));
-            const swatchOptionsComponent = initSwatchOptions(JSON.parse(swatchOptions));
+            const swatchOptionsComponent = initSwatchOptions();
 
             return Object.assign(
                 configurableOptionsComponent,
-                swatchOptionsComponent,
-                {
-                    selectedOptions: {},
-                    reflectOption(event) {
-                        const attributeId = event.target.dataset.attributeId;
-                        const label = event.target.dataset.optionLabel
-                            || event.target.options?.[event.target.selectedIndex]?.text
-                            || '';
-                        this.selectedOptions[attributeId] = label;
-                        this.changeOption(attributeId, event.target.value);
-                    },
-                }
+                swatchOptionsComponent
             );
         }
 
@@ -72,7 +61,6 @@ $swatchConfig = json_decode($jsonSwatchConfig, true);
     <div
         x-data="initConfigurableSwatchProductOptions"
         data-product-id="<?= (int) $productId ?>"
-        data-swatch-options="<?= $escaper->escapeHtmlAttr($block->getJsonSwatchConfig()) ?>"
         class="mb-2 relative"
     >
         <script type="application/json"><?= /* @noEscape */ str_replace('</script>', '<\/script>', $jsonConfig) ?></script>
@@ -102,21 +90,26 @@ $swatchConfig = json_decode($jsonSwatchConfig, true);
                 </fieldset>
             <?php else: ?>
                 <div role="group" class="mb-4">
-                    <label class="mb-1 text-base font-medium" for="attribute<?= $escaper->escapeHtmlAttr($attributeId) ?>">
+                    <label
+                        class="mb-1 text-base font-medium"
+                        for="attribute<?= $escaper->escapeHtmlAttr($attributeId) ?>">
                         <?= $escaper->escapeHtml($productAttribute->getStoreLabel()) ?>
                     </label>
                     <select
-                        name="super_attribute[<?= $escaper->escapeHtmlAttr($attributeId) ?>]"
                         id="attribute<?= $escaper->escapeHtmlAttr($attributeId) ?>"
+                        name="super_attribute[<?= $escaper->escapeHtmlAttr($attributeId) ?>]"
+                        class="form-select w-full"
+                        required
                         data-attribute-id="<?= $escaper->escapeHtmlAttr($attributeId) ?>"
                         @change="reflectOption"
-                        required
                     >
                         <option value=""><?= $escaper->escapeHtml(__('Choose an Option...')) ?></option>
                         <?php foreach ($productOptions ?? [] as $option): ?>
-                            <option value="<?= $escaper->escapeHtmlAttr($option['value_index']) ?>">
-                                <?= $escaper->escapeHtml($option['store_label']) ?>
-                            </option>
+                            <option
+                                value="<?= $escaper->escapeHtmlAttr($option['value_index']) ?>"
+                                data-attribute-id="<?= $escaper->escapeHtmlAttr($attributeId) ?>"
+                                :disabled="optionIsDisabled"
+                            ><?= $escaper->escapeHtml($option['store_label']) ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
