@@ -35,12 +35,38 @@ $lucideIcons = $viewModels->require(LucideIcons::class);
 /** @var StoreConfig $storeConfig */
 $storeConfig = $viewModels->require(StoreConfig::class);
 $isAutocompleteEnabled = $storeConfig->getStoreConfig('customer/password/autocomplete_on_storefront');
+$customerLoginRecaptchaType = $storeConfig->getStoreConfig('recaptcha_frontend/type_for/customer_login');
+$isV2Recaptcha = in_array($customerLoginRecaptchaType, ['recaptcha', 'invisible'], true);
 
 ?>
 <script>
     function initAuthentication() {
         return {
             open: false,
+            <?php if ($isV2Recaptcha): ?>
+            init() {
+                let captchaObserver = null;
+                this.$watch('open', (value) => {
+                    if (value) {
+                        captchaObserver = new MutationObserver((mutations) => {
+                            for (const mutation of mutations) {
+                                for (const node of mutation.addedNodes) {
+                                    if (node.nodeType !== Node.ELEMENT_NODE) continue;
+                                    if (node.querySelector('iframe[src*="/bframe"]')) {
+                                        const wrapper = this.$root.querySelector('#recaptcha-challenge-wrapper');
+                                        wrapper ? wrapper.appendChild(node) : this.$root.appendChild(node);
+                                    }
+                                }
+                            }
+                        });
+                        captchaObserver.observe(document.body, { childList: true });
+                    } else {
+                        captchaObserver && captchaObserver.disconnect();
+                        captchaObserver = null;
+                    }
+                });
+            },
+            <?php endif; ?>
             close() {
                 this.open = false;
             },
@@ -251,6 +277,9 @@ $isAutocompleteEnabled = $storeConfig->getStoreConfig('customer/password/autocom
                 </a>
             </div>
         </form>
+        <?php if ($isV2Recaptcha): ?>
+            <div id="recaptcha-challenge-wrapper" class="[&>*]:!inset-0"></div>
+        <?php endif; ?>
         <?= $recaptcha ? $recaptcha->getLegalNoticeHtml('customer_login') : '' ?>
     </div>
     <div class="block-new-customer p-8 border-t border-gray-300">
