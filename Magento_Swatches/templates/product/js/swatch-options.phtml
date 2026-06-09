@@ -48,13 +48,7 @@ use Magento\Framework\View\Element\Template;
                 if (!this.tooltipPositionElement) return null;
                 const el = this.tooltipPositionElement;
                 const elRect = el.getBoundingClientRect();
-                const overflowEl = el.closest('.snap-track') || el.closest('[class*="overflow-x"]');
-                let left = elRect.left + elRect.width / 2;
-
-                if (overflowEl) {
-                    const overflowRect = overflowEl.getBoundingClientRect();
-                    left = Math.max(overflowRect.left, Math.min(overflowRect.right, left));
-                }
+                const left = elRect.left + elRect.width / 2;
 
                 return {
                     bottom: `${window.innerHeight - elRect.top}px`,
