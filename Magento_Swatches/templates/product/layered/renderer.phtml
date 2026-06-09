@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 use Hyva\Theme\ViewModel\HyvaCsp;
 use Hyva\Theme\Model\ViewModelRegistry;
+use Hyva\Theme\ViewModel\SwatchRenderer;
 use Magento\Framework\Escaper;
 use Magento\Swatches\Block\LayeredNavigation\RenderLayered;
 use Magento\Swatches\Model\Swatch;
@@ -24,6 +25,14 @@ use Magento\Swatches\ViewModel\Product\Renderer\Configurable as ConfigurableView
 /** @var ConfigurableViewModel $configurableViewModel */
 $configurableViewModel = $viewModels->require(ConfigurableViewModel::class);
 
+/** @var SwatchRenderer $swatchRenderer */
+$swatchRenderer = $viewModels->require(SwatchRenderer::class);
+
+$swatchImgWidth  = $swatchRenderer->getSwatchDimension('swatch_image', 'width', 30);
+$swatchImgHeight = $swatchRenderer->getSwatchDimension('swatch_image', 'height', 30);
+$swatchThumbWidth  = $swatchRenderer->getSwatchDimension('swatch_thumb', 'width', 90);
+$swatchThumbHeight = $swatchRenderer->getSwatchDimension('swatch_thumb', 'height', 90);
+
 $swatchData = $block->getSwatchData();
 ?>
 <script>
@@ -38,16 +47,16 @@ $swatchData = $block->getSwatchData();
                 const item = this.activeTooltipItem;
                 if (item?.type === 'color') return {
                     backgroundColor: item.preview,
-                    width: '90px',
-                    height: '90px'
+                    width: `${item.width ?? 90}px`,
+                    height: `${item.height ?? 90}px`
                 };
                 if (item?.type === 'image') return {
                     backgroundImage: `url(${item.preview})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
-                    width: '90px',
-                    height: '90px'
+                    width: `${item.width ?? 90}px`,
+                    height: `${item.height ?? 90}px`
                 };
                 return null;
             },
@@ -103,6 +112,8 @@ $swatchData = $block->getSwatchData();
                 'label'   => $label['label'],
                 'type'    => $swatchType === Swatch::SWATCH_TYPE_VISUAL_COLOR ? 'color'
                     : ($swatchType === Swatch::SWATCH_TYPE_VISUAL_IMAGE ? 'image' : 'text'),
+                'width'   => $swatchThumbWidth,
+                'height'  => $swatchThumbHeight,
             ];
             ?>
             <a
@@ -123,8 +134,8 @@ $swatchData = $block->getSwatchData();
                     <img
                         src="<?= $escaper->escapeUrl($block->getSwatchPath('swatch_image', $swatchValue)) ?>"
                         alt="<?= $escaper->escapeHtmlAttr($label['label']) ?>"
-                        width="20"
-                        height="20"
+                        width="<?= (int) $swatchImgWidth ?>"
+                        height="<?= (int) $swatchImgHeight ?>"
                         class="size-full object-cover"
                         loading="lazy"
                     >
