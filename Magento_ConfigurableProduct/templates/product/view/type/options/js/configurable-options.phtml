@@ -69,7 +69,7 @@ $currentProduct = $viewModels->require(CurrentProduct::class);
                     if (el.tagName === 'SELECT') {
                         el.value = val;
                         this.selectedOptions[el.dataset.attributeId] = el.options[el.selectedIndex]?.text || '';
-                    } else if (el.value === val) {
+                    } else if (el.value === val && this.optionIsActive(el.dataset.attributeId, el.value)) {
                         el.checked = true;
                         this.selectedOptions[el.dataset.attributeId] = el.dataset.optionLabel || '';
                     }
