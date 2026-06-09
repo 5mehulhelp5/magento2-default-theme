@@ -117,7 +117,8 @@ $swatchConfig = json_decode($jsonSwatchConfig, true);
             $attributeId = $attribute->getAttributeId();
             $productAttribute = $attribute->getProductAttribute();
 
-            if (!$productAttribute->getUsedInProductListing() || !$swatchRendererViewModel->isSwatchAttribute($productAttribute)) {
+            if (!$productAttribute->getUsedInProductListing() ||
+                !$swatchRendererViewModel->isSwatchAttribute($productAttribute)) {
                 continue;
             }
 
@@ -125,7 +126,9 @@ $swatchConfig = json_decode($jsonSwatchConfig, true);
             $attributeSwatchConfig = $swatchConfig[$attributeId] ?? [];
             ?>
             <fieldset class="mt-4">
-                <legend class="mb-1 text-sm font-medium"><?= $escaper->escapeHtml($productAttribute->getStoreLabel()) ?></legend>
+                <legend class="mb-1 text-sm font-medium">
+                    <?= $escaper->escapeHtml($productAttribute->getStoreLabel()) ?>
+                </legend>
                 <div class="flex flex-wrap gap-1">
                     <?php foreach ($productOptions ?? [] as $option): ?>
                         <?= /* @noEscape */ $swatchItemBlock
