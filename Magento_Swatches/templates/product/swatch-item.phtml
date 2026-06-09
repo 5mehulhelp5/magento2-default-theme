@@ -36,7 +36,10 @@ $optionId = $option['value_index'];
 $optionLabel = $option['store_label'];
 $id = "attribute-option" . $productId . "-" . $optionId;
 
-$swatchData = $block->getSwatchData() ?? [];
+$swatchData = $block->getSwatchData();
+if (!$swatchData) {
+    return '';
+}
 $swatchType = (int) ($swatchData['type'] ?? Swatch::SWATCH_TYPE_TEXTUAL);
 $isVisual = in_array($swatchType, [Swatch::SWATCH_TYPE_VISUAL_COLOR, Swatch::SWATCH_TYPE_VISUAL_IMAGE], true);
 
