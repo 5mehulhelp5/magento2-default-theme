@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
     -   Fixes a double-render bug where `x-defer="intersect"` combined with stacked Alpine template tags caused swatch options to appear twice.
     -   Swatch appearance is driven by the `.swatch-option` CSS component, making visual customisation a stylesheet change rather than a template override.
     -   The layered navigation renderer is aligned with the product renderers: same rendering approach, tooltip shape, and image dimensions from `view.xml`.
+    -   Fixes an accessibility inconsistency where swatches acted as toggles rather than a standard radio group.
 
     If you have child theme overrides for any swatch templates, refer to the [upgrade guide](https://docs.hyva.io/hyva-themes/upgrading/upgrading-to-1-5-0.html).
 
