@@ -331,21 +331,6 @@ $currentProduct = $viewModels->require(CurrentProduct::class);
                     v && this.changeOption(attribute.id, v)
                 });
             },
-            <?php
-            /*
-             * @deprecated
-             * The following methods are empty stubs kept for backwards compatibility with third-party code that may
-             * call them, but they no longer work.
-             */
-            ?>
-            optionIsEnabled(attributeId, optionId) {},
-            calculateSimpleIndexForFullSelection(selectedValues) {},
-            onGetCartData(data) {},
-            preselectCartItems(data) {},
-            findProductIdToUseForOptionPrice(option) {},
-            getAttributeOptionLabel(option) {},
-            getOptionPriceAdjustmentBasePrice() {},
-            clearOptionIfActive(optionId, value) {},
         }
     }
 </script>
