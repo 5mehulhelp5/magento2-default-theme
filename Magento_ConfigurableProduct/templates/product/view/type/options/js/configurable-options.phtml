@@ -87,7 +87,11 @@ $currentProduct = $viewModels->require(CurrentProduct::class);
                 )
             },
             optionIsDisabled() {
-                return !this.optionIsActive(this.$el.dataset.attributeId, this.$el.value);
+                const attributeId = this.$el.dataset.attributeId;
+                if (!attributeId) {
+                    throw new Error('data-attribute-id missing, in item template');
+                }
+                return !this.optionIsActive(attributeId, this.$el.value);
             },
             findSimpleIndex() {
                 <?php /* a better method name would be `updateSelectedSimpleIndex` but keeping for bc */ ?>

@@ -43,6 +43,12 @@ $swatchConfig = json_decode($jsonSwatchConfig, true);
         function initConfigurableSwatchProductOptions() {
             const { productId } = this.$root.dataset;
             const configEl = this.$root.querySelector('script[type="application/json"]');
+            if (!configEl) {
+                throw new Error(`initConfigurableSwatchProductOptions:
+                    missing inline JSON config in component root,
+                    outdated renderer.phtml override?`);
+            }
+
             const configurableOptionsComponent = initConfigurableOptions(productId, JSON.parse(configEl.textContent));
             const swatchOptionsComponent = initSwatchOptions();
 
