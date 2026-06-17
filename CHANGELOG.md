@@ -6,9 +6,38 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-[Unreleased]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.4.7...main
+[Unreleased]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.5.0...main
 
-## [1.4.7] - 2026-05-28
+## [1.5.0] - 2026-07-?
+
+### Added
+
+-   Nothing Added
+
+### Changed
+
+-   **Improved product gallery**  
+
+    The gallery is now PHP-rendered and only hydrated by Alpine.js, meaning images are present in the initial HTML which improves Performance and LCP.
+
+    -   Built-in lightbox with keyboard navigation and loop support with disabled button states at boundaries
+    -   Now configurable via `view.xml` with options for loop, caption, pager style, pager direction, navigation position, and maximum thumbnail count
+    -   Thumbnails are displayed vertically by default on large screens, with an option to switch to horizontal layout
+    -   Custom elements can be added inside the gallery using the new gallery.additional container block, great for extensions such as labels
+
+    For more information, please refer to [merge request #1484](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1484).
+
+-   **Updated Tailwind CSS from v4.1 to v4.3**  
+
+    Highlights across both releases include first-party scrollbar styling, new zoom and tab-size utilities, four new neutral color palettes, extended logical property utilities including logical inset utilities, font features, and stacked/compound `@variant` support in custom CSS. For the full list of changes see the [Tailwind CSS v4.3 release post](https://tailwindcss.com/blog/tailwindcss-v4-3).
+
+    Make sure to update you child theme with this version since we are using these new classes in the phtml to reduce the CSS size for any none logical properties.
+
+### Removed
+
+-   Nothing Removed
+
+## [1.4.7] - 2026-07-?
 
 [1.4.7]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.4.6...1.4.7
 
@@ -42,33 +71,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 -   **Remove unused `$count` variable from custom option templates**  
     Cleaned up an unused `$count` variable and its increment from `checkable.phtml` and `multiple.phtml` in the product custom options composite fieldset.
-
-### Removed
-
--   Nothing Removed
-
-### Added
-
--   Nothing Added
-
-### Changed
-
--   **Improved product gallery**  
-
-    The gallery is now PHP-rendered and only hydrated by Alpine.js, meaning images are present in the initial HTML which improves Performance and LCP.
-
-    -   Built-in lightbox with keyboard navigation and loop support with disabled button states at boundaries
-    -   Now configurable via `view.xml` with options for loop, caption, pager style, pager direction, navigation position, and maximum thumbnail count
-    -   Thumbnails are displayed vertically by default on large screens, with an option to switch to horizontal layout
-    -   Custom elements can be added inside the gallery using the new gallery.additional container block, great for extensions such as labels
-
-    For more information, please refer to [merge request #1484](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1484).
-
--   **Updated Tailwind CSS from v4.1 to v4.3**  
-
-    Highlights across both releases include first-party scrollbar styling, new zoom and tab-size utilities, four new neutral color palettes, extended logical property utilities including logical inset utilities, font features, and stacked/compound `@variant` support in custom CSS. For the full list of changes see the [Tailwind CSS v4.3 release post](https://tailwindcss.com/blog/tailwindcss-v4-3).
-
-    Make sure to update you child theme with this version since we are using these new classes in the phtml to reduce the CSS size for any none logical properties.
 
 ### Removed
 
