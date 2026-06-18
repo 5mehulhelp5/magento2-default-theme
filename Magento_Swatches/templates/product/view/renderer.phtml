@@ -98,7 +98,8 @@ $swatchConfig = json_decode($jsonSwatchConfig, true);
                 <div role="group" class="mb-4">
                     <label
                         class="mb-1 text-base font-medium"
-                        for="attribute<?= $escaper->escapeHtmlAttr($attributeId) ?>">
+                        for="attribute<?= $escaper->escapeHtmlAttr($attributeId) ?>"
+                    >
                         <?= $escaper->escapeHtml($productAttribute->getStoreLabel()) ?>
                     </label>
                     <select
