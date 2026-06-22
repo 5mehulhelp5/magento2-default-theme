@@ -39,12 +39,7 @@ $showOptionalRegions = $block->getConfig('general/region/display_all');
     <?= $escaper->escapeHtml(__('Customer Address')) ?>
 </div>
 <form class="form-address-edit"
-      x-data="Object.assign(initCustomerAddressEdit(), hyva.formValidation($root),
-        {
-            labelSave:   '<?= $escaper->escapeJs(__('Save Address')) ?>',
-            labelSaving: '<?= $escaper->escapeJs(__('Saving...')) ?>'
-        }
-      )"
+      x-data="Object.assign(initCustomerAddressEdit(), hyva.formValidation($root))"
       @private-content-loaded.window="onPrivateContentLoaded($event.detail.data)"
       @submit="onSubmit"
       action="<?= $escaper->escapeUrl($block->getSaveUrl()) ?>"
@@ -290,7 +285,7 @@ $showOptionalRegions = $block->getConfig('general/region/display_all');
                     data-action="save-address"
                     :disabled="isSubmitting"
                     title="<?= $escaper->escapeHtmlAttr(__('Save Address')) ?>">
-                <span x-text="isSubmitting ? labelSaving : labelSave"></span>
+                <span x-text="updateSubmitBtnText></span>
             </button>
         </div>
         <div class="secondary">
@@ -380,6 +375,11 @@ function initCustomerAddressEdit() {
                 ''
             this.onChange(event)
             this.validateField(this.fields['region'])
+        },
+        updateSubmitBtnText() {
+            return this.isSubmitting
+                ? '<?= $escaper->escapeJs(__('Saving...')) ?>'
+                : '<?= $escaper->escapeJs(__('Save Address')) ?>'
         }
     }
 }
