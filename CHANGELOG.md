@@ -18,7 +18,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 -   **PHP-rendered configurable product swatches**
 
-    Swatches complete the PHP rendering story started by the gallery. Color, image, and text options now arrive in the initial HTML — no rendering loop, no pop-in, no layout shift. Combined with the gallery change, HTML document size is approximately 10% smaller and CLS on the product detail page is eliminated entirely.
+    Swatches complete the PHP rendering story started by the gallery. Color, image, and text options now arrive in the initial HTML, no rendering loop, no pop-in, no layout shift.
+    Combined with the gallery change, HTML document size is approximately 10% smaller and CLS on the product detail page is eliminated entirely.
 
     -   Layered navigation filter selections are preserved when navigating to the product detail page.
     -   Cart item editing is more stable when restoring previously selected options.
@@ -30,7 +31,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
     If you have child theme overrides for any swatch templates, refer to the [upgrade guide](https://docs.hyva.io/hyva-themes/upgrading/upgrading-to-1-5-0.html).
 
--   **Improved product gallery**  
+-   **Improved product gallery**
 
     The gallery is now PHP-rendered and only hydrated by Alpine.js, meaning images are present in the initial HTML which improves Performance and LCP.
 
@@ -41,7 +42,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
     For more information, please refer to [merge request #1484](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1484).
 
--   **Updated Tailwind CSS from v4.1 to v4.3**  
+-   **Updated Tailwind CSS from v4.1 to v4.3**
 
     Highlights across both releases include first-party scrollbar styling, new zoom and tab-size utilities, four new neutral color palettes, extended logical property utilities including logical inset utilities, font features, and stacked/compound `@variant` support in custom CSS. For the full list of changes see the [Tailwind CSS v4.3 release post](https://tailwindcss.com/blog/tailwindcss-v4-3).
 
