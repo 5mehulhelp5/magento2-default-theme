@@ -152,6 +152,7 @@
                         <arguments>
                             <argument name="gallery_options" xsi:type="object">Magento\Catalog\Block\Product\View\GalleryOptions</argument>
                         </arguments>
+                        <container name="gallery.additional" />
                     </block>
 
                     <block class="Magento\Catalog\Block\Product\View"
