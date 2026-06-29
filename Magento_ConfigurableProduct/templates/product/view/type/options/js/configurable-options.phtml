@@ -335,6 +335,36 @@ $currentProduct = $viewModels->require(CurrentProduct::class);
                     v && this.changeOption(attribute.id, v)
                 });
             },
+            findProductForOptionPrice(attributeId, value) {
+                const options = this.optionConfig.attributes[attributeId]?.options || [];
+                const option = options.find(o => o.id === value);
+                if (!option?.products?.length) return null;
+                return option.products.reduce((cheapest, productId) => {
+                    if (!cheapest) return productId;
+                    const cheapestPrice = this.optionConfig.optionPrices[cheapest]?.finalPrice?.amount ?? Infinity;
+                    const thisPrice = this.optionConfig.optionPrices[productId]?.finalPrice?.amount ?? Infinity;
+                    return thisPrice < cheapestPrice ? productId : cheapest;
+                }, null);
+            },
+            getOptionLabel() {
+                const value = this.$el.value;
+                const attributeId = this.$el.dataset.attributeId;
+                const label = this.$el.dataset.optionLabel || '';
+                if (!value || !attributeId) return label;
+
+                const productId = this.findProductForOptionPrice(attributeId, value);
+                if (!productId) return label;
+
+                const optionPrice = this.optionConfig.optionPrices[productId]?.finalPrice?.amount;
+                const basePrice = this.optionConfig.prices?.finalPrice?.amount;
+                if (optionPrice == null || basePrice == null) return label;
+
+                const adjustment = optionPrice - basePrice;
+                if (Math.abs(adjustment) < 0.001) return label;
+
+                const formatted = hyva.formatPrice(Math.abs(adjustment));
+                return `${label} (${adjustment > 0 ? '+' : '-'}${formatted})`;
+            },
         }
     }
 </script>

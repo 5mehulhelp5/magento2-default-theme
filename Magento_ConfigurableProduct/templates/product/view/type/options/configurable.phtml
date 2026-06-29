@@ -67,7 +67,9 @@ $jsonConfig = $block->getJsonConfig();
                         <option
                             value="<?= $escaper->escapeHtmlAttr($option['value_index']) ?>"
                             data-attribute-id="<?= $escaper->escapeHtmlAttr($attributeId) ?>"
+                            data-option-label="<?= $escaper->escapeHtmlAttr($option['store_label']) ?>"
                             :disabled="optionIsDisabled"
+                            x-text="getOptionLabel"
                         ><?= $escaper->escapeHtml($option['store_label']) ?></option>
                     <?php endforeach; ?>
                 </select>
