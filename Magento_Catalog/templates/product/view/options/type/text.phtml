@@ -34,6 +34,7 @@ if ($productPriceViewModel->displayPriceInclAndExclTax()) {
 
 <div class="mb-4">
     <label
+        class="mb-1 text-base font-normal"
         for="options_<?= $escaper->escapeHtmlAttr($optionId) ?>_text"
         x-html="updateOptionPrice('<?= $escaper->escapeJs($optionId) ?>', $el)"
     >
