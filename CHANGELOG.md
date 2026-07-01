@@ -59,7 +59,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 -   Nothing Removed
 
-## [1.4.8] - 2026-07-30
+## [1.4.8] - 2026-07-01
 
 [1.4.8]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.4.7...1.4.8
 
