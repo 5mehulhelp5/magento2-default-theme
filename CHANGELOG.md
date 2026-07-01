@@ -6,11 +6,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-[Unreleased]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.5.0...main
+[Unreleased]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.5.1...main
 
-## [1.5.0] - 2026-06-30
+## [1.5.1] - 2026-07-01
 
-[1.5.0]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.4.7...1.5.0
+[1.5.1]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.4.8...1.5.1
 
 ### Added
 
@@ -59,9 +59,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 -   Nothing Removed
 
-## [1.4.7] - 2026-06-30
+## [1.4.8] - 2026-07-01
 
-[1.4.7]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.4.6...1.4.7
+[1.4.8]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.4.6...1.4.8
 
 ### Added
 
