@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed
+
+-   Fixed swatch tooltip appearing on touch devices due to focus triggered by tap.
+
 [Unreleased]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.5.1...main
 
 ## [1.5.1] - 2026-07-01
