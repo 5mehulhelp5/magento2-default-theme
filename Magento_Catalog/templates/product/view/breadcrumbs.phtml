@@ -47,10 +47,10 @@ $product = $currentProductViewModel->exists() ? $currentProductViewModel->get() 
             <template x-for="item in breadcrumbs">
                 <li class="item inline-flex whitespace-nowrap">
                     <template x-if="item.name !== 'home'">
-                        <span aria-hidden="true" class="separator text-fg-secondary px-2">/</span>
+                        <span aria-hidden="true" class="separator text-ink-muted px-2">/</span>
                     </template>
                     <template x-if="item.name === 'product'">
-                        <a :href="item.link" class="text-fg-secondary" aria-current="page" x-text="item.label"></a>
+                        <a :href="item.link" class="text-ink-muted" aria-current="page" x-text="item.label"></a>
                     </template>
                     <template x-if="item.name !== 'product'">
                         <a :href="item.link" :aria-label="item.title" x-text="item.label"></a>

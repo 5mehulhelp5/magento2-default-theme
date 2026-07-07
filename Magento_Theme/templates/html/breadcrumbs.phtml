@@ -31,7 +31,7 @@ $currentPageUrl = preg_replace('/[?#].*$/', '', $block->getUrl('', ['_current' =
             <?php foreach ($crumbs as $crumbName => $crumbInfo): ?>
                 <li class="item flex <?= $escaper->escapeHtmlAttr($crumbName) ?>">
                 <?php if (!$crumbInfo['first']): ?>
-                    <span aria-hidden="true" class="separator text-fg-secondary px-2">/</span>
+                    <span aria-hidden="true" class="separator text-ink-muted px-2">/</span>
                 <?php endif; ?>
                 <?php if ($crumbInfo['link']): ?>
                     <a
@@ -43,7 +43,7 @@ $currentPageUrl = preg_replace('/[?#].*$/', '', $block->getUrl('', ['_current' =
                 <?php elseif ($crumbInfo['last']): ?>
                     <a
                         href="<?= $escaper->escapeUrl($currentPageUrl) ?>"
-                        class="text-fg-secondary"
+                        class="text-ink-muted"
                         aria-current="page"
                     ><?= $escaper->escapeHtml($crumbInfo['label']) ?></a>
                 <?php else: ?>

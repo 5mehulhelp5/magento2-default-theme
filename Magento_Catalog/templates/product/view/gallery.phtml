@@ -81,7 +81,7 @@ $btnIconSize = 28;
 
 $trackCssClasses = implode(' ', array_filter([
     'flex overflow-x-auto overflow-y-clip overscroll-x-contain snap-x snap-mandatory',
-    'aspect-(--gallery-ratio) bg-white text-fg',
+    'aspect-(--gallery-ratio) bg-white text-ink',
     'motion-safe:scroll-smooth scrollbar-none'
 ]));
 
@@ -110,7 +110,7 @@ $navCssClasses = implode(' ', array_filter([
     $navStyle === 'center' ? 'top-1/2 -translate-y-1/2 inset-x-2 justify-between pointer-events-none' : '',
 ]));
 
-$captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-gray-200/60 text-fg max-w-2/3 text-pretty'
+$captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-gray-200/60 text-ink max-w-2/3 text-pretty'
     . ($navStyle === 'start' ? ' end-2' : ' start-2');
 ?>
 
