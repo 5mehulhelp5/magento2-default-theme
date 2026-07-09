@@ -72,10 +72,10 @@ $hasAssociatedProducts = count($associatedProducts) > 0;
         <?= $escaper->escapeHtml(__('Grouped product items')) ?>
     </h2>
     <div class="hidden sm:flex py-2 items-center justify-between gap-2">
-        <div class="text-ink-muted font-semibold">
+        <div class="text-fg-secondary font-semibold">
             <?= $escaper->escapeHtml(__('Product Name')) ?>
         </div>
-        <div class="text-ink-muted font-semibold w-20">
+        <div class="text-fg-secondary font-semibold w-20">
             <?= $escaper->escapeHtml(__('Qty')) ?>
         </div>
     </div>
@@ -89,7 +89,7 @@ $hasAssociatedProducts = count($associatedProducts) > 0;
                  <?php endif; ?>
              <?php endforeach; ?>
         >
-            <label for="super_group[<?= $escaper->escapeHtmlAttr($item->getId()) ?>]" class="text-ink">
+            <label for="super_group[<?= $escaper->escapeHtmlAttr($item->getId()) ?>]" class="text-fg">
                 <span class="product-item-name">
                     <?= $escaper->escapeHtml($item->getName()) ?>
                 </span>

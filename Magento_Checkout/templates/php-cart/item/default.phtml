@@ -93,7 +93,7 @@ $maxSalesQtyLength = ($maxSalesQty ? strlen((string) $maxSalesQty) : 4)
                     <?php if ($qty > 1): ?>
                         <span><?= $escaper->escapeHtmlAttr(__('%1 x', $qty)) ?></span>
                     <?php endif; ?>
-                    <span class="text-ink-muted">
+                    <span class="text-fg-secondary">
                         <span class="sr-only"><?= $escaper->escapeHtml(__('Price')) ?></span>
                         <span><?= $block->getUnitPriceHtml($item) ?></span>
                     </span>
@@ -109,7 +109,7 @@ $maxSalesQtyLength = ($maxSalesQty ? strlen((string) $maxSalesQty) : 4)
                     <?php foreach ($options as $option): ?>
                         <?php $formatedOptionValue = $block->getFormatedOptionValue($option) ?>
                         <div class="table-row">
-                            <dt class="table-cell font-normal min-w-16 pe-2 pb-1 text-ink-muted">
+                            <dt class="table-cell font-normal min-w-16 pe-2 pb-1 text-fg-secondary">
                                 <?= $escaper->escapeHtml($option['label']) ?>
                             </dt>
                             <dd class="table-cell font-bold pb-1">
