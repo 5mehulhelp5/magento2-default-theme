@@ -12,7 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 [1.5.2]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.5.1...1.5.2
 
-This release contains the same changes as [1.4.9].
+This release contains the same changes as [1.4.10].
 
 ### Added
 
