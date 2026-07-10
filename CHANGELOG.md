@@ -108,9 +108,9 @@ This release contains the same changes as [1.4.9].
 
 -   Nothing Removed
 
-## [1.4.9] - 2026-07-10
+## [1.4.10] - 2026-07-10
 
-[1.4.9]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.4.8...1.4.9
+[1.4.10]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.4.8...1.4.10
 
 ### Added
 
