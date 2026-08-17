@@ -18,6 +18,9 @@
 
         > * {
             grid-area: 1/1;
+        }
+
+        img {
             border-radius: calc(
                 var(--swatch-radius, 0.5em) - var(--swatch-px, 6px)
             );
