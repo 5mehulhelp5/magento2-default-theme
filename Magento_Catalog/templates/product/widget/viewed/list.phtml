@@ -73,11 +73,7 @@ $jsTemplate = 'Magento_Catalog::product/widget/viewed/js/recently-viewed-product
             class="snap-slider <?= $escaper->escapeHtmlAttr($cssClasses) ?>"
             aria-label="<?= $escaper->escapeHtmlAttr($ariaLabel); ?>"
             data-slider-type="<?= $escaper->escapeHtmlAttr($type) ?>"
-            <?php if ($showPager): ?>
-            x-snap-slider.auto-pager.group-pager
-            <?php else: ?>
-            x-snap-slider
-            <?php endif; ?>
+            x-snap-slider<?= $showPager ? '.auto-pager.group-pager' : '' ?>
         >
             <a
                 href="#<?= $escaper->escapeHtmlAttr($sliderName) ?>-slider-end"
