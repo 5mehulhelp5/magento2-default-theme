@@ -30,6 +30,13 @@ $miniCartOptionShowSku = $block->getShowSku() !== null ? (bool) $block->getShowS
 
 <script>
     function initCartDrawer() {
+        const decoder = document.createElement('textarea');
+
+        const unescapeHtml = (value) => {
+            decoder.innerHTML = value ?? '';
+            return decoder.value;
+        };
+
         return {
             open: false,
             isLoading: false,
@@ -71,7 +78,9 @@ $miniCartOptionShowSku = $block->getShowSku() !== null ? (bool) $block->getShowS
                 return this.maxItemsToDisplay && this.maxItemsToDisplay < this.itemsCount;
             },
             setCartItems() {
-                this.cartItems = this.cart.items && this.cart.items.sort((a, b) => b.item_id - a.item_id) || [];
+                this.cartItems = this.cart.items && this.cart.items
+                    .map(item => ({...item, product_name: unescapeHtml(item.product_name)}))
+                    .sort((a, b) => b.item_id - a.item_id) || [];
 
                 if (this.maxItemsToDisplay > 0) {
                     this.cartItems = this.cartItems.slice(0, parseInt(this.maxItemsToDisplay, 10));
@@ -291,9 +300,9 @@ $miniCartOptionShowSku = $block->getShowSku() !== null ? (bool) $block->getShowS
                     <template x-if="productIsVisibleInSite">
                         <a
                             class="block shrink-0 max-w-[25%]"
-                            :href="item.product_url"
                             data-aria-label="<?= $escaper->escapeHtmlAttr(__('Product "%0"')) ?>"
-                            :title="item.product_name"
+                            :href="item.product_url"
+                            :aria-label="productAriaLabel"
                         >
                             <img
                                 :src="item.product_image.src"
