@@ -8,6 +8,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 [Unreleased]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.5.2...main
 
+### Changed
+
+-   **Fixed repeat submissions of the forgot password form triggering the password reset rate limit**  
+    For more information, please refer to [issue #1362](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/work_items/1362).
+
 ## [1.5.2] - 2026-07-10
 
 [1.5.2]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.5.1...1.5.2
