@@ -13,6 +13,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 -   **Fixed HTML entities such as apostrophes not being decoded in the minicart**  
     For more information, please refer to [issue #1358](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/work_items/1358).
 
+-   **Fixed the "As low as" label showing on products whose child products all have the same price**  
+    For more information, please refer to [issue #1346](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/work_items/1346).
+
 ## [1.5.2] - 2026-07-10
 
 [1.5.2]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.5.1...1.5.2
