@@ -15,6 +15,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 -   **Fixed HTML entities such as apostrophes not being decoded in the minicart**  
     For more information, please refer to [issue #1358](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/work_items/1358).
 
+-   **Fixed the same message being shown twice when it arrives through both the cookie and a dispatch**  
+    For more information, please refer to [issue #1353](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/work_items/1353).
+
 ## [1.5.2] - 2026-07-10
 
 [1.5.2]: https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/compare/1.5.1...1.5.2
