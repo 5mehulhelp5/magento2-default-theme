@@ -10,6 +10,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+-   **Made the price group label on the product page translatable**  
+    For more information, please refer to [issue #1369](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/work_items/1369).
+
 -   **Made the previous and next slide labels in the slider templates translatable**  
     For more information, please refer to [issue #1368](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/work_items/1368).
 
