@@ -10,11 +10,22 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+-   **Made the previous and next slide labels in the slider templates translatable**  
+    For more information, please refer to [issue #1368](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/work_items/1368).
+
+-   **Fixed repeat submissions of the forgot password form triggering the password reset rate limit**  
+    For more information, please refer to [issue #1362](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/work_items/1362).
 -   **Fixed HTML entities such as apostrophes not being decoded in the minicart**  
     For more information, please refer to [issue #1358](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/work_items/1358).
 
 -   **Fixed the "As low as" label showing on products whose child products all have the same price**  
     For more information, please refer to [issue #1346](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/work_items/1346).
+
+-   **Fixed the same message being shown twice when it arrives through both the cookie and a dispatch**  
+    For more information, please refer to [issue #1353](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/work_items/1353).
+
+-   **Fixed cart validation messages being replayed and no longer appearing once repeated**  
+    For more information, please refer to [issue #1313](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/work_items/1313).
 
 ## [1.5.2] - 2026-07-10
 

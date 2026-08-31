@@ -51,6 +51,7 @@ $defaultSuccessMessageTimeout = $storeConfig->getStoreConfig('hyva_theme_general
             addMessages(messages, hideAfter) {
                 messages.map((message) => {
                     if (!message.text || !message.text.trim()) return;
+                    if (this.isDisplayed(message)) return;
                     this.messages = this.messages.concat(message);
                     if (hideAfter === undefined && message.type === 'success' && window.defaultSuccessMessageTimeout) {
                         hideAfter = window.defaultSuccessMessageTimeout;
@@ -59,6 +60,17 @@ $defaultSuccessMessageTimeout = $storeConfig->getStoreConfig('hyva_theme_general
                         this.setHideTimeOut(this.messages.length -1, hideAfter);
                     }
                 });
+            },
+            <?php
+            /*
+             * Cookie messages reach the component through window.mageMessages, the same messages can also
+             * arrive through a dispatch, so the identical text would be shown twice.
+             */
+            ?>
+            isDisplayed(message) {
+                return this.messages.some(
+                    (displayed) => displayed && displayed.type === message.type && displayed.text === message.text
+                );
             },
             setHideTimeOut(messageIndex, hideAfter) {
                 setTimeout((messageIndex) => {
