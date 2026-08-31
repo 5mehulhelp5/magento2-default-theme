@@ -10,8 +10,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
--   **Removed the incorrect `BaseImage $block` annotation from the grouped product template**  
-    For more information, please refer to [issue #1367](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/work_items/1367).
+-   **Made the previous and next slide labels in the slider templates translatable**  
+    For more information, please refer to [issue #1368](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/work_items/1368).
 
 -   **Fixed repeat submissions of the forgot password form triggering the password reset rate limit**  
     For more information, please refer to [issue #1362](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/work_items/1362).
@@ -23,6 +23,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 -   **Fixed cart validation messages being replayed and no longer appearing once repeated**  
     For more information, please refer to [issue #1313](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/work_items/1313).
+
+### Removed
+
+-   **Removed the incorrect `BaseImage $block` annotation from the grouped product template**  
+    For more information, please refer to [issue #1367](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/work_items/1367).
 
 ## [1.5.2] - 2026-07-10
 
