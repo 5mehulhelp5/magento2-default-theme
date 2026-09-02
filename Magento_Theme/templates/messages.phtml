@@ -28,10 +28,19 @@ $defaultSuccessMessageTimeout = $storeConfig->getStoreConfig('hyva_theme_general
     <?php if ($defaultSuccessMessageTimeout): ?>
     window.defaultSuccessMessageTimeout = <?= (int) $defaultSuccessMessageTimeout ?>;
     <?php endif; ?>
+    function isDuplicateMessage(messages, message) {
+        return messages.some(m => m && m.type === message.type && m.text === message.text);
+    }
+
     function initMessages() {
         "use strict";
         return {
-            messages: window.mageMessages || [],
+            messages: (window.mageMessages || []).filter((message, index, all) => {
+                if (!message || !message.text || !message.text.trim()) {
+                    return false;
+                }
+                return !isDuplicateMessage(all.slice(0, index), message);
+            }),
             isEmpty() {
                 return this.messages.reduce(
                     function (isEmpty, message) {
@@ -51,6 +60,7 @@ $defaultSuccessMessageTimeout = $storeConfig->getStoreConfig('hyva_theme_general
             addMessages(messages, hideAfter) {
                 messages.map((message) => {
                     if (!message.text || !message.text.trim()) return;
+                    if (isDuplicateMessage(this.messages, message)) return;
                     this.messages = this.messages.concat(message);
                     if (hideAfter === undefined && message.type === 'success' && window.defaultSuccessMessageTimeout) {
                         hideAfter = window.defaultSuccessMessageTimeout;
