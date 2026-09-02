@@ -76,6 +76,14 @@ $miniCartOptionShowSku = $block->getShowSku() !== null ? (bool) $block->getShowS
                 if (this.maxItemsToDisplay > 0) {
                     this.cartItems = this.cartItems.slice(0, parseInt(this.maxItemsToDisplay, 10));
                 }
+
+                this.cartItems.forEach(item => {
+                    (item.options || []).forEach(option => {
+                        if (Array.isArray(option.value)) {
+                            option.value = option.value.join('<br>');
+                        }
+                    });
+                });
             },
             updateItemQty(event) {
                 const form = event.target;
