@@ -30,13 +30,6 @@ $miniCartOptionShowSku = $block->getShowSku() !== null ? (bool) $block->getShowS
 
 <script>
     function initCartDrawer() {
-        const decoder = document.createElement('textarea');
-
-        const unescapeHtml = (value) => {
-            decoder.innerHTML = value ?? '';
-            return decoder.value;
-        };
-
         return {
             open: false,
             isLoading: false,
@@ -78,9 +71,7 @@ $miniCartOptionShowSku = $block->getShowSku() !== null ? (bool) $block->getShowS
                 return this.maxItemsToDisplay && this.maxItemsToDisplay < this.itemsCount;
             },
             setCartItems() {
-                this.cartItems = this.cart.items && this.cart.items
-                    .map(item => ({...item, product_name: unescapeHtml(item.product_name)}))
-                    .sort((a, b) => b.item_id - a.item_id) || [];
+                this.cartItems = this.cart.items && this.cart.items.sort((a, b) => b.item_id - a.item_id) || [];
 
                 if (this.maxItemsToDisplay > 0) {
                     this.cartItems = this.cartItems.slice(0, parseInt(this.maxItemsToDisplay, 10));
@@ -327,7 +318,7 @@ $miniCartOptionShowSku = $block->getShowSku() !== null ? (bool) $block->getShowS
                     <div class="grow space-y-4">
                         <div class="flex gap-2 justify-between items-center">
                             <p class="text-lg">
-                                <span x-text="item.qty"></span> x <strong x-text="item.product_name"></strong>
+                                <span x-text="item.qty"></span> x <strong x-html="item.product_name"></strong>
                             </p>
                             <span class="price-box" x-html="item.product_price"></span>
                         </div>
