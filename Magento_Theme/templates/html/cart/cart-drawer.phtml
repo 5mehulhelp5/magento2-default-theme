@@ -76,6 +76,13 @@ $miniCartOptionShowSku = $block->getShowSku() !== null ? (bool) $block->getShowS
                 if (this.maxItemsToDisplay > 0) {
                     this.cartItems = this.cartItems.slice(0, parseInt(this.maxItemsToDisplay, 10));
                 }
+
+                // Angle brackets stay escaped so a name can never resolve into a tag.
+                const entities = { '&amp;': '&', '&quot;': '"', '&#039;': "'", '&#39;': "'" };
+                this.cartItems = this.cartItems.map((item) => ({
+                    ...item,
+                    product_name: item.product_name.replace(/&(?:amp|quot|#0?39);/g, (entity) => entities[entity])
+                }));
             },
             updateItemQty(event) {
                 const form = event.target;
@@ -318,7 +325,7 @@ $miniCartOptionShowSku = $block->getShowSku() !== null ? (bool) $block->getShowS
                     <div class="grow space-y-4">
                         <div class="flex gap-2 justify-between items-center">
                             <p class="text-lg">
-                                <span x-text="item.qty"></span> x <strong x-html="item.product_name"></strong>
+                                <span x-text="item.qty"></span> x <strong x-text="item.product_name"></strong>
                             </p>
                             <span class="price-box" x-html="item.product_price"></span>
                         </div>
