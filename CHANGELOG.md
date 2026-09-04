@@ -10,6 +10,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+-   **Fixed a cross-site scripting issue in the MSRP price and popup templates**  
+
+    The product name and the MSRP explanation message are now escaped for the JavaScript context they are rendered into.
+
+    For more information, please refer to [merge request #1547](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1547).
+
+    Many thanks to Jelle Janssens (Singto BV) for reporting this issue!
+
 -   **Made the price group label on the product page translatable**  
     For more information, please refer to [issue #1369](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/work_items/1369).
 
