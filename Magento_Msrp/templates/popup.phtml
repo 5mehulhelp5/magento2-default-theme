@@ -8,7 +8,7 @@
 declare(strict_types=1);
 
 use Hyva\Theme\Model\ViewModelRegistry;
-use Hyva\Theme\ViewModel\HeroiconsOutline;
+use Hyva\Theme\ViewModel\LucideIcons;
 use Magento\Msrp\Block\Popup;
 use Magento\Framework\Escaper;
 
@@ -16,8 +16,8 @@ use Magento\Framework\Escaper;
 /** @var Escaper $escaper */
 /** @var ViewModelRegistry $viewModels */
 
-/** @var HeroiconsOutline $heroicons */
-$heroicons = $viewModels->require(HeroiconsOutline::class);
+/** @var LucideIcons $lucideIcons */
+$lucideIcons = $viewModels->require(LucideIcons::class);
 ?>
 
 <?php if ($block->isEnabled()): ?>
@@ -44,7 +44,7 @@ $heroicons = $viewModels->require(HeroiconsOutline::class);
                 aria-label="<?= $escaper->escapeHtmlAttr(__('Close panel')) ?>"
                 title="<?= $escaper->escapeHtmlAttr(__('Close panel')) ?>"
             >
-                <?= $heroicons->xHtml('', 24, 24, ['aria-hidden' => 'true']); ?>
+                <?= $lucideIcons->xHtml('', 24, 24, ['aria-hidden' => 'true']); ?>
             </button>
         </div>
 

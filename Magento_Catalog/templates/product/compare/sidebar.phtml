@@ -8,7 +8,7 @@
 declare(strict_types=1);
 
 use Hyva\Theme\Model\ViewModelRegistry;
-use Hyva\Theme\ViewModel\HeroiconsOutline;
+use Hyva\Theme\ViewModel\LucideIcons;
 use Magento\Framework\Escaper;
 use Magento\Framework\View\Element\Template;
 
@@ -16,8 +16,8 @@ use Magento\Framework\View\Element\Template;
 /** @var Escaper $escaper */
 /** @var ViewModelRegistry $viewModels */
 
-/** @var HeroiconsOutline $heroicons */
-$heroicons = $viewModels->require(HeroiconsOutline::class);
+/** @var LucideIcons $lucideIcons */
+$lucideIcons = $viewModels->require(LucideIcons::class);
 ?>
 
 <script>
@@ -151,7 +151,7 @@ function initCompareSidebarClear() {
                             class="p-1 inline-flex shrink-0 items-center justify-center text-slate-400
                                    hover:text-slate-800 ml-auto"
                         >
-                            <?= $heroicons->xHtml('', 24, 24, ['aria-hidden' => 'true']); ?>
+                            <?= $lucideIcons->xHtml('', 24, 24, ['aria-hidden' => 'true']); ?>
                         </button>
                     </li>
                 </template>
