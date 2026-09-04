@@ -32,6 +32,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 -   **Fixed repeat submissions of the forgot password form triggering the password reset rate limit**  
     For more information, please refer to [issue #1362](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/work_items/1362).
+
 -   **Fixed HTML entities such as apostrophes not being decoded in the minicart**  
     For more information, please refer to [issue #1358](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/work_items/1358).
 
