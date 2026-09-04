@@ -10,18 +10,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+-   **Template Hardening against XSS**  
+    For more information, please refer to [merge request #1548](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1548).
+
+-   **Fixed the customer name not being shown in bold in the Login as Customer banner**  
+    For more information, please refer to [merge request #1548](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1548).
+
 -   **Fixed a cross-site scripting issue in the MSRP price and popup templates**  
-
-    The product name and the MSRP explanation message are now escaped for the JavaScript context they are rendered into.
-
     For more information, please refer to [merge request #1547](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1547).
 
     Many thanks to Jelle Janssens (Singto BV) for reporting this issue!
 
 -   **Made the MSRP templates CSP safe**  
-
-    The popup data is passed through a data attribute and read with `JSON.parse`, and the Alpine components are registered with `Alpine.data` instead of being declared in the `x-data` attribute. Child themes overriding `Magento_Msrp/templates/popup.phtml` or `Magento_Msrp/templates/product/price/msrp.phtml` need to be updated.
-
     For more information, please refer to [merge request #1547](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1547).
 
 -   **Made the price group label on the product page translatable**  
