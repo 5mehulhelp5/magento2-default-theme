@@ -10,6 +10,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+-   **Template Hardening against XSS**  
+
+    Values written into inline scripts are now escaped with the JavaScript escaper, so every value is escaped for the context it is used in.
+
+    For more information, please refer to [merge request #1548](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1548).
+
+-   **Fixed the customer name not being shown in bold in the Login as Customer banner**  
+
+    For more information, please refer to [merge request #1548](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1548).
+
 -   **Made the price group label on the product page translatable**  
     For more information, please refer to [issue #1369](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/work_items/1369).
 
