@@ -10,6 +10,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+-   **Replaced the Heroicons with Lucide icons throughout the theme**  
+    Icons that used the solid Heroicons set now render as outline, because Lucide only ships an outline set. For more information, please refer to [merge request #1552](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1552).
+
 -   **Made the price group label on the product page translatable**  
     For more information, please refer to [issue #1369](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/work_items/1369).
 
