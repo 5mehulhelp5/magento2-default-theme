@@ -8,17 +8,17 @@
 declare(strict_types=1);
 
 use Hyva\Theme\Model\ViewModelRegistry;
-use Hyva\Theme\ViewModel\HeroiconsOutline;
 use Hyva\Theme\ViewModel\HyvaCsp;
+use Hyva\Theme\ViewModel\LucideIcons;
 use Hyva\Theme\ViewModel\StoreConfig;
 use Magento\Framework\Escaper;
 
 /** @var Escaper $escaper */
 /** @var HyvaCsp $hyvaCsp */
 /** @var ViewModelRegistry $viewModels */
-/** @var HeroiconsOutline $heroicons */
+/** @var LucideIcons $lucideIcons */
 /** @var StoreConfig $storeConfig */
-$heroicons = $viewModels->require(HeroiconsOutline::class);
+$lucideIcons = $viewModels->require(LucideIcons::class);
 $storeConfig = $viewModels->require(StoreConfig::class);
 
 $defaultSuccessMessageTimeout = $storeConfig->getStoreConfig('hyva_theme_general/messages/success_message_timeout');
@@ -131,7 +131,7 @@ $defaultSuccessMessageTimeout = $storeConfig->getStoreConfig('hyva_theme_general
                                     aria-label="<?= $escaper->escapeHtml(__('Close message')) ?>"
                                     @click.prevent="removeMessage"
                                 >
-                                    <?= $heroicons->xHtml('stroke-current', 18, 18, ['aria-hidden' => 'true']); ?>
+                                    <?= $lucideIcons->xHtml('stroke-current', 18, 18, ['aria-hidden' => 'true']); ?>
                                 </button>
                             </div>
                         </template>

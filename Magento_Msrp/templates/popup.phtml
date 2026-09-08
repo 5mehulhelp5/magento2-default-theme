@@ -8,8 +8,7 @@
 declare(strict_types=1);
 
 use Hyva\Theme\Model\ViewModelRegistry;
-use Hyva\Theme\ViewModel\HeroiconsOutline;
-use Hyva\Theme\ViewModel\HyvaCsp;
+use Hyva\Theme\ViewModel\LucideIcons;
 use Magento\Msrp\Block\Popup;
 use Magento\Framework\Escaper;
 
@@ -18,8 +17,8 @@ use Magento\Framework\Escaper;
 /** @var HyvaCsp $hyvaCsp */
 /** @var ViewModelRegistry $viewModels */
 
-/** @var HeroiconsOutline $heroicons */
-$heroicons = $viewModels->require(HeroiconsOutline::class);
+/** @var LucideIcons $lucideIcons */
+$lucideIcons = $viewModels->require(LucideIcons::class);
 
 $explanationMessage = $escaper->escapeHtml($block->getExplanationMessage(), ["br"]);
 $whatsThisMessage = $escaper->escapeHtml($block->getExplanationMessageWhatsThis(), ["br"]);
@@ -48,7 +47,7 @@ $whatsThisMessage = $escaper->escapeHtml($block->getExplanationMessageWhatsThis(
                 @click="closePopover"
                 aria-label="<?= $escaper->escapeHtmlAttr(__('Close panel')) ?>"
             >
-                <?= $heroicons->xHtml('', 24, 24, ['aria-hidden' => 'true']); ?>
+                <?= $lucideIcons->xHtml('', 24, 24, ['aria-hidden' => 'true']); ?>
             </button>
         </div>
 
