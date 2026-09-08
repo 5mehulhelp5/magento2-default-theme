@@ -174,10 +174,10 @@ $graphqlQuery = $gqlViewModel->query("slider_products_query", $query ?: "
                                 data.data.products &&
                                 data.data.products.items &&
                                 data.data.products.items[0] &&
-                                data.data.products.items[0]['<?= $escaper->escapeHtml($type) ?>_products'] &&
+                                data.data.products.items[0]['<?= $escaper->escapeJs($type) ?>_products'] &&
                                 // only use products with visibility set to `Catalog` or `Catalog, Search` (2 or 4)
                                 // with status set to '1' (enabled)
-                                data.data.products.items[0]['<?= $escaper->escapeHtml($type) ?>_products']
+                                data.data.products.items[0]['<?= $escaper->escapeJs($type) ?>_products']
                                     .filter(product => {
                                         return (
                                             [2,4].includes(product.visibility) &&
@@ -220,7 +220,7 @@ $graphqlQuery = $gqlViewModel->query("slider_products_query", $query ?: "
                         typeof window.dispatchMessages !== "undefined" && window.dispatchMessages(
                             [{
                                 type: "warning",
-                                text: "<?= $escaper->escapeHtml(__('Could not add item to wishlist.')) ?>"
+                                text: "<?= $escaper->escapeJs(__('Could not add item to wishlist.')) ?>"
                             }], 5000
                         );
                     }
@@ -230,7 +230,7 @@ $graphqlQuery = $gqlViewModel->query("slider_products_query", $query ?: "
                         [{
                             type: (response.success) ? "success" : "error",
                             text: (response.success)
-                                ? "<?= $escaper->escapeHtml(
+                                ? "<?= $escaper->escapeJs(
                                     __("%1 has been added to your Wish List.", __("Product"))
                                 ) ?>" : response.error_message
                         }], 5000

@@ -13,6 +13,20 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 -   **Replaced the Heroicons with Lucide icons throughout the theme**  
     Icons that used the solid Heroicons set now render as outline, because Lucide only ships an outline set. For more information, please refer to [merge request #1552](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1552).
 
+-   **Template Hardening against XSS**  
+    For more information, please refer to [merge request #1548](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1548).
+
+-   **Fixed the customer name not being shown in bold in the Login as Customer banner**  
+    For more information, please refer to [merge request #1548](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1548).
+
+-   **Fixed a cross-site scripting issue in the MSRP price and popup templates**  
+    For more information, please refer to [merge request #1547](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1547).
+
+    Many thanks to Jelle Janssens (Singto BV) for reporting this issue!
+
+-   **Made the MSRP templates CSP safe**  
+    For more information, please refer to [merge request #1547](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1547).
+
 -   **Made the price group label on the product page translatable**  
     For more information, please refer to [issue #1369](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/work_items/1369).
 
@@ -21,6 +35,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 -   **Fixed repeat submissions of the forgot password form triggering the password reset rate limit**  
     For more information, please refer to [issue #1362](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/work_items/1362).
+
 -   **Fixed HTML entities such as apostrophes not being decoded in the minicart**  
     For more information, please refer to [issue #1358](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/work_items/1358).
 
