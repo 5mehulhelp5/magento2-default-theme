@@ -445,14 +445,20 @@ $captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-gray-200/60
                 this.overflowSrc = (overflowIdx >= 0 && this.newImages[overflowIdx]?.img) || this.initOverflowSrc;
             },
             updateActiveItem() {
-                const track = this.$root.querySelector('[data-track]');
-                if (!track) return;
                 const slide = this.newImages.length > 0
                     ? document.getElementById('gallery-slide-dyn-0')
                     : track.firstElementChild;
-                if (!slide) return;
+                this.scrollToActiveItem(slide);
+            },
+            scrollToActiveItem(target) {
+                if (!target) return;
+
+                const items = this.getLightboxItems();
+                const track = this.$root.querySelector('[data-track]');
+                if (!track) return;
+
                 const trackRect = track.getBoundingClientRect();
-                const slideRect = slide.getBoundingClientRect();
+                const slideRect = target.getBoundingClientRect();
                 track.scrollTo({
                     left: slideRect.left - trackRect.left + track.scrollLeft,
                     top: slideRect.top - trackRect.top + track.scrollTop,
@@ -536,6 +542,9 @@ $captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-gray-200/60
                 this.showLightbox(idx);
             },
             openOverflowLightbox() {
+                const items = this.getLightboxItems();
+                const target = items[this.maxDisplay];
+                this.scrollToActiveItem(target);
                 this.showLightbox(this.maxDisplay);
             },
             navigateLightbox(dir) {
