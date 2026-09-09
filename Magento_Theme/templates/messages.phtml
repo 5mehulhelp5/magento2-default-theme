@@ -16,13 +16,14 @@ use Magento\Framework\Escaper;
 /** @var Escaper $escaper */
 /** @var HyvaCsp $hyvaCsp */
 /** @var ViewModelRegistry $viewModels */
+
 /** @var LucideIcons $lucideIcons */
-/** @var StoreConfig $storeConfig */
 $lucideIcons = $viewModels->require(LucideIcons::class);
+
+/** @var StoreConfig $storeConfig */
 $storeConfig = $viewModels->require(StoreConfig::class);
 
 $defaultSuccessMessageTimeout = $storeConfig->getStoreConfig('hyva_theme_general/messages/success_message_timeout');
-
 ?>
 <script>
     <?php if ($defaultSuccessMessageTimeout): ?>
@@ -139,7 +140,7 @@ $defaultSuccessMessageTimeout = $storeConfig->getStoreConfig('hyva_theme_general
                                 aria-label="<?= $escaper->escapeHtml(__('Close message')) ?>"
                                 @click.prevent="removeMessage"
                             >
-                                <?= $heroicons->xHtml('stroke-current', 18, 18, ['aria-hidden' => 'true']); ?>
+                                <?= $lucideIcons->xHtml('stroke-current', 18, 18, ['aria-hidden' => 'true']); ?>
                             </button>
                         </div>
                     </template>
