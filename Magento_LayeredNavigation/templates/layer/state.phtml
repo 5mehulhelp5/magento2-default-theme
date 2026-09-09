@@ -53,7 +53,10 @@ if (empty($filters)) {
                             <?= $escaper->escapeHtml($filterLabel) ?>
                         </span>
                     </span>
-                    <a class="btn p-2" href="<?= $escaper->escapeUrl($filter->getRemoveUrl()) ?>">
+                    <a
+                        class="btn p-2"
+                        href="<?= $escaper->escapeUrl($filter->getRemoveUrl()) ?>"
+                        rel="nofollow">
                         <span class="sr-only"><?= $escaper->escapeHtml(__('Remove active %1 filter: %2', $filterName, $filterLabel)) ?></span>
                         <?= $lucideIcons->trashHtml('', 20, 20, ['aria-hidden' => 'true']); ?>
                     </a>
