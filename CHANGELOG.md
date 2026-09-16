@@ -48,6 +48,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 -   **Fixed cart validation messages being replayed and no longer appearing once repeated**  
     For more information, please refer to [issue #1313](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/work_items/1313).
 
+-   **Fixes layout jump in form error message**  
+    For more information, please refer to [merge request #1557](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1557).
+
 ### Removed
 
 -   **Removed the incorrect `BaseImage $block` annotation from the grouped product template**  
