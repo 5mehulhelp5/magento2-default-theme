@@ -52,7 +52,6 @@ if (!$shoppingAssistanceViewModel->isLoginAsCustomerEnabled()) {
            name="assistance_allowed_checkbox"
            id="assistance_allowed_checkbox"
            value="1"
-           title="<?= $escaper->escapeHtmlAttr(__('Allow remote shopping assistance')) ?>"
            class="checkbox"
            aria-describedby="assistance_allowed_checkbox_tooltip"
         <?php if ($shoppingAssistanceViewModel->isAssistanceAllowed()): ?>
