@@ -60,8 +60,12 @@
 
         /* Reserve space for single line form validation messages */
         &.field-reserved {
-            --reserved-space: --spacing(7);
+            --reserved-space: 1.5em;
             margin-block-end: var(--reserved-space);
+
+            @supports (line-height: 1lh) {
+                --reserved-space: 1lh;
+            }
 
             ul {
                 @apply text-sm;
