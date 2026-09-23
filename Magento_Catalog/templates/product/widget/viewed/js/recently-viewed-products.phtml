@@ -36,13 +36,13 @@ $noOfProductsToShow = (int) $storeConfig->getStoreConfig('catalog/recently_produ
             noOfProductsToShow: this.$root.dataset.productsToShow || <?= $escaper->escapeJs($noOfProductsToShow) ?>
         }
 
-        <?php /* The product data is written to local storage by register-viewed-product.phtml. */ ?>
-        <?php /* */ ?>
-        <?php /* With catalog/recently_products/synchronize_with_backend enabled this used to be fetched */ ?>
-        <?php /* over GraphQL. Hyvä never posted the viewed product ids to the backend, so that fetch */ ?>
-        <?php /* returned what this storage already held and the setting made no difference. */ ?>
-        <?php /* */ ?>
-        <?php /* To fetch from the backend again, use GET /V1/products-render-info, as Luma does here. */ ?>
+        <?php /*
+            The product data is written to local storage by register-viewed-product.phtml.
+            With catalog/recently_products/synchronize_with_backend enabled this used to be fetched
+            over GraphQL. Hyvä never posted the viewed product ids to the backend, so that fetch
+            returned what this storage already held and the setting made no difference.
+            To fetch from the backend again, use GET /V1/products-render-info.
+        */ ?>
         function readRecentlyViewedFromStorage () {
             const data = hyva.getBrowserStorage().getItem('recently_viewed_products');
             return data ? JSON.parse(data).filter(product => {
