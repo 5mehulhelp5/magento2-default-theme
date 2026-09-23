@@ -84,7 +84,7 @@
             }
 
             input {
-                @apply mr-3;
+                @apply me-3;
             }
         }
 
