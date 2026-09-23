@@ -24,7 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 -   **The `catalog/recently_products/synchronize_with_backend` setting no longer has any effect**  
     The recently viewed products widget used it to choose between fetching the product data over GraphQL and reading it from the browser storage. Only the latter remains, which is also the only one of the two that can show prices incl. and excl. tax.
 
-    Fetching the data from `GET /V1/products-render-info` instead, the REST endpoint Magento uses for the same widget in Luma, was implemented as a replacement and then dropped again. The record that is written when the product is viewed already holds everything the widget renders, so both sources produced the same result and the request only added a round trip.
+    The GraphQL fetch was removed rather than replaced, because the record that is written when the product is viewed already holds everything the widget renders, so it returned what the browser already had. If the widget ever needs more than that snapshot, the data can be fetched from `GET /V1/products-render-info`, the endpoint Magento uses for the same widget in Luma.
 
     A note was added to the field in the admin, and the view model methods that only served the removed code are deprecated in the theme module.
 
