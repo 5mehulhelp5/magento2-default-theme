@@ -21,8 +21,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
     For more information, please refer to [merge request #1561](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1561).
 
--   **The recently viewed products widget fetches its data from the REST API instead of GraphQL**  
-    With `catalog/recently_products/synchronize_with_backend` enabled, the widget now requests `GET /V1/products-render-info`, the same endpoint Magento uses for the Luma widget, instead of querying GraphQL. It falls back to the data stored in the browser when the request fails. With the setting disabled nothing is requested, as before.
+-   **The `catalog/recently_products/synchronize_with_backend` setting no longer has any effect**  
+    The recently viewed products widget used it to choose between fetching the product data over GraphQL and reading it from the browser storage. Only the latter remains, which is also the only one of the two that can show prices incl. and excl. tax.
+
+    Fetching the data from `GET /V1/products-render-info` instead, the REST endpoint Magento uses for the same widget in Luma, was implemented as a replacement and then dropped again. The record that is written when the product is viewed already holds everything the widget renders, so both sources produced the same result and the request only added a round trip.
+
+    A note was added to the field in the admin, and the view model methods that only served the removed code are deprecated in the theme module.
 
     For more information, please refer to [merge request #1561](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1561).
 

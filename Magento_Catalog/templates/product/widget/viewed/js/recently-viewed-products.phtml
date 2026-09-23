@@ -8,11 +8,8 @@
 declare(strict_types=1);
 
 use Hyva\Theme\Model\ViewModelRegistry;
-use Hyva\Theme\ViewModel\Currency;
 use Hyva\Theme\ViewModel\HyvaCsp;
 use Hyva\Theme\ViewModel\ProductPage;
-use Hyva\Theme\ViewModel\RecentlyViewedProducts;
-use Hyva\Theme\ViewModel\Store;
 use Hyva\Theme\ViewModel\StoreConfig;
 use Magento\Framework\Escaper;
 use Magento\Framework\View\Element\Template;
@@ -31,70 +28,28 @@ $currentProductSku = $currentProduct ? $currentProduct->getSku() : '';
 /** @var StoreConfig $storeConfig */
 $storeConfig = $viewModels->require(StoreConfig::class);
 
-/** @var RecentlyViewedProducts $recentlyViewed */
-$recentlyViewed = $viewModels->require(RecentlyViewedProducts::class);
-
-/** @var Store $viewModelStore */
-$viewModelStore = $viewModels->require(Store::class);
-
-/** @var Currency $viewModelCurrency */
-$viewModelCurrency = $viewModels->require(Currency::class);
-
 $noOfProductsToShow = (int) $storeConfig->getStoreConfig('catalog/recently_products/viewed_count');
-
-// The image codes the products-render-info endpoint returns are declared in Magento_Catalog::etc/di.xml
-$renderInfoImageCode = (string) ($block->getData('render_info_image_code')
-    ?: 'recently_viewed_products_grid_content_widget');
 ?>
 <script>
     function initRecentlyViewedProductsComponent() {
         const config = {
-            noOfProductsToShow: this.$root.dataset.productsToShow || <?= $escaper->escapeJs($noOfProductsToShow) ?>,
-            <?php /* catalog/recently_products/synchronize_with_backend, the setting Magento uses to keep */ ?>
-            <?php /* the widget in sync with the backend instead of rendering what the browser stored. */ ?>
-            syncWithBackend: <?= $recentlyViewed->isFetchRecentlyViewedEnabled() ? 'true' : 'false' ?>,
-            renderInfoUrl: BASE_URL + 'rest/' + CURRENT_STORE_CODE + '/V1/products-render-info',
-            storeId: <?= (int) $viewModelStore->getStoreId() ?>,
-            currencyCode: '<?= $escaper->escapeJs($viewModelCurrency->getCurrentCurrencyCode()) ?>',
-            imageCode: '<?= $escaper->escapeJs($renderInfoImageCode) ?>'
+            noOfProductsToShow: this.$root.dataset.productsToShow || <?= $escaper->escapeJs($noOfProductsToShow) ?>
         }
 
-        <?php /* The product data is written to local storage by register-viewed-product.phtml */ ?>
+        <?php /* The product data is written to local storage by register-viewed-product.phtml. */ ?>
+        <?php /* */ ?>
+        <?php /* Magento can also fetch it from the backend through GET /V1/products-render-info, which is */ ?>
+        <?php /* what catalog/recently_products/synchronize_with_backend switches on in Luma. That was */ ?>
+        <?php /* implemented here and dropped again, because the record written when the product was viewed */ ?>
+        <?php /* already holds everything this widget renders, so the request returned the same result the */ ?>
+        <?php /* browser already had. The setting has no effect in Hyvä, which is noted on the field in the */ ?>
+        <?php /* admin. */ ?>
         function readRecentlyViewedFromStorage () {
             const data = hyva.getBrowserStorage().getItem('recently_viewed_products');
             return data ? JSON.parse(data).filter(product => {
                 <?php /** Remove records stored by earlier versions, which held only the sku */ ?>
                 return product.id;
             }) : [];
-        }
-
-        <?php /* Translate a products-render-info item into the structure stored in local storage, */ ?>
-        <?php /* so both sources render through the same accessors below. */ ?>
-        function mapRenderInfoToProduct(item, storedProduct) {
-            const images = item.images || [];
-            const image = images.find(image => image.code === config.imageCode) || images[0] || {};
-            const priceInfo = item.price_info || {};
-            <?php /* Magento_Tax adds the prices excluding tax and weee as an extension attribute */ ?>
-            const priceExclTax = (priceInfo.extension_attributes || {}).tax_adjustments || {};
-            const price = (value) => ({ value: value, currency: item.currency_code });
-
-            return Object.assign({}, storedProduct, {
-                id: item.id,
-                name: item.name,
-                url: item.url,
-                small_image: { url: image.url || '', label: image.label || item.name },
-                price_range: {
-                    minimum_price: {
-                        regular_price: price(priceInfo.regular_price),
-                        final_price: price(priceInfo.final_price),
-                        base_price: price(
-                            priceExclTax.final_price === undefined
-                                ? priceInfo.final_price
-                                : priceExclTax.final_price
-                        )
-                    }
-                }
-            });
         }
 
         return {
@@ -124,44 +79,7 @@ $renderInfoImageCode = (string) ($block->getData('render_info_image_code')
 
                 itemsToShow = itemsToShow.slice(0, this.maxProductsToShow);
 
-                config.syncWithBackend && itemsToShow.length
-                    ? this.fetchProducts(itemsToShow)
-                    : this.renderRecentlyViewedProducts(itemsToShow);
-            },
-            <?php /* Refresh the locally stored product data, so price and stock changes are picked up */ ?>
-            fetchProducts(itemsToShow) {
-                const filter = 'searchCriteria[filter_groups][0][filters][0]';
-                const params = new URLSearchParams({
-                    'store_id': config.storeId,
-                    'currency_code': config.currencyCode,
-                    [`${filter}[field]`]: 'entity_id',
-                    [`${filter}[condition_type]`]: 'in',
-                    [`${filter}[value]`]: itemsToShow.map(product => product.id).join(',')
-                });
-
-                window.fetch(`${config.renderInfoUrl}?${params}`, {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json' }
-                })
-                    .then(response => response.json())
-                    .then(result => {
-                        const items = (result && result.items) || [];
-
-                        <?php /* Keep the order of the locally stored list, the response is not sorted */ ?>
-                        const products = itemsToShow.reduce((products, storedProduct) => {
-                            const item = items.find(item => `${item.id}` === `${storedProduct.id}`);
-                            if (item) {
-                                products.push(mapRenderInfoToProduct(item, storedProduct));
-                            }
-                            return products;
-                        }, []);
-
-                        this.renderRecentlyViewedProducts(products);
-                    })
-                    .catch(() => {
-                        <?php /* Fall back to the locally stored data, an outdated widget beats an empty one */ ?>
-                        this.renderRecentlyViewedProducts(itemsToShow);
-                    });
+                this.renderRecentlyViewedProducts(itemsToShow);
             },
             renderRecentlyViewedProducts(products) {
                 this.products = products;
@@ -241,10 +159,6 @@ $renderInfoImageCode = (string) ($block->getData('render_info_image_code')
                 });
             },
             productUrl() {
-                <?php /* products-render-info returns a complete url, the local record holds the url key */ ?>
-                if (this.product?.url) {
-                    return this.product.url;
-                }
                 const baseUrl = '<?= $escaper->escapeUrl($block->getBaseUrl()) ?>';
                 return this.product?.url_key
                     ? new URL(`${this.product?.url_key}${(this.product?.url_suffix || '')}`, baseUrl)
