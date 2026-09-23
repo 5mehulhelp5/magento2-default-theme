@@ -14,11 +14,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 > The default theme no longer uses GraphQL, and therefore no longer requires `hyva-themes/magento2-graphql-view-model` and `hyva-themes/magento2-graphql-tokens`.
 > Both packages keep working, but they are no longer installed through the theme. If a module of yours uses the `GraphqlViewModel` view model, or reads the `signin_token` of the `customer` section, add the package it comes from to the `require` section of that module instead.
 >
+> Because the storefront no longer depends on it, you can now disable the GraphQL modules, or block the `/graphql` route, without breaking the theme.
+>
 > For more information, please refer to [merge request #1561](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1561).
 
 ### Changed
 
--   **Replaced the GraphQL calls in the default theme with PHP and Ajax**  
+-   **Replaced the GraphQL calls in the default theme with PHP and Ajax to reduce the attack surface of a storefront**  
+    GraphQL is a broad, publicly reachable API, and it had to stay enabled purely because a handful of templates used it. Every one of those templates had a server side alternative, so the storefront no longer needs the endpoint at all, and merchants who do not use GraphQL for other purposes can now turn it off. It also removes the signed customer token the theme placed in the private content section.
+
     The product review form now posts to the `review/product/post` controller, the customer product review list is rendered server side from the review collection, and the recently viewed products widget always reads its data from the browser storage.
 
     As a result the theme no longer requires `hyva-themes/magento2-graphql-view-model`, `hyva-themes/magento2-graphql-tokens`, `magento/module-graph-ql`, `magento/module-catalog-rule-graph-ql`, `magento/module-customer-graph-ql`, `magento/module-directory-graph-ql` and `magento/module-quote-graph-ql`.
