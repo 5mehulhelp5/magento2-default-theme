@@ -11,24 +11,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Changed
 
 -   **Replaced the GraphQL calls in the default theme with PHP and Ajax to reduce the attack surface of a storefront**  
-    GraphQL is a broad, publicly reachable API, and it had to stay enabled purely because a handful of templates used it. Every one of those templates had a server side alternative, so the storefront no longer needs the endpoint at all, and merchants who do not use GraphQL for other purposes can now disable the GraphQL modules, or block the `/graphql` route, without breaking the theme. It also removes the signed customer token the theme placed in the private content section.
-
-    The product review form now posts to the `review/product/post` controller, the customer product review list is rendered server side from the review collection, and the recently viewed products widget always reads its data from the browser storage.
-
-    As a result the theme no longer requires `hyva-themes/magento2-graphql-view-model`, `hyva-themes/magento2-graphql-tokens`, `magento/module-graph-ql`, `magento/module-catalog-rule-graph-ql`, `magento/module-customer-graph-ql`, `magento/module-directory-graph-ql` and `magento/module-quote-graph-ql`.
-
-    Note that `hyva-themes/magento2-graphql-view-model` and `hyva-themes/magento2-graphql-tokens` were installed only because the theme required them. Both packages keep working, so if a module of yours uses the `GraphqlViewModel` view model, or reads the `signin_token` of the `customer` section, add the package it comes from to the `require` section of that module.
+    The product review form, the customer product review list and the recently viewed products widget no longer use GraphQL, so the theme no longer requires `hyva-themes/magento2-graphql-view-model`, `hyva-themes/magento2-graphql-tokens` and the five `magento/module-*-graph-ql` packages. Both Hyvä packages keep working, so a module that uses the `GraphqlViewModel` view model, or the `signin_token` of the `customer` section, should add the package it comes from to its own `require`.
 
     For more information, please refer to [merge request #1561](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1561).
 
 -   **The `catalog/recently_products/synchronize_with_backend` setting no longer has any effect**  
-    The recently viewed products widget used it to choose between fetching the product data over GraphQL and reading it from the browser storage. Only the latter remains, which is also the only one of the two that can show prices incl. and excl. tax.
-
-    Hyvä never posted the viewed product ids to the backend the way Magento does, so the list has always been per browser and the GraphQL fetch returned what the browser storage already held. It was removed rather than replaced for that reason. Fetching from the backend again is possible with `GET /V1/products-render-info`, the endpoint Magento uses for the same widget in Luma.
-
-    A note was added to the field in the admin, and the view model methods that only served the removed code are deprecated in the theme module.
-
-    For more information, please refer to [merge request #1561](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1561).
+    The recently viewed products widget always reads its data from the browser storage, and a note was added to the field in the admin. For more information, please refer to [merge request #1561](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1561).
 
 -   **Replaced the Heroicons with Lucide icons throughout the theme**  
     Icons that used the solid Heroicons set now render as outline, because Lucide only ships an outline set. For more information, please refer to [merge request #1552](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1552).
