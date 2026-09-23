@@ -38,14 +38,18 @@ $noOfProductsToShow = (int) $storeConfig->getStoreConfig('catalog/recently_produ
 
         <?php /* The product data is written to local storage by register-viewed-product.phtml. */ ?>
         <?php /* */ ?>
-        <?php /* When catalog/recently_products/synchronize_with_backend was enabled, this data used to be */ ?>
-        <?php /* fetched over GraphQL instead. That was removed because the record written when the product */ ?>
-        <?php /* was viewed already holds everything this widget renders, so the fetch returned what the */ ?>
-        <?php /* browser already had. The setting therefore has no effect in Hyvä, which is noted on the */ ?>
-        <?php /* field in the admin. */ ?>
+        <?php /* In Magento this list can follow a logged in customer across devices and browsers: with */ ?>
+        <?php /* catalog/recently_products/synchronize_with_backend enabled the viewed product ids are */ ?>
+        <?php /* posted to catalog/product/frontend_action_synchronize, and read back from the */ ?>
+        <?php /* recently_viewed_product customer section on the next page load. */ ?>
         <?php /* */ ?>
-        <?php /* Should the widget ever need more than that snapshot, the data can be fetched from */ ?>
-        <?php /* GET /V1/products-render-info, the endpoint Magento uses for the same widget in Luma. */ ?>
+        <?php /* Hyvä never posted those ids, so nothing was stored server side and the list has always */ ?>
+        <?php /* been per browser. All the setting did here was decide where the product details came */ ?>
+        <?php /* from, GraphQL or this storage, and both showed the same thing, so the GraphQL fetch was */ ?>
+        <?php /* removed. The setting has no effect in Hyvä, which is noted on the field in the admin. */ ?>
+        <?php /* */ ?>
+        <?php /* Matching Magento needs both halves: posting the ids to the sync controller, and fetching */ ?>
+        <?php /* the details from GET /V1/products-render-info, the endpoint Luma uses for this widget. */ ?>
         function readRecentlyViewedFromStorage () {
             const data = hyva.getBrowserStorage().getItem('recently_viewed_products');
             return data ? JSON.parse(data).filter(product => {

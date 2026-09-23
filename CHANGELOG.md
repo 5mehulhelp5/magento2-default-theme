@@ -24,7 +24,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 -   **The `catalog/recently_products/synchronize_with_backend` setting no longer has any effect**  
     The recently viewed products widget used it to choose between fetching the product data over GraphQL and reading it from the browser storage. Only the latter remains, which is also the only one of the two that can show prices incl. and excl. tax.
 
-    The GraphQL fetch was removed rather than replaced, because the record that is written when the product is viewed already holds everything the widget renders, so it returned what the browser already had. If the widget ever needs more than that snapshot, the data can be fetched from `GET /V1/products-render-info`, the endpoint Magento uses for the same widget in Luma.
+    In Magento the setting makes the list follow a logged in customer across devices and browsers, by posting the viewed product ids to the backend and reading them back from the customer section. Hyvä never posted those ids, so the list has always been per browser, and the setting only decided where the product details came from. Both sources showed the same thing, so the GraphQL fetch was removed rather than replaced.
+
+    Matching Magento needs both halves: posting the ids to `catalog/product/frontend_action_synchronize`, and fetching the details from `GET /V1/products-render-info`, the endpoint Magento uses for the same widget in Luma.
 
     A note was added to the field in the admin, and the view model methods that only served the removed code are deprecated in the theme module.
 
