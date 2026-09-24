@@ -10,6 +10,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+-   **Replaced the GraphQL calls in the default theme with PHP and Ajax to reduce the attack surface of a storefront**  
+    The product review form, the customer product review list and the recently viewed products widget no longer use GraphQL, so the theme no longer requires `hyva-themes/magento2-graphql-view-model`, `hyva-themes/magento2-graphql-tokens` and the five `magento/module-*-graph-ql` packages. Both Hyvä packages keep working, so a module that uses the `GraphqlViewModel` view model, or the `signin_token` of the `customer` section, should add the package it comes from to its own `require`.
+
+    For more information, please refer to [merge request #1561](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1561).
+
+-   **The `catalog/recently_products/synchronize_with_backend` setting no longer has any effect**  
+    The recently viewed products widget always reads its data from the browser storage, and a note was added to the field in the admin. For more information, please refer to [merge request #1561](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1561).
+
 -   **Replaced the Heroicons with Lucide icons throughout the theme**  
     Icons that used the solid Heroicons set now render as outline, because Lucide only ships an outline set. For more information, please refer to [merge request #1552](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1552).
 
