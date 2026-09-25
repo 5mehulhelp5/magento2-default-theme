@@ -41,4 +41,12 @@
         font-size: var(--price-font-size, var(--text-base));
         font-weight: var(--price-font-weight, bolder);
     }
+
+    .price-excluding-tax {
+        &::before {
+            content: attr(data-label) " ";
+            font-size: var(--price-font-size-label, 0.875rem);
+            font-weight: var(--price-font-weight, normal);
+        }
+    }
 }
