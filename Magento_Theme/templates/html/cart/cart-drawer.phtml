@@ -327,7 +327,7 @@ $miniCartOptionShowSku = $block->getShowSku() !== null ? (bool) $block->getShowS
                             <p class="text-lg">
                                 <span x-text="item.qty"></span> x <strong x-text="item.product_name"></strong>
                             </p>
-                            <span class="price-box" x-html="item.product_price"></span>
+                            <span class="price-box" x-html-safe="item.product_price"></span>
                         </div>
                         <template x-if="showDetails">
                             <dl class="table text-sm">
@@ -389,7 +389,7 @@ $miniCartOptionShowSku = $block->getShowSku() !== null ? (bool) $block->getShowS
 
             <dl class="flex gap-2 justify-between items-center text-sm font-bold">
                 <dt><?= $escaper->escapeHtml(__('Subtotal')) ?></dt>
-                <dd x-html="cart.subtotal"></dd>
+                <dd x-html-safe="cart.subtotal"></dd>
             </dl>
 
             <div class="flex flex-col gap-y-4 mt-8">

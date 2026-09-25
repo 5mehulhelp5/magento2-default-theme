@@ -129,7 +129,7 @@ $lucideIcons = $viewModels->require(LucideIcons::class);
                                 <strong class="mr-2 text-sm leading-6 font-normal">
                                     <a :href="product.product_url" :title="product.product_name" x-text="product.product_name"></a>
                                 </strong>
-                                <div class="mr-2 text-sm leading-6 font-bold" x-html="product.product_price"></div>
+                                <div class="mr-2 text-sm leading-6 font-bold" x-html-safe="product.product_price"></div>
                                 <template x-if="product.product_is_saleable_and_visible">
                                     <div class="actions-primary my-2">
                                         <template x-if="!product.product_has_required_options">
