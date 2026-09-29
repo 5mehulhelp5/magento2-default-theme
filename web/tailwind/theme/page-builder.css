@@ -291,6 +291,7 @@ body:where(:not([class*="-full-width"])) {
             position: relative;
 
             &:not(.pagebuilder-poster-overlay) {
+                max-width: none;
                 @variant md {
                     max-width: var(--container-xl);
                 }
