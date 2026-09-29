@@ -41,8 +41,13 @@
 
 /* Preserve the snap for older sliders */
 @utility snap {
-    @apply snap-x snap-mandatory scroll-smooth [&>*]:snap-start;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
     scrollbar-width: none;
+
+    > * {
+        scroll-snap-align: start;
+    }
 
     &::-webkit-scrollbar {
         display: none;
