@@ -20,6 +20,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+-   **Show multi-select bundle option values on separate lines in the cart and minicart**  
+    For more information, please refer to [issue #1348](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1348).
+
 -   **Fixed configurable options without enabled child products being rendered as disabled**  
     Since 1.5.1 an option whose child products are all disabled, or not assigned to the website, rendered greyed out
     instead of being omitted.
