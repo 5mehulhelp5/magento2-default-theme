@@ -77,13 +77,16 @@ $miniCartOptionShowSku = $block->getShowSku() !== null ? (bool) $block->getShowS
                     this.cartItems = this.cartItems.slice(0, parseInt(this.maxItemsToDisplay, 10));
                 }
 
-                this.cartItems.forEach(item => {
-                    (item.options || []).forEach(option => {
-                        if (Array.isArray(option.value)) {
-                            option.value = option.value.join('<br>');
-                        }
-                    });
-                });
+                // Angle brackets stay escaped so a name can never resolve into a tag.
+                const entities = { '&amp;': '&', '&quot;': '"', '&#039;': "'", '&#39;': "'" };
+                this.cartItems = this.cartItems.map((item) => ({
+                    ...item,
+                    product_name: item.product_name.replace(/&(?:amp|quot|#0?39);/g, (entity) => entities[entity]),
+                    options: (item.options || []).map((option) => Array.isArray(option.value)
+                        ? { ...option, value: option.value.join('<br>') }
+                        : option
+                    )
+                }));
             },
             updateItemQty(event) {
                 const form = event.target;
@@ -299,9 +302,9 @@ $miniCartOptionShowSku = $block->getShowSku() !== null ? (bool) $block->getShowS
                     <template x-if="productIsVisibleInSite">
                         <a
                             class="block shrink-0 max-w-[25%]"
-                            :href="item.product_url"
                             data-aria-label="<?= $escaper->escapeHtmlAttr(__('Product "%0"')) ?>"
-                            :title="item.product_name"
+                            :href="item.product_url"
+                            :aria-label="productAriaLabel"
                         >
                             <img
                                 :src="item.product_image.src"
@@ -328,7 +331,7 @@ $miniCartOptionShowSku = $block->getShowSku() !== null ? (bool) $block->getShowS
                             <p class="text-lg">
                                 <span x-text="item.qty"></span> x <strong x-text="item.product_name"></strong>
                             </p>
-                            <span class="price-box" x-html="item.product_price"></span>
+                            <span class="price-box" x-html-safe="item.product_price"></span>
                         </div>
                         <template x-if="showDetails">
                             <dl class="table text-sm">
@@ -390,7 +393,7 @@ $miniCartOptionShowSku = $block->getShowSku() !== null ? (bool) $block->getShowS
 
             <dl class="flex gap-2 justify-between items-center text-sm font-bold">
                 <dt><?= $escaper->escapeHtml(__('Subtotal')) ?></dt>
-                <dd x-html="cart.subtotal"></dd>
+                <dd x-html-safe="cart.subtotal"></dd>
             </dl>
 
             <div class="flex flex-col gap-y-4 mt-8">

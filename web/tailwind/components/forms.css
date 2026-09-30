@@ -31,7 +31,9 @@
             border-width: 1px;
             border-color: var(--form-bg);
             background-color: var(--form-stroke);
-            transition: background-color 150ms, border-color 150ms,
+            transition:
+                background-color 150ms,
+                border-color 150ms,
                 translate 150ms;
         }
 
@@ -60,8 +62,12 @@
 
         /* Reserve space for single line form validation messages */
         &.field-reserved {
-            --reserved-space: --spacing(7);
+            --reserved-space: 1.5em;
             margin-block-end: var(--reserved-space);
+
+            @supports (line-height: 1lh) {
+                --reserved-space: 1lh;
+            }
 
             ul {
                 @apply text-sm;
@@ -80,7 +86,7 @@
             }
 
             input {
-                @apply mr-3;
+                @apply me-3;
             }
         }
 
@@ -92,5 +98,14 @@
         &.required > label {
             @apply after:relative after:-top-1 after:text-red-600 after:icon-asterisk after:text-xs;
         }
+    }
+
+    .field-label {
+        display: block;
+        inline-size: 100%;
+        margin-block-end: var(--field-label-flow, 0.25em);
+        font-size: inherit;
+        font-weight: 500;
+        color: inherit;
     }
 }
