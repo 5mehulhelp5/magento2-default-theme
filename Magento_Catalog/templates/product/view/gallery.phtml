@@ -434,11 +434,13 @@ $captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-gray-200/60
                 this.$watch('newImages', () => this.updateActiveItem());
             },
             updateGallery(images = []) {
-                const existing = new Set(this.initImages.map(i => i.img));
-                this.newImages = images.filter(img => !existing.has(img.img));
                 this.sliderItems = {};
                 if (this.replaceOnReceive) {
-                    this.showInitImages = !this.newImages.length;
+                    this.newImages = images;
+                    this.showInitImages = !images.length;
+                } else {
+                    const existing = new Set(this.initImages.map(i => i.img));
+                    this.newImages = images.filter(img => !existing.has(img.img));
                 }
                 const visibleInitCount = this.showInitImages ? this.initImages.length : 0;
                 this.maxImageCount = visibleInitCount + this.newImages.length - this.maxDisplay;
@@ -448,7 +450,7 @@ $captionCssClasses = 'absolute bottom-2 text-sm py-1 px-2 rounded bg-gray-200/60
             updateActiveItem() {
                 const slide = this.newImages.length > 0
                     ? document.getElementById('gallery-slide-dyn-0')
-                    : track.firstElementChild;
+                    : this.$root.querySelector('[data-track]')?.firstElementChild;
                 this.scrollToActiveItem(slide);
             },
             scrollToActiveItem(target) {
