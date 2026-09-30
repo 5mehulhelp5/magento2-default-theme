@@ -81,7 +81,11 @@ $miniCartOptionShowSku = $block->getShowSku() !== null ? (bool) $block->getShowS
                 const entities = { '&amp;': '&', '&quot;': '"', '&#039;': "'", '&#39;': "'" };
                 this.cartItems = this.cartItems.map((item) => ({
                     ...item,
-                    product_name: item.product_name.replace(/&(?:amp|quot|#0?39);/g, (entity) => entities[entity])
+                    product_name: item.product_name.replace(/&(?:amp|quot|#0?39);/g, (entity) => entities[entity]),
+                    options: (item.options || []).map((option) => Array.isArray(option.value)
+                        ? { ...option, value: option.value.join('<br>') }
+                        : option
+                    )
                 }));
             },
             updateItemQty(event) {
