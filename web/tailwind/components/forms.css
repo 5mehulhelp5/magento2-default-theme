@@ -86,7 +86,7 @@
             }
 
             input {
-                @apply me-3;
+                margin-inline-end: --spacing(3);
             }
         }
 
