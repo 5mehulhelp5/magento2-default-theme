@@ -9,12 +9,12 @@
         }
 
         & a:hover {
-            text-decoration-line: underline;
+            text-decoration: underline;
             color: var(--color-fg);
         }
 
         & strong {
-            text-decoration-line: underline;
+            text-decoration: underline;
             font-weight: var(--font-weight-normal);
             color: var(--color-fg);
         }

@@ -114,7 +114,7 @@ body:where(:not([class*="-full-width"])) {
 
     .tabs-content {
         border-radius: var(--radius-sm);
-        background-color: var(--color-container-lighter);
+        background-color: var(--color-bg);
         box-shadow: var(--shadow-sm);
         border: 1px solid var(--color-gray-300);
         position: relative;
@@ -172,7 +172,7 @@ body:where(:not([class*="-full-width"])) {
         }
 
         :is(a, button, div) {
-            box-shadow: 0 0 #0000;
+            box-shadow: none;
             display: inline-block;
         }
     }
