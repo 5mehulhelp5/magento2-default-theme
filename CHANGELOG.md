@@ -29,6 +29,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
     For more information, please refer to [issue #1360](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1360).
 
+-   **Fixed simple product images being hidden in the PDP gallery when they are also used by the configurable parent**  
+    With the `replace` gallery switch strategy, images shared between the parent and the selected simple product were
+    filtered out, so only the images unique to the simple product were shown.
+
+    For more information, please refer to [issue #1363](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1363).
+
 -   **Fixed identical storefront messages being shown more than once**  
     For more information, please refer to [issue #1371](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1371).
 
