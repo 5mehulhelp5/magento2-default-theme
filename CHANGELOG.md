@@ -29,6 +29,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
     For more information, please refer to [issue #1360](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1360).
 
+-   **Only load the reCAPTCHA script when interacting with a form that uses reCAPTCHA**  
+    Previously the Google script was loaded on the first input in any form, such as the search or newsletter form.
+
+    For more information, please refer to [issue #736](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/736).
+
 -   **Fixed simple product images being hidden in the PDP gallery when they are also used by the configurable parent**  
     With the `replace` gallery switch strategy, images shared between the parent and the selected simple product were
     filtered out, so only the images unique to the simple product were shown.
