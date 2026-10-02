@@ -20,6 +20,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+-   **Fixed the configurable option selection being lost after a failed add to cart**  
+    For more information, please refer to [issue #776](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/776).
+
 -   **Show multi-select bundle option values on separate lines in the cart and minicart**  
     For more information, please refer to [issue #1348](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1348).
 
