@@ -20,6 +20,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+-   **Fixed blank pages when navigating in the Facebook and Instagram in-app browser on Android**  
+    Cross-document view transitions are disabled in these browsers, since they never complete them.
+
+    For more information, please refer to [issue #1342](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1342).
+
 -   **Fixed the configurable option selection being lost after a failed add to cart**  
     For more information, please refer to [issue #776](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/776).
 
