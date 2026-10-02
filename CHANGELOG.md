@@ -34,6 +34,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
     For more information, please refer to [issue #1156](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1156).
 
+-   **Fixed a parse error in heredoc templates with HTML minification enabled**  
+    The Braintree stored PayPal account and the order cancellation modal templates no longer pass a heredoc directly
+    into a method call, which the Magento minifier does not preserve. The PayPal payer email is now escaped as well.
+
+    For more information, please refer to [issue #1379](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1379).
+
+-   **Fixed the header search staying invalid after submitting a too short query**  
+    For more information, please refer to [issue #1375](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1375).
+
 -   **Fixed simple product images being hidden in the PDP gallery when they are also used by the configurable parent**  
     With the `replace` gallery switch strategy, images shared between the parent and the selected simple product were
     filtered out, so only the images unique to the simple product were shown.
