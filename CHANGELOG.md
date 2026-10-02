@@ -34,6 +34,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
     For more information, please refer to [issue #1156](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1156).
 
+-   **Only load the reCAPTCHA script when interacting with a form that uses reCAPTCHA**  
+    Previously the Google script was loaded on the first input in any form, such as the search or newsletter form.
+
+    For more information, please refer to [issue #736](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/736).
+
 -   **Fixed a parse error in heredoc templates with HTML minification enabled**  
     The Braintree stored PayPal account and the order cancellation modal templates no longer pass a heredoc directly
     into a method call, which the Magento minifier does not preserve. The PayPal payer email is now escaped as well.
