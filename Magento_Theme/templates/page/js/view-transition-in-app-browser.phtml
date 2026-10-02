@@ -15,7 +15,14 @@ use Magento\Framework\View\Element\Template;
 ?>
 <script>
     (() => {
-        <?php /* The Meta in-app browser on Android never finishes cross-document view transitions, leaving the page blank */ ?>
+        <?php
+        /*
+         * The Facebook and Instagram apps on Android ship their own Chromium based WebView, which starts the
+         * cross-document view transition from the theme CSS but never finishes it, so the page stays blank after
+         * navigating. This rule is rendered after the theme stylesheet, so it wins and disables the transition.
+         * Only remove it once these apps are confirmed to handle view transitions (issue #1342).
+         */
+        ?>
         const userAgent = navigator.userAgent;
         if (!/android/i.test(userAgent) || !/FBAN|FBAV|FB_IAB|Instagram/.test(userAgent)) return;
 
