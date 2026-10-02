@@ -29,6 +29,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
     For more information, please refer to [issue #1360](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1360).
 
+-   **Fixed a parse error in heredoc templates with HTML minification enabled**  
+    The Braintree stored PayPal account and the order cancellation modal templates no longer pass a heredoc directly
+    into a method call, which the Magento minifier does not preserve. The PayPal payer email is now escaped as well.
+
+    For more information, please refer to [issue #1379](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1379).
+
 -   **Fixed the header search staying invalid after submitting a too short query**  
     For more information, please refer to [issue #1375](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1375).
 
