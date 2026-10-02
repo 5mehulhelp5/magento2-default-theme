@@ -17,7 +17,7 @@ use Magento\Framework\View\Element\Template;
     (() => {
         <?php /* The Meta in-app browser on Android never finishes cross-document view transitions, leaving the page blank */ ?>
         const userAgent = navigator.userAgent;
-        if (!/android/i.test(userAgent) || !/FBAN|FBAV|Instagram/.test(userAgent)) return;
+        if (!/android/i.test(userAgent) || !/FBAN|FBAV|FB_IAB|Instagram/.test(userAgent)) return;
 
         const style = document.createElement('style');
         style.textContent = '@view-transition { navigation: none; }';
