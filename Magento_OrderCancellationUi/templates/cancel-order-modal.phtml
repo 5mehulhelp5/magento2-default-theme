@@ -27,7 +27,7 @@ $modalContent = <<<END_OF_CONTENT
 ></div>
 <div class="field field-reserved required">
     <label for="cancel-order-reason">
-        <span>{$block->escapeHtml(__('Provide a cancellation reason:'))}</span>
+        <span>{$escaper->escapeHtml(__('Provide a cancellation reason:'))}</span>
     </label>
     <select id="cancel-order-reason" class="form-select max-w-full" x-ref="reason" required>
         <option value=""></option>
