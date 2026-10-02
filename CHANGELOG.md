@@ -20,6 +20,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+-   **Fixed the quantity field showing the old quantity when editing a cart item**  
+    For more information, please refer to [issue #1338](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1338).
+
 -   **Fixed blank pages when navigating in the Facebook and Instagram in-app browser on Android**  
     Cross-document view transitions are disabled in these browsers, since they never complete them.
 
