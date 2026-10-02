@@ -29,6 +29,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
     For more information, please refer to [issue #1360](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1360).
 
+-   **Fixed the reCAPTCHA v2 invisible legal notice and badge gap**  
+    v2 invisible forms now show the legal notice like v3, and the hidden inline badge no longer leaves an empty gap.
+
+    For more information, please refer to [issue #1156](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1156).
+
 -   **Only load the reCAPTCHA script when interacting with a form that uses reCAPTCHA**  
     Previously the Google script was loaded on the first input in any form, such as the search or newsletter form.
 
