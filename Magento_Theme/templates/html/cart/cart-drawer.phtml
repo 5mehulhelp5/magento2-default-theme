@@ -8,6 +8,7 @@
 declare(strict_types=1);
 
 use Hyva\Theme\Model\ViewModelRegistry;
+use Hyva\Theme\ViewModel\Cart\ItemOrder;
 use Hyva\Theme\ViewModel\HyvaCsp;
 use Hyva\Theme\ViewModel\StoreConfig;
 use Hyva\Theme\ViewModel\LucideIcons;
@@ -21,7 +22,9 @@ use Magento\Framework\View\Element\Template;
 
 $storeConfig = $viewModels->require(StoreConfig::class);
 $maxItemsToDisplay = $storeConfig->getStoreConfig('checkout/sidebar/max_items_display_count');
-$showNewestItemsFirst = (bool) $storeConfig->getStoreConfig('checkout/cart/show_newest_items_first');
+
+/** @var ItemOrder $itemOrder */
+$itemOrder = $viewModels->require(ItemOrder::class);
 
 /** @var LucideIcons $lucideIcons */
 $lucideIcons = $viewModels->require(LucideIcons::class);
@@ -36,7 +39,7 @@ $miniCartOptionShowSku = $block->getShowSku() !== null ? (bool) $block->getShowS
             isLoading: false,
             cart: {},
             maxItemsToDisplay: <?= (int) $maxItemsToDisplay ?>,
-            showNewestItemsFirst: <?= $showNewestItemsFirst ? 'true' : 'false' ?>,
+            showNewestItemsFirst: <?= $itemOrder->isShowNewestItemsFirst() ? 'true' : 'false' ?>,
             itemsCount: 0,
             showSku: <?= $miniCartOptionShowSku ? 'true' : 'false' ?>,
             autocompleteNumber: 100,
