@@ -10,6 +10,10 @@
 
 declare(strict_types=1);
 
+use Hyva\Theme\Model\ViewModelRegistry;
+use Hyva\Theme\ViewModel\ProductPage;
+use Hyva\Theme\ViewModel\ProductPrice;
+use Magento\Catalog\Pricing\Price\FinalPrice;
 use Magento\Msrp\Pricing\Render\PriceBox;
 use Magento\Framework\Escaper;
 use Magento\Msrp\Pricing\Price\MsrpPriceInterface;
@@ -18,6 +22,7 @@ use Magento\Framework\Pricing\Render as PricingRender;
 
 /** @var PriceBox $block */
 /** @var Escaper $escaper */
+/** @var ViewModelRegistry $viewModels */
 
 /** @var MsrpPriceInterface $priceType */
 $priceType = $block->getPrice();
@@ -72,6 +77,31 @@ $msrpData = [
 <?php endif; ?>
 
 <?php if ($block->getZone() == PricingRender::ZONE_ITEM_VIEW): ?>
+    <?php
+    /** @var ProductPrice $productPriceViewModel */
+    $productPriceViewModel = $viewModels->require(ProductPrice::class);
+    /** @var ProductPage $productViewModel */
+    $productViewModel = $viewModels->require(ProductPage::class);
+    $priceValidUntil = $product->getSpecialToDate();
+    ?>
+    <?php /* The actual price stays hidden on the page, but crawlers still need it in the structured data */ ?>
+    <div itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+        <meta
+            itemprop="price"
+            content="<?= $escaper->escapeHtmlAttr($productPriceViewModel->getPriceValue(FinalPrice::PRICE_CODE, $product)) ?>"
+        >
+        <meta itemprop="priceCurrency" content="<?= $escaper->escapeHtmlAttr($productViewModel->getCurrencyData()['code']) ?>">
+        <?php if ($priceValidUntil): ?>
+            <meta
+                itemprop="priceValidUntil"
+                content="<?= $escaper->escapeHtmlAttr(date('Y-m-d', strtotime($priceValidUntil))) ?>"
+            >
+        <?php endif; ?>
+        <link
+            itemprop="availability"
+            href="<?= $escaper->escapeHtmlAttr($product->getIsSalable() ? 'http://schema.org/InStock' : 'http://schema.org/OutOfStock') ?>"
+        >
+    </div>
     <button
         type="button"
         class="underline hover:no-underline"

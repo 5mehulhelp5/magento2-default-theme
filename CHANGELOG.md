@@ -26,6 +26,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+-   **Fixed the missing Offer price for MSRP products with a hidden price**  
+    The structured data now includes the actual price, the "What's this?" link is shown again, and Escape closes the
+    MSRP popover.
+
+    For more information, please refer to [issue #1382](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1382).
+
 -   **Fixed accessibility issues from the WCAG 2.2 audit**  
     Accessible names for navigation landmarks, the mobile menu, the store and language switchers and the items per page
     select, autocomplete on the registration name fields, and no empty store name heading on the contact page.
