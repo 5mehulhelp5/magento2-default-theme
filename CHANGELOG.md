@@ -26,6 +26,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+-   **Fixed accessibility issues from the WCAG 2.2 audit**  
+    Accessible names for navigation landmarks, the mobile menu, the store and language switchers and the items per page
+    select, autocomplete on the registration name fields, and no empty store name heading on the contact page.
+
+    For more information, please refer to [issue #1354](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1354).
+
 -   **Fixed the quantity field showing the old quantity when editing a cart item**  
     For more information, please refer to [issue #1338](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1338).
 
