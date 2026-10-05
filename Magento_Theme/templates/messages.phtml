@@ -133,7 +133,7 @@ $defaultSuccessMessageTimeout = $storeConfig->getStoreConfig('hyva_theme_general
                             :class="message.type"
                             :ui-id="getMessageUiId"
                         >
-                            <span x-html="message.text"></span>
+                            <span x-html-safe="message.text"></span>
                             <button
                                 type="button"
                                 class="text-ink-muted hover:text-ink"

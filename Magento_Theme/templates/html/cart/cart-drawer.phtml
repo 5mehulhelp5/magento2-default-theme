@@ -359,7 +359,7 @@ $miniCartOptionShowSku = $block->getShowSku() !== null ? (bool) $block->getShowS
                                             class="table-cell font-normal min-w-16 pe-2 pb-2"
                                             x-text="option.label"
                                         ></dt>
-                                        <dd class="table-cell font-bold pb-2" x-html="option.value"></dd>
+                                        <dd class="table-cell font-bold pb-2" x-html-safe="option.value"></dd>
                                     </div>
                                 </template>
                             </dl>
@@ -420,7 +420,7 @@ $miniCartOptionShowSku = $block->getShowSku() !== null ? (bool) $block->getShowS
                 >
                     <?= $escaper->escapeHtml(__('View and Edit Cart')) ?>
                 </a>
-                <div x-html="getSectionDataExtraActions"></div>
+                <div x-html-safe="getSectionDataExtraActions"></div>
                 <?= $block->getChildHtml('extra_actions'); ?>
             </div>
         </div>
