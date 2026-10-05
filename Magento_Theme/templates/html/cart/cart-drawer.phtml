@@ -8,6 +8,7 @@
 declare(strict_types=1);
 
 use Hyva\Theme\Model\ViewModelRegistry;
+use Hyva\Theme\ViewModel\Cart\ItemOrder;
 use Hyva\Theme\ViewModel\HyvaCsp;
 use Hyva\Theme\ViewModel\StoreConfig;
 use Hyva\Theme\ViewModel\LucideIcons;
@@ -22,6 +23,9 @@ use Magento\Framework\View\Element\Template;
 $storeConfig = $viewModels->require(StoreConfig::class);
 $maxItemsToDisplay = $storeConfig->getStoreConfig('checkout/sidebar/max_items_display_count');
 
+/** @var ItemOrder $itemOrder */
+$itemOrder = $viewModels->require(ItemOrder::class);
+
 /** @var LucideIcons $lucideIcons */
 $lucideIcons = $viewModels->require(LucideIcons::class);
 
@@ -35,6 +39,7 @@ $miniCartOptionShowSku = $block->getShowSku() !== null ? (bool) $block->getShowS
             isLoading: false,
             cart: {},
             maxItemsToDisplay: <?= (int) $maxItemsToDisplay ?>,
+            showNewestItemsFirst: <?= $itemOrder->isShowNewestItemsFirst() ? 'true' : 'false' ?>,
             itemsCount: 0,
             showSku: <?= $miniCartOptionShowSku ? 'true' : 'false' ?>,
             autocompleteNumber: 100,
@@ -71,10 +76,15 @@ $miniCartOptionShowSku = $block->getShowSku() !== null ? (bool) $block->getShowS
                 return this.maxItemsToDisplay && this.maxItemsToDisplay < this.itemsCount;
             },
             setCartItems() {
-                this.cartItems = this.cart.items && this.cart.items.sort((a, b) => b.item_id - a.item_id) || [];
+                <?php /* The limit always keeps the most recently added items, the setting only changes their order */ ?>
+                this.cartItems = [...(this.cart.items || [])].sort((a, b) => b.item_id - a.item_id);
 
                 if (this.maxItemsToDisplay > 0) {
                     this.cartItems = this.cartItems.slice(0, parseInt(this.maxItemsToDisplay, 10));
+                }
+
+                if (!this.showNewestItemsFirst) {
+                    this.cartItems.reverse();
                 }
 
                 // Angle brackets stay escaped so a name can never resolve into a tag.

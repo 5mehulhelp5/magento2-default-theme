@@ -10,6 +10,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+-   **Same item order on the cart page and in the mini cart**  
+    Both follow the new "Show Newest Items First" setting under "Hyvä Themes > General > Cart", which defaults to Yes.
+    Previously the mini cart showed the newest items first and the cart page the oldest first.
+
+    For more information, please refer to [issue #1373](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1373).
+
 -   **Support for the Hyvä Font API**  
     The `generate` script now runs `npx hyva-fonts`, which requires `@hyva-themes/hyva-modules` v1.5. Fonts configured in
     `hyva.config.json` are written to `generated/hyva-fonts.css` and between the `hyva-fonts` markers in
