@@ -33,7 +33,7 @@ $loginButtonViewModel = $viewModels->require(LoginButton::class);
 $recaptcha = $block->getData('viewModelRecaptcha');
 ?>
 <div class="card">
-    <div aria-labelledby="block-customer-login-heading">
+    <div>
         <form class="form form-login"
               action="<?= $escaper->escapeUrl($block->getPostActionUrl()) ?>"
               method="post"
@@ -85,6 +85,7 @@ $recaptcha = $block->getData('viewModelRecaptcha');
                             class="form-input w-full"
                             required
                             :type="showPassword ? 'text' : 'password'"
+                            type="password"
                             autocomplete="<?= $block->isAutocompleteDisabled() ? 'off' : 'current-password' ?>"
                             id="pass"
                             title="<?= $escaper->escapeHtmlAttr(__('Password')) ?>"
