@@ -12,6 +12,7 @@ declare(strict_types=1);
 use Hyva\Theme\Model\ViewModelRegistry;
 use Hyva\Theme\ViewModel\Cart\ItemOutput;
 use Hyva\Theme\ViewModel\Modal;
+use Hyva\Theme\ViewModel\StoreConfig;
 use Magento\Checkout\Block\Cart\Grid;
 use Magento\Checkout\ViewModel\Cart as CartViewModel;
 use Magento\Framework\Escaper;
@@ -30,6 +31,14 @@ $modalViewModel = $viewModels->require(Modal::class);
 $cartItemOutputViewModel = $viewModels->require(ItemOutput::class);
 
 $mergedCells = ($cartItemOutputViewModel->isItemPriceDisplayBoth() ? 2 : 1);
+
+/** @var StoreConfig $storeConfig */
+$storeConfig = $viewModels->require(StoreConfig::class);
+
+$cartItems = $block->getItems();
+if ($storeConfig->getStoreConfig('checkout/cart/show_newest_items_first')) {
+    $cartItems = array_reverse($cartItems);
+}
 ?>
 <?= $block->getChildHtml('form_before') ?>
 <form
@@ -46,7 +55,7 @@ $mergedCells = ($cartItemOutputViewModel->isItemPriceDisplayBoth() ? 2 : 1);
                 <h2><?= $escaper->escapeHtml(__('Shopping Cart Items')) ?></h2>
             </legend>
             <ul class="divide-y divide-gray-300">
-                <?php foreach ($block->getItems() as $item): ?>
+                <?php foreach ($cartItems as $item): ?>
                     <li class="py-6 first:pt-0 last:pb-0">
                         <?= $block->getItemHtml($item) ?>
                     </li>
