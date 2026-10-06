@@ -128,8 +128,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 -   **Replaced the border dividers on the product attributes and cart form with a CSS solution to reduce the HTML size**  
     For more information, please refer to [issue #1372](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1372).
 
--   **Migrated `x-html` to `x-html-safe` where the content is known to be safe**  
-    Covers the cart totals labels, custom option price labels, cart drawer and wishlist sidebar prices, and the MSRP popup content.
+-   **Migrated all `x-html` usage to `x-html-safe`**  
 
     For more information, please refer to [merge request #1562](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1562).
 
