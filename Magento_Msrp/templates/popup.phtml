@@ -108,7 +108,6 @@ $whatsThisMessage = $escaper->escapeHtml($block->getExplanationMessageWhatsThis(
                         if (event && event.target === this.anchor) return;
                         this.open = false;
                     },
-                    <?php /* The anchor keeps focus after opening, so closePopover() would ignore the key press */ ?>
                     closeOnEscape() {
                         if (!this.open) return;
                         this.open = false;
