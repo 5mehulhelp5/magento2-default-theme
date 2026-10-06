@@ -26,8 +26,9 @@ $whatsThisMessage = $escaper->escapeHtml($block->getExplanationMessageWhatsThis(
 
 <?php if ($block->isEnabled()): ?>
     <div
-        class="z-10 fixed bottom-4 inset-x-4 sm:w-96 max-w-prose mx-auto p-4 rounded shadow-2xl bg-white
-            lg:absolute lg:bottom-auto lg:right-auto lg:top-[var(--msrp-block-offset)] lg:left-[var(--msrp-inline-offset)] lg:shadow-lg lg:max-w-xs"
+        class="z-10 fixed bottom-4 inset-x-4 sm:w-96 max-w-prose mx-auto card shadow-2xl
+            lg:absolute lg:bottom-auto lg:right-auto lg:top-[var(--msrp-block-offset)]
+            lg:left-[var(--msrp-inline-offset)] lg:shadow-lg lg:max-w-xs"
         :style="setPosition"
         x-data="initMsrpPopover"
         x-cloak
@@ -38,7 +39,7 @@ $whatsThisMessage = $escaper->escapeHtml($block->getExplanationMessageWhatsThis(
         @click.outside="closePopover"
         @msrp-popover.window="showPopover"
         @resize.window.debounce="closePopover"
-        @keydown.window.escape="closePopover"
+        @keydown.window.escape="closeOnEscape"
     >
         <div class="flex justify-between gap-2 mb-2">
             <strong id="map-popup-heading-price" class="font-bold" x-text="title"></strong>
@@ -46,6 +47,7 @@ $whatsThisMessage = $escaper->escapeHtml($block->getExplanationMessageWhatsThis(
                 type="button"
                 @click="closePopover"
                 aria-label="<?= $escaper->escapeHtmlAttr(__('Close panel')) ?>"
+                class="btn p-1"
             >
                 <?= $lucideIcons->xHtml('', 24, 24, ['aria-hidden' => 'true']); ?>
             </button>
@@ -56,11 +58,11 @@ $whatsThisMessage = $escaper->escapeHtml($block->getExplanationMessageWhatsThis(
                 <dl class="price-box">
                     <div class="flex gap-2">
                         <dt class="font-semibold whitespace-nowrap"><?= $escaper->escapeHtml(__('Price')) ?>:</dt>
-                        <dd x-html="msrpPrice" class="flex flex-col"></dd>
+                        <dd x-html-safe="msrpPrice" class="flex flex-col"></dd>
                     </div>
                     <div class="flex gap-2">
                         <dt class="font-semibold whitespace-nowrap"><?= $escaper->escapeHtml(__('Actual Price')) ?>:</dt>
-                        <dd x-html="actualPrice" class="flex flex-col"></dd>
+                        <dd x-html-safe="actualPrice" class="flex flex-col"></dd>
                     </div>
                 </dl>
             </div>
@@ -105,6 +107,12 @@ $whatsThisMessage = $escaper->escapeHtml($block->getExplanationMessageWhatsThis(
                     closePopover(event) {
                         if (event && event.target === this.anchor) return;
                         this.open = false;
+                    },
+                    <?php /* The anchor keeps focus after opening, so closePopover() would ignore the key press */ ?>
+                    closeOnEscape() {
+                        if (!this.open) return;
+                        this.open = false;
+                        this.anchor?.focus();
                     },
                     showPopover(event) {
                         const data = event.detail.msrpData;
