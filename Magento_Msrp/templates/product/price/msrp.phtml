@@ -102,13 +102,16 @@ $msrpData = [
             href="<?= $escaper->escapeHtmlAttr($product->getIsSalable() ? 'http://schema.org/InStock' : 'http://schema.org/OutOfStock') ?>"
         >
     </div>
-    <button
-        type="button"
-        class="underline hover:no-underline"
-        x-data="initMsrpPrice"
-        @click="onClick"
-        data-msrp-data="<?= $escaper->escapeHtmlAttr(json_encode(['type' => 'help'])) ?>"
-    >
-        <?= $escaper->escapeHtml(__("What's this?")) ?>
-    </button>
+    <?php /* "Click for price" already shows the same explanation, so only offer it when the price is not shown on click */ ?>
+    <?php if (! $priceType->isShowPriceOnGesture()): ?>
+        <button
+            type="button"
+            class="underline hover:no-underline"
+            x-data="initMsrpPrice"
+            @click="onClick"
+            data-msrp-data="<?= $escaper->escapeHtmlAttr(json_encode(['type' => 'help'])) ?>"
+        >
+            <?= $escaper->escapeHtml(__("What's this?")) ?>
+        </button>
+    <?php endif; ?>
 <?php endif; ?>

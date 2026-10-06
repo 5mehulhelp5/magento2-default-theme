@@ -27,8 +27,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Changed
 
 -   **Fixed the missing Offer price for MSRP products with a hidden price**  
-    The structured data now includes the actual price, the "What's this?" link is shown again, and Escape closes the
-    MSRP popover.
+    The structured data now includes the actual price, the "What's this?" link is shown again when the price is only
+    shown in the cart, and Escape closes the MSRP popover.
 
     For more information, please refer to [issue #1382](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1382).
 
