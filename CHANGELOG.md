@@ -57,6 +57,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 -   **Show multi-select bundle option values on separate lines in the cart and minicart**  
     For more information, please refer to [issue #1348](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1348).
 
+    Many thanks to Valeriia Prokhina (Perspective) for the contribution!
+
 -   **Fixed configurable options without enabled child products being rendered as disabled**  
     Since 1.5.1 an option whose child products are all disabled, or not assigned to the website, rendered greyed out
     instead of being omitted.
@@ -91,11 +93,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 -   **Fixed identical storefront messages being shown more than once**  
     For more information, please refer to [issue #1371](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1371).
 
+    Many thanks to Valeriia Prokhina (Perspective) for the contribution!
+
 -   **Fixed the applied coupon code disappearing after a cart Ajax update**  
     For more information, please refer to [issue #1343](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1343).
 
+    Many thanks to Rodwell Kajau (Web Vision) for the contribution!
+
 -   **Fixed the order view items pager ignoring the items per page**  
     For more information, please refer to [issue #1303](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1303).
+
+    Many thanks to Ivan Martsii (Perspective) for the contribution!
 
 -   **Fixed the gallery not scrolling to the active thumbnail when opened from the additional images trigger**  
     For more information, please refer to [issue #1350](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1350).
@@ -122,8 +130,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
     Includes the bundle option price rendering, RTL safe spacing and the form label font size.  
     For more information, please refer to [merge request #1560](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/merge_requests/1560).
 
+-   **Fixed the missing tax label for bundle radio and checkbox options**  
+    For more information, please refer to [issue #969](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/969).
+
 -   **Reworked the messages CSS component to modern CSS**  
     For more information, please refer to [issue #1376](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1376).
+
+    Many thanks to Koen Brouwers (Webdesign Tilburg) for the contribution!
+
+-   **Replaced most `@apply` rules with plain CSS and logical properties**  
+    For more information, please refer to [issue #1380](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1380).
+
+    Many thanks to Koen Brouwers (Webdesign Tilburg) for the contribution!
 
 -   **Replaced the border dividers on the product attributes and cart form with a CSS solution to reduce the HTML size**  
     For more information, please refer to [issue #1372](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1372).
@@ -174,6 +192,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 -   **Fixes missing `rel="nofollow"` on the layered navigation links**  
     For more information, please refer to [issue #1370](https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/1370).
+
+    Many thanks to Kevin Ruscoe (Clear Design) for the contribution!
 
 ### Removed
 
